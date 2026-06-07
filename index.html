@@ -1120,6 +1120,7 @@
 .wal-time { font-size:0.78rem; color:rgba(255,255,255,0.6); min-width:80px; text-align:center; }
 .wal-lang-toggle { display:flex; gap:6px; }
 </style>
+<script src="https://code.responsivevoice.org/responsivevoice.js?key=FREE"></script>
 </head>
 <body>
 
@@ -1895,12 +1896,8 @@ function showWatchAndListen(storyId) {
   });
 }
 
-// ── Web Speech TTS ────────────────────────────────────────────────────────────
+// ── TTS engine — ResponsiveVoice (Greek) / Web Speech (English) ───────────────
 function walStartSpeech() {
-  if (!window.speechSynthesis) {
-    document.getElementById('wal-time').textContent = 'No TTS available';
-    return;
-  }
   const data = storyText[walStoryId][walLang];
   walParas = data.text.split('\n\n').filter(p => p.trim());
   walTotalParas = walParas.length;
@@ -1916,18 +1913,10 @@ function walSpeakNext() {
     if (walParaIdx >= walTotalParas) { walSetPlayIcon(false); walSpeaking = false; }
     return;
   }
-  const u = new SpeechSynthesisUtterance(walParas[walParaIdx]);
-  u.lang = walLang === 'en' ? 'en-GB' : 'el-GR';
-  u.rate = 0.88;
-  u.pitch = 1.05;
-  // Pick best available voice
-  const voices = speechSynthesis.getVoices();
-  const code = walLang === 'en' ? 'en' : 'el';
-  const voice = voices.find(v => v.lang.startsWith(code) && v.localService)
-             || voices.find(v => v.lang.startsWith(code))
-             || null;
-  if (voice) u.voice = voice;
-  u.onend = () => {
+
+  const text = walParas[walParaIdx];
+
+  const onDone = () => {
     walParaIdx++;
     walUpdateSpeechProgress();
     // Auto-advance comic page
@@ -1938,8 +1927,25 @@ function walSpeakNext() {
     }
     walSpeakNext();
   };
-  u.onerror = () => { walParaIdx++; walSpeakNext(); };
-  speechSynthesis.speak(u);
+
+  if (walLang === 'gr' && typeof responsiveVoice !== 'undefined' && responsiveVoice.voiceSupport()) {
+    // ResponsiveVoice — Google neural Greek
+    responsiveVoice.speak(text, 'Greek Female', { rate: 0.88, pitch: 1, onend: onDone });
+  } else {
+    // Web Speech API — English (or fallback)
+    if (!window.speechSynthesis) { document.getElementById('wal-time').textContent = 'No TTS'; return; }
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = walLang === 'en' ? 'en-GB' : 'el-GR';
+    u.rate = 0.88; u.pitch = 1.05;
+    const voices = speechSynthesis.getVoices();
+    const code = walLang === 'en' ? 'en' : 'el';
+    const voice = voices.find(v => v.lang.startsWith(code) && v.localService)
+               || voices.find(v => v.lang.startsWith(code)) || null;
+    if (voice) u.voice = voice;
+    u.onend = onDone;
+    u.onerror = () => { walParaIdx++; walSpeakNext(); };
+    speechSynthesis.speak(u);
+  }
 }
 
 function walUpdateSpeechProgress() {
@@ -1980,6 +1986,7 @@ function walTogglePlay() {
 function walStop() {
   if (walAudio) { walAudio.pause(); walAudio = null; }
   if (window.speechSynthesis) speechSynthesis.cancel();
+  if (typeof responsiveVoice !== 'undefined') responsiveVoice.cancel();
   walSpeaking = false; walPaused = false; walParaIdx = 0;
   walSetPlayIcon(false);
   document.getElementById('wal-progress-fill').style.width = '0';
