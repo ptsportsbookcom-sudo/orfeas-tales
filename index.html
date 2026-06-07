@@ -1054,6 +1054,71 @@
     .comic-nav-btn { padding: 8px 14px; font-size: 0.75rem; }
   }
 
+
+/* ── Story card actions ──────────────────────────────── */
+.card-lang-toggle { display:flex; gap:8px; margin:12px 0 10px; }
+.story-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; }
+.btn-story-read, .btn-story-watch {
+  padding:10px 20px; border-radius:24px; font-weight:700; font-size:0.85rem;
+  cursor:pointer; border:2px solid transparent; transition:all 0.2s; white-space:nowrap;
+}
+.btn-story-read {
+  background:transparent; border-color:var(--gold); color:var(--gold);
+}
+.btn-story-read:hover { background:var(--gold); color:#0a0a1a; }
+.btn-story-watch {
+  background:linear-gradient(135deg,#7c3aed,#4f46e5);
+  color:#fff; border-color:transparent;
+  box-shadow:0 4px 15px rgba(124,58,237,0.4);
+}
+.btn-story-watch:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(124,58,237,0.55); }
+
+/* ── Story reader page ────────────────────────────────── */
+.reader-topbar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 24px; background:rgba(255,255,255,0.04);
+  border-bottom:1px solid rgba(255,255,255,0.08); position:sticky; top:0; z-index:10;
+}
+.reader-back-btn {
+  display:flex; align-items:center; gap:6px; background:transparent;
+  border:1px solid rgba(255,255,255,0.2); color:#ccc; padding:8px 14px;
+  border-radius:20px; cursor:pointer; font-size:0.85rem; transition:all 0.2s;
+}
+.reader-back-btn:hover { border-color:var(--gold); color:var(--gold); }
+.reader-lang-toggle { display:flex; gap:8px; }
+.story-reader-body {
+  max-width:680px; margin:0 auto; padding:40px 24px 80px;
+  font-size:1.05rem; line-height:1.85; color:rgba(255,255,255,0.85);
+}
+.story-reader-body h2 {
+  font-family:'Cinzel', serif; color:var(--gold); font-size:1.6rem;
+  margin-bottom:32px; text-align:center; line-height:1.3;
+}
+.story-reader-body p { margin-bottom:1.2em; }
+.story-reader-body p:first-of-type::first-letter {
+  font-size:3em; font-family:'Cinzel', serif; color:var(--gold);
+  float:left; line-height:0.8; margin:4px 8px 0 0;
+}
+
+/* ── Watch & Listen audio bar in comic ───────────────── */
+.wal-bar {
+  display:flex; align-items:center; gap:12px; justify-content:center;
+  background:rgba(124,58,237,0.18); border-bottom:1px solid rgba(124,58,237,0.3);
+  padding:10px 20px; flex-wrap:wrap;
+}
+.wal-bar.hidden { display:none; }
+.wal-play-btn {
+  background:linear-gradient(135deg,#7c3aed,#4f46e5); color:#fff;
+  border:none; border-radius:50%; width:36px; height:36px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.wal-progress-wrap {
+  flex:1; min-width:120px; max-width:300px; height:4px;
+  background:rgba(255,255,255,0.15); border-radius:2px; cursor:pointer; position:relative;
+}
+.wal-progress-fill { height:100%; background:#7c3aed; border-radius:2px; width:0; transition:width 0.5s linear; }
+.wal-time { font-size:0.78rem; color:rgba(255,255,255,0.6); min-width:80px; text-align:center; }
+.wal-lang-toggle { display:flex; gap:6px; }
 </style>
 </head>
 <body>
@@ -1075,7 +1140,6 @@
   <div class="header-nav">
     <button class="header-nav-btn" onclick="showPage('stories')">Stories</button>
     <button class="header-nav-btn" onclick="showPage('characters')">Characters</button>
-    <button class="header-nav-btn comic-btn" onclick="showPage('stories')">📖 Comics</button>
   </div>
   <button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="Toggle background music">🎵 <span class="music-label">Music</span></button>
 </header>
@@ -1097,10 +1161,7 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
     Characters
   </button>
-  <button class="nav-link" onclick="showPage('comic')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-    Comic
-  </button>
+
   <div class="nav-section-label" style="margin-top:12px">Navigation</div>
   <button class="nav-link" onclick="showPage('home')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -1119,9 +1180,9 @@
     <h1>A Universe of<br>Adventures Awaits</h1>
     <p>Join Aristotelis and Thetokis on a magical journey through the cosmos. Meet incredible friends, discover hidden worlds, and face the darkness together.</p>
     <div class="hero-buttons">
-      <button class="btn-primary" onclick="showComicFromStory()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-        Read the Comic
+      <button class="btn-primary" onclick="showPage('stories')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Explore Stories
       </button>
       <button class="btn-secondary" onclick="showPage('characters')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
@@ -1161,43 +1222,20 @@
       <div class="story-info">
         <div class="story-ep-label">Episode I</div>
         <div class="story-title">The Day Two Friends Met</div>
-        <div class="story-comic-preview" onclick="showComicFromStory()">
-          <img src="story1/panels/panel_01.webp" alt="Comic preview">
-          <img src="story1/panels/panel_06.png" alt="Comic preview">
-          <div class="preview-overlay">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-            <span>Read Comic</span>
-          </div>
-        </div>
         <div class="story-desc">Young Thetokis and Aristotelis cross paths for the very first time — and discover that the greatest adventures begin with a single friendship.</div>
         <div class="story-meta">5 min read · 12 panels</div>
-
-        <!-- AUDIO PLAYER -->
-        <div class="audio-player visible" id="player-1">
-          <div class="audio-top">
-            <div class="lang-toggle">
-              <button class="lang-btn active" onclick="setLang(1,'en',this)">🇬🇧 EN</button>
-              <button class="lang-btn" onclick="setLang(1,'gr',this)">🇬🇷 GR</button>
-            </div>
-            <button class="play-btn" id="play-btn-1" onclick="togglePlay(1)">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </button>
-            <div class="audio-progress">
-              <div class="progress-bar-wrap" onclick="seekAudio(1,event)">
-                <div class="progress-bar-fill" id="progress-1"></div>
-              </div>
-              <div class="audio-time">
-                <span id="time-cur-1">0:00</span>
-                <span id="time-dur-1">0:00</span>
-              </div>
-            </div>
-          </div>
-          <div class="audio-note" id="audio-note-1">🎵 Add audio file: story1/story1_en.mp3 / story1/story1_gr.mp3 to this folder</div>
+        <div class="card-lang-toggle">
+          <button class="lang-btn active" id="card1-en" onclick="setCardLang(1,'en',this)">🇬🇧 EN</button>
+          <button class="lang-btn" id="card1-gr" onclick="setCardLang(1,'gr',this)">🇬🇷 GR</button>
         </div>
-        <button class="read-comic-btn" onclick="showComicFromStory()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-          Read Comic
-        </button>
+        <div class="story-actions">
+          <button class="btn-story-read" onclick="showStoryText(1)">
+            📖 Read
+          </button>
+          <button class="btn-story-watch" onclick="showWatchAndListen(1)">
+            🎬 Watch &amp; Listen
+          </button>
+        </div>
       </div>
     </div>
 
@@ -1271,9 +1309,41 @@
 </div>
 
 <!-- ══════════════════════════════
+     PAGE: STORY READER
+══════════════════════════════ -->
+<div class="page" id="page-story-reader">
+  <div class="reader-topbar">
+    <button class="reader-back-btn" onclick="showPage('stories')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Stories
+    </button>
+    <div class="reader-lang-toggle">
+      <button class="lang-btn active" id="reader-btn-en" onclick="setReaderLang('en',this)">🇬🇧 EN</button>
+      <button class="lang-btn" id="reader-btn-gr" onclick="setReaderLang('gr',this)">🇬🇷 GR</button>
+    </div>
+  </div>
+  <div class="story-reader-body" id="story-reader-body"></div>
+</div>
+
+<!-- ══════════════════════════════
      PAGE: COMIC
 ══════════════════════════════ -->
 <div class="page" id="page-comic">
+  <!-- Watch & Listen audio bar -->
+  <div class="wal-bar hidden" id="wal-bar">
+    <button class="wal-play-btn" id="wal-play-btn" onclick="walTogglePlay()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    </button>
+    <div class="wal-progress-wrap" onclick="walSeek(event)">
+      <div class="wal-progress-fill" id="wal-progress-fill"></div>
+    </div>
+    <span class="wal-time" id="wal-time">0:00 / 0:00</span>
+    <div class="wal-lang-toggle">
+      <button class="lang-btn active" id="wal-btn-en" onclick="walSetLang('en',this)">🇬🇧 EN</button>
+      <button class="lang-btn" id="wal-btn-gr" onclick="walSetLang('gr',this)">🇬🇷 GR</button>
+    </div>
+  </div>
+
   <div class="comic-reader">
 
     <button class="comic-back-btn" onclick="showPage('stories')">← Back to Stories</button>
@@ -1491,6 +1561,12 @@ buildCharacters();
 
 // ── NAVIGATION ───────────────────────────────────────────────
 function showPage(name) {
+  // hide Watch & Listen bar when leaving comic
+  if (name !== 'comic') {
+    const wb = document.getElementById('wal-bar');
+    if (wb) wb.classList.add('hidden');
+    if (walAudio) { walAudio.pause(); }
+  }
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -1731,6 +1807,124 @@ function comicNext() { if (comicPage < COMIC_PAGES) goToComicPage(comicPage + 1)
 function showComicFromStory() {
   goToComicPage(1);
   showPage('comic');
+}
+
+
+// ── Story data ───────────────────────────────────────────────────────────────
+const storyText = {
+  1: {
+    en: { title: "The Day Two Friends Met", text: "The Day Two Friends Met\n\nAristotelis and Theotokis went to the same school, somewhere between the mountains and the sea. But even though they walked the same hallways every day, they might as well have lived on different planets.\n\nAristotelis was the kind of boy who ran before he walked, jumped before he looked, and laughed the loudest in any room. He had wild curly hair that never sat still and bright eyes always searching for the next adventure. His teachers called him enthusiastic. His classmates called him a lot. He didn't mind either way.\n\nTheotokis was different. Quiet and careful, the kind of boy who thought three times before he spoke once. He had round glasses he was always pushing up his nose, and a habit of stopping mid-walk to stare at things no one else noticed \u2014 the pattern of a crack in the wall, the way shadows fell, the perfect geometry of a spider's web.\n\nWhat they did mind was each other. Aristotelis thought Theotokis was too serious, too smug, too clever for his own good. Theotokis thought Aristotelis was reckless, noisy, and exhausting. So they kept their distance \u2014 opposite sides of the classroom, different lunch tables, polite but nothing more.\n\nUntil the day of the forest field trip.\n\nIt was a perfect autumn morning, the air full of pine and cool earth. The class walked a winding trail, teachers pointing out beetles and mushrooms and the shapes of leaves. Aristotelis tried to pay attention. But then a butterfly landed on a branch just off the trail \u2014 golden and black, wings opening and closing like a slow heartbeat \u2014 and before he could stop himself, he was following it into the trees.\n\nJust a few more steps, he told himself. Just to see where it goes.\n\nAt the back of the group, Theotokis had also stopped. He was staring up at the forest canopy, the way the branches interlocked like the arches of a cathedral, the way light fell in long dusty columns. He pulled out his notebook and began to sketch \u2014 so absorbed he didn't notice the voices of his classmates fading, until there was nothing left but the sound of the wind.\n\nBy the time the teachers noticed, the sky had turned the deep blue of early evening.\n\nDeep in the forest, Aristotelis sat on a mossy rock. The butterfly was long gone. The trail was nowhere to be seen. The trees looked the same in every direction.\n\nA twig snapped. He spun around.\n\nTheotokis stepped out from behind a wide oak tree, notebook still in hand, glasses slightly crooked.\n\n\"Oh,\" said Aristotelis. \"It's you.\"\n\n\"Oh,\" said Theotokis. \"The reckless one.\"\n\n\"Excuse me? You're lost too.\"\n\n\"I am temporarily disoriented. There is a difference.\"\n\nAristotelis opened his mouth \u2014 then closed it again. This was not the moment.\n\n\"Fine,\" he said. \"For now, let's help each other. Then we go our separate ways and pretend this never happened. Deal?\"\n\nTheotokis pushed his glasses up. \"Agreed. What do you suggest?\"\n\n\"We find a river and follow it downhill. Water always leads to the city.\"\n\n\"That is actually a good idea,\" said Theotokis, sounding slightly surprised.\n\n\"Don't sound so shocked.\" Aristotelis reached into his backpack and pulled out a torch. He clicked it on and a warm beam cut through the dark.\n\nTheotokis stared at it. \"You brought a torch on a forest field trip?\"\n\n\"I bring a torch everywhere. You never know.\"\n\nFor the first time either of them could remember, Theotokis smiled at something Aristotelis had said.\n\nThey set off together \u2014 Aristotelis lighting the way, Theotokis navigating from the map he'd memorised on the bus. The forest at night was full of sounds, and neither of them said they were scared. But they walked a little closer together with every step.\n\nAfter a while they found the river, exactly where Theotokis had predicted. They sat on the bank to rest.\n\n\"I'm hungry,\" Aristotelis admitted.\n\nTheotokis opened his bag and produced two cereal bars, an apple, and a packet of dried figs. He held half out without a word.\n\nAristotelis looked at him. \"You packed extra food?\"\n\n\"I always pack extra. Just in case.\"\n\nAristotelis laughed \u2014 a real, warm laugh. \"We're actually the same, you know. You think ahead, I act fast. Same thing, really. Just different directions.\"\n\nTheotokis considered this. \"I suppose,\" he said quietly.\n\nThey sat by the river and ate, and for the first time they really talked \u2014 about the stars above them, about whether butterflies remembered being caterpillars, about why rivers always curved the way they did.\n\nThey were still talking when Mr. Nikolas found them, torchlight swinging through the trees, voice hoarse from calling their names.\n\nThere were hugs and tears and, yes, some grounding. But Aristotelis and Theotokis didn't really mind.\n\nBecause something had changed in that forest.\n\nAfter that night, they started sitting at the same lunch table. Then walking home together. Aristotelis pulled Theotokis into adventures he'd never have tried alone. And Theotokis quietly made sure those adventures didn't end in disaster.\n\nTheotokis became the serious one \u2014 always one step ahead, always ready with a plan, a solution, and a snack.\n\nAristotelis became the spark that got Theotokis out of his own head and into the world \u2014 louder, braver, more alive than he'd ever been alone.\n\nThey were completely different. That was the whole point.\n\nAnd from that night in the forest onwards, they were the very best of friends.\n\nThe end." },
+    gr: { title: "Η Μέρα που Δύο Φίλοι Γνωρίστηκαν", text: "\u0397 \u039c\u03ad\u03c1\u03b1 \u03c0\u03bf\u03c5 \u0394\u03cd\u03bf \u03a6\u03af\u03bb\u03bf\u03b9 \u0393\u03bd\u03c9\u03c1\u03af\u03c3\u03c4\u03b7\u03ba\u03b1\u03bd\n\n\u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ba\u03b1\u03b9 \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03c0\u03ae\u03b3\u03b1\u03b9\u03bd\u03b1\u03bd \u03c3\u03c4\u03bf \u03af\u03b4\u03b9\u03bf \u03c3\u03c7\u03bf\u03bb\u03b5\u03af\u03bf, \u03ba\u03ac\u03c0\u03bf\u03c5 \u03b1\u03bd\u03ac\u03bc\u03b5\u03c3\u03b1 \u03c3\u03c4\u03b1 \u03b2\u03bf\u03c5\u03bd\u03ac \u03ba\u03b1\u03b9 \u03c4\u03b7 \u03b8\u03ac\u03bb\u03b1\u03c3\u03c3\u03b1. \u039a\u03b9 \u03b1\u03c2 \u03c0\u03b5\u03c1\u03c0\u03b1\u03c4\u03bf\u03cd\u03c3\u03b1\u03bd \u03c3\u03c4\u03bf\u03c5\u03c2 \u03af\u03b4\u03b9\u03bf\u03c5\u03c2 \u03b4\u03b9\u03b1\u03b4\u03c1\u03cc\u03bc\u03bf\u03c5\u03c2 \u03ba\u03ac\u03b8\u03b5 \u03bc\u03ad\u03c1\u03b1, \u03b8\u03b1 \u03bc\u03c0\u03bf\u03c1\u03bf\u03cd\u03c3\u03b5 \u03ba\u03b1\u03bd\u03b5\u03af\u03c2 \u03bd\u03b1 \u03c0\u03b5\u03b9 \u03c0\u03c9\u03c2 \u03b6\u03bf\u03cd\u03c3\u03b1\u03bd \u03c3\u03b5 \u03b4\u03b9\u03b1\u03c6\u03bf\u03c1\u03b5\u03c4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03c0\u03bb\u03b1\u03bd\u03ae\u03c4\u03b5\u03c2.\n\n\u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ae\u03c4\u03b1\u03bd \u03c4\u03bf \u03b5\u03af\u03b4\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03b1\u03b3\u03bf\u03c1\u03b9\u03bf\u03cd \u03c0\u03bf\u03c5 \u03ad\u03c4\u03c1\u03b5\u03c7\u03b5 \u03c0\u03c1\u03b9\u03bd \u03c0\u03b5\u03c1\u03c0\u03b1\u03c4\u03ae\u03c3\u03b5\u03b9, \u03c0\u03bf\u03c5 \u03c0\u03b7\u03b4\u03bf\u03cd\u03c3\u03b5 \u03c0\u03c1\u03b9\u03bd \u03ba\u03bf\u03b9\u03c4\u03ac\u03be\u03b5\u03b9, \u03ba\u03b1\u03b9 \u03c0\u03bf\u03c5 \u03b3\u03b5\u03bb\u03bf\u03cd\u03c3\u03b5 \u03c0\u03b9\u03bf \u03b4\u03c5\u03bd\u03b1\u03c4\u03ac \u03b1\u03c0\u03cc \u03cc\u03bb\u03bf\u03c5\u03c2. \u0395\u03af\u03c7\u03b5 \u03b1\u03b3\u03c1\u03b9\u03ac \u03c3\u03b3\u03bf\u03c5\u03c1\u03ac \u03bc\u03b1\u03bb\u03bb\u03b9\u03ac \u03c0\u03bf\u03c5 \u03c0\u03bf\u03c4\u03ad \u03b4\u03b5\u03bd \u03ba\u03ac\u03b8\u03bf\u03bd\u03c4\u03b1\u03bd \u03ae\u03c3\u03c5\u03c7\u03b1, \u03ba\u03b1\u03b9 \u03c6\u03c9\u03c4\u03b5\u03b9\u03bd\u03ac \u03bc\u03ac\u03c4\u03b9\u03b1 \u03c0\u03bf\u03c5 \u03c0\u03ac\u03bd\u03c4\u03b1 \u03ad\u03c8\u03b1\u03c7\u03bd\u03b1\u03bd \u03c4\u03b7\u03bd \u03b5\u03c0\u03cc\u03bc\u03b5\u03bd\u03b7 \u03c0\u03b5\u03c1\u03b9\u03c0\u03ad\u03c4\u03b5\u03b9\u03b1. \u039f\u03b9 \u03b4\u03ac\u03c3\u03ba\u03b1\u03bb\u03bf\u03af \u03c4\u03bf\u03c5 \u03c4\u03bf\u03bd \u03ad\u03bb\u03b5\u03b3\u03b1\u03bd \u03b5\u03bd\u03b8\u03bf\u03c5\u03c3\u03b9\u03ce\u03b4\u03b7. \u039f\u03b9 \u03c3\u03c5\u03bc\u03bc\u03b1\u03b8\u03b7\u03c4\u03ad\u03c2 \u03c4\u03bf\u03c5 \u03c4\u03bf\u03bd \u03ad\u03bb\u03b5\u03b3\u03b1\u03bd \"\u03c0\u03bf\u03bb\u03cd\". \u0395\u03ba\u03b5\u03af\u03bd\u03bf\u03c2 \u03b4\u03b5\u03bd \u03ad\u03bd\u03bf\u03b9\u03b1\u03b6\u03b5 \u03ba\u03b1\u03b9 \u03c0\u03bf\u03bb\u03cd.\n\n\u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03ae\u03c4\u03b1\u03bd \u03b4\u03b9\u03b1\u03c6\u03bf\u03c1\u03b5\u03c4\u03b9\u03ba\u03cc\u03c2. \u0389\u03c3\u03c5\u03c7\u03bf\u03c2 \u03ba\u03b1\u03b9 \u03c0\u03c1\u03bf\u03c3\u03b5\u03ba\u03c4\u03b9\u03ba\u03cc\u03c2, \u03c4\u03bf \u03b5\u03af\u03b4\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03b1\u03b3\u03bf\u03c1\u03b9\u03bf\u03cd \u03c0\u03bf\u03c5 \u03c3\u03ba\u03b5\u03c6\u03c4\u03cc\u03c4\u03b1\u03bd \u03c4\u03c1\u03b5\u03b9\u03c2 \u03c6\u03bf\u03c1\u03ad\u03c2 \u03c0\u03c1\u03b9\u03bd \u03bc\u03b9\u03bb\u03ae\u03c3\u03b5\u03b9 \u03bc\u03af\u03b1. \u03a6\u03bf\u03c1\u03bf\u03cd\u03c3\u03b5 \u03c3\u03c4\u03c1\u03bf\u03b3\u03b3\u03c5\u03bb\u03ac \u03b3\u03c5\u03b1\u03bb\u03b9\u03ac \u03c0\u03bf\u03c5 \u03c4\u03b1 \u03b1\u03bd\u03ad\u03b2\u03b1\u03b6\u03b5 \u03c3\u03c5\u03bd\u03b5\u03c7\u03ce\u03c2 \u03c3\u03c4\u03b7 \u03bc\u03cd\u03c4\u03b7 \u03c4\u03bf\u03c5, \u03ba\u03b1\u03b9 \u03b5\u03af\u03c7\u03b5 \u03c4\u03b7 \u03c3\u03c5\u03bd\u03ae\u03b8\u03b5\u03b9\u03b1 \u03bd\u03b1 \u03c3\u03c4\u03b1\u03bc\u03b1\u03c4\u03ac \u03c3\u03c4\u03b7 \u03bc\u03ad\u03c3\u03b7 \u03c4\u03bf\u03c5 \u03b4\u03c1\u03cc\u03bc\u03bf\u03c5 \u03b3\u03b9\u03b1 \u03bd\u03b1 \u03ba\u03bf\u03b9\u03c4\u03ac\u03be\u03b5\u03b9 \u03c0\u03c1\u03ac\u03b3\u03bc\u03b1\u03c4\u03b1 \u03c0\u03bf\u03c5 \u03ba\u03b1\u03bd\u03b5\u03af\u03c2 \u03ac\u03bb\u03bb\u03bf\u03c2 \u03b4\u03b5\u03bd \u03c0\u03c1\u03cc\u03c3\u03b5\u03c7\u03b5 \u2014 \u03c4\u03bf \u03c3\u03c7\u03ad\u03b4\u03b9\u03bf \u03bc\u03b9\u03b1\u03c2 \u03c1\u03c9\u03b3\u03bc\u03ae\u03c2 \u03c3\u03c4\u03bf\u03bd \u03c4\u03bf\u03af\u03c7\u03bf, \u03c4\u03bf\u03bd \u03c4\u03c1\u03cc\u03c0\u03bf \u03c0\u03bf\u03c5 \u03ad\u03c0\u03b5\u03c6\u03c4\u03b5 \u03b7 \u03c3\u03ba\u03b9\u03ac, \u03c4\u03b7\u03bd \u03c4\u03ad\u03bb\u03b5\u03b9\u03b1 \u03b3\u03b5\u03c9\u03bc\u03b5\u03c4\u03c1\u03af\u03b1 \u03b5\u03bd\u03cc\u03c2 \u03b9\u03c3\u03c4\u03bf\u03cd \u03b1\u03c1\u03ac\u03c7\u03bd\u03b7\u03c2.\n\n\u0391\u03c5\u03c4\u03cc \u03c0\u03bf\u03c5 \u03c4\u03bf\u03c5\u03c2 \u03b5\u03bd\u03bf\u03c7\u03bb\u03bf\u03cd\u03c3\u03b5 \u03ae\u03c4\u03b1\u03bd \u03bf \u03ad\u03bd\u03b1\u03c2 \u03c4\u03bf\u03bd \u03ac\u03bb\u03bb\u03bf\u03bd. \u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ad\u03b2\u03bb\u03b5\u03c0\u03b5 \u03c4\u03bf\u03bd \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7 \u03c5\u03c0\u03b5\u03c1\u03b2\u03bf\u03bb\u03b9\u03ba\u03ac \u03c3\u03bf\u03b2\u03b1\u03c1\u03cc, \u03c5\u03c0\u03b5\u03c1\u03b2\u03bf\u03bb\u03b9\u03ba\u03ac \u03b1\u03bb\u03b1\u03b6\u03cc\u03bd\u03b1, \u03c5\u03c0\u03b5\u03c1\u03b2\u03bf\u03bb\u03b9\u03ba\u03ac \u03ad\u03be\u03c5\u03c0\u03bd\u03bf \u03b3\u03b9\u03b1 \u03c4\u03bf \u03ba\u03b1\u03bb\u03cc \u03c4\u03bf\u03c5. \u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03ad\u03b2\u03bb\u03b5\u03c0\u03b5 \u03c4\u03bf\u03bd \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7 \u03b1\u03c0\u03b5\u03c1\u03af\u03c3\u03ba\u03b5\u03c0\u03c4\u03bf, \u03b8\u03bf\u03c1\u03c5\u03b2\u03ce\u03b4\u03b7 \u03ba\u03b1\u03b9 \u03ba\u03bf\u03c5\u03c1\u03b1\u03c3\u03c4\u03b9\u03ba\u03cc. \u0388\u03c4\u03c3\u03b9 \u03ba\u03c1\u03b1\u03c4\u03bf\u03cd\u03c3\u03b1\u03bd \u03b1\u03c0\u03bf\u03c3\u03c4\u03ac\u03c3\u03b5\u03b9\u03c2 \u2014 \u03b1\u03bd\u03c4\u03af\u03b8\u03b5\u03c4\u03b5\u03c2 \u03c0\u03bb\u03b5\u03c5\u03c1\u03ad\u03c2 \u03c3\u03c4\u03b7\u03bd \u03c4\u03ac\u03be\u03b7, \u03b4\u03b9\u03b1\u03c6\u03bf\u03c1\u03b5\u03c4\u03b9\u03ba\u03ac \u03c4\u03c1\u03b1\u03c0\u03ad\u03b6\u03b9\u03b1 \u03c3\u03c4\u03bf \u03b3\u03b5\u03cd\u03bc\u03b1, \u03b5\u03c5\u03b3\u03b5\u03bd\u03b9\u03ba\u03bf\u03af \u03bc\u03b5\u03bd, \u03b1\u03bb\u03bb\u03ac \u03c4\u03af\u03c0\u03bf\u03c4\u03b1 \u03c0\u03b1\u03c1\u03b1\u03c0\u03ac\u03bd\u03c9.\n\n\u039c\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u03b7\u03bc\u03ad\u03c1\u03b1 \u03c4\u03b7\u03c2 \u03b5\u03ba\u03b4\u03c1\u03bf\u03bc\u03ae\u03c2 \u03c3\u03c4\u03bf \u03b4\u03ac\u03c3\u03bf\u03c2.\n\n\u0389\u03c4\u03b1\u03bd \u03ad\u03bd\u03b1 \u03c4\u03ad\u03bb\u03b5\u03b9\u03bf \u03c6\u03b8\u03b9\u03bd\u03bf\u03c0\u03c9\u03c1\u03b9\u03bd\u03cc \u03c0\u03c1\u03c9\u03af, \u03bf \u03b1\u03ad\u03c1\u03b1\u03c2 \u03b3\u03b5\u03bc\u03ac\u03c4\u03bf\u03c2 \u03bc\u03c5\u03c1\u03c9\u03b4\u03b9\u03ac \u03c0\u03b5\u03cd\u03ba\u03bf\u03c5 \u03ba\u03b1\u03b9 \u03b4\u03c1\u03bf\u03c3\u03b5\u03c1\u03ae\u03c2 \u03b3\u03b7\u03c2. \u0397 \u03c4\u03ac\u03be\u03b7 \u03c0\u03b5\u03c1\u03c0\u03b1\u03c4\u03bf\u03cd\u03c3\u03b5 \u03ad\u03bd\u03b1 \u03b5\u03bb\u03b9\u03ba\u03bf\u03b5\u03b9\u03b4\u03ad\u03c2 \u03bc\u03bf\u03bd\u03bf\u03c0\u03ac\u03c4\u03b9, \u03b5\u03bd\u03ce \u03bf\u03b9 \u03b4\u03ac\u03c3\u03ba\u03b1\u03bb\u03bf\u03b9 \u03ad\u03b4\u03b5\u03b9\u03c7\u03bd\u03b1\u03bd \u03ba\u03b1\u03c4\u03c3\u03b1\u03c1\u03af\u03b4\u03b5\u03c2, \u03bc\u03b1\u03bd\u03b9\u03c4\u03ac\u03c1\u03b9\u03b1 \u03ba\u03b1\u03b9 \u03c4\u03b1 \u03c3\u03c7\u03ae\u03bc\u03b1\u03c4\u03b1 \u03c4\u03c9\u03bd \u03c6\u03cd\u03bb\u03bb\u03c9\u03bd. \u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03c0\u03c1\u03bf\u03c3\u03c0\u03b1\u03b8\u03bf\u03cd\u03c3\u03b5 \u03bd\u03b1 \u03c0\u03c1\u03bf\u03c3\u03ad\u03c7\u03b5\u03b9. \u039c\u03b1 \u03c4\u03cc\u03c4\u03b5 \u03bc\u03b9\u03b1 \u03c0\u03b5\u03c4\u03b1\u03bb\u03bf\u03cd\u03b4\u03b1 \u03c0\u03c1\u03bf\u03c3\u03b3\u03b5\u03b9\u03ce\u03b8\u03b7\u03ba\u03b5 \u03c3\u03b5 \u03ad\u03bd\u03b1 \u03ba\u03bb\u03b1\u03b4\u03af \u03b1\u03ba\u03c1\u03b9\u03b2\u03ce\u03c2 \u03b4\u03af\u03c0\u03bb\u03b1 \u03c3\u03c4\u03bf \u03bc\u03bf\u03bd\u03bf\u03c0\u03ac\u03c4\u03b9 \u2014 \u03c7\u03c1\u03c5\u03c3\u03ae \u03ba\u03b1\u03b9 \u03bc\u03b1\u03cd\u03c1\u03b7, \u03bc\u03b5 \u03c6\u03c4\u03b5\u03c1\u03ac \u03c0\u03bf\u03c5 \u03ac\u03bd\u03bf\u03b9\u03b3\u03b1\u03bd \u03ba\u03b1\u03b9 \u03ad\u03ba\u03bb\u03b5\u03b9\u03bd\u03b1\u03bd \u03c3\u03b1\u03bd \u03b1\u03c1\u03b3\u03cc\u03c2 \u03c7\u03c4\u03cd\u03c0\u03bf\u03c2 \u03ba\u03b1\u03c1\u03b4\u03b9\u03ac\u03c2 \u2014 \u03ba\u03b1\u03b9 \u03c0\u03c1\u03b9\u03bd \u03c0\u03c1\u03bf\u03bb\u03ac\u03b2\u03b5\u03b9 \u03bd\u03b1 \u03c3\u03c4\u03b1\u03bc\u03b1\u03c4\u03ae\u03c3\u03b5\u03b9 \u03c4\u03bf\u03bd \u03b5\u03b1\u03c5\u03c4\u03cc \u03c4\u03bf\u03c5, \u03c4\u03b7\u03bd \u03b1\u03ba\u03bf\u03bb\u03bf\u03c5\u03b8\u03bf\u03cd\u03c3\u03b5 \u03bc\u03ad\u03c3\u03b1 \u03c3\u03c4\u03b1 \u03b4\u03ad\u03bd\u03c4\u03c1\u03b1.\n\n\u039c\u03cc\u03bd\u03bf \u03bb\u03af\u03b3\u03b1 \u03b2\u03ae\u03bc\u03b1\u03c4\u03b1 \u03b1\u03ba\u03cc\u03bc\u03b1, \u03b5\u03af\u03c0\u03b5 \u03c3\u03c4\u03bf\u03bd \u03b5\u03b1\u03c5\u03c4\u03cc \u03c4\u03bf\u03c5. \u039c\u03cc\u03bd\u03bf \u03bd\u03b1 \u03b4\u03c9 \u03c0\u03bf\u03cd \u03c0\u03b7\u03b3\u03b1\u03af\u03bd\u03b5\u03b9.\n\n\u03a3\u03c4\u03bf \u03c0\u03af\u03c3\u03c9 \u03bc\u03ad\u03c1\u03bf\u03c2 \u03c4\u03b7\u03c2 \u03bf\u03bc\u03ac\u03b4\u03b1\u03c2, \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03b5\u03af\u03c7\u03b5 \u03b5\u03c0\u03af\u03c3\u03b7\u03c2 \u03c3\u03c4\u03b1\u03bc\u03b1\u03c4\u03ae\u03c3\u03b5\u03b9. \u039a\u03bf\u03b9\u03c4\u03bf\u03cd\u03c3\u03b5 \u03c4\u03b7 \u03c3\u03c4\u03ad\u03b3\u03b7 \u03c4\u03bf\u03c5 \u03b4\u03ac\u03c3\u03bf\u03c5\u03c2, \u03c4\u03bf\u03bd \u03c4\u03c1\u03cc\u03c0\u03bf \u03c0\u03bf\u03c5 \u03c4\u03b1 \u03ba\u03bb\u03b1\u03b4\u03b9\u03ac \u03c0\u03bb\u03ad\u03ba\u03bf\u03bd\u03c4\u03b1\u03bd \u03c3\u03b1\u03bd \u03c4\u03cc\u03be\u03b1 \u03ba\u03b1\u03b8\u03b5\u03b4\u03c1\u03b9\u03ba\u03bf\u03cd \u03bd\u03b1\u03bf\u03cd, \u03c4\u03bf\u03bd \u03c4\u03c1\u03cc\u03c0\u03bf \u03c0\u03bf\u03c5 \u03c4\u03bf \u03c6\u03c9\u03c2 \u03ad\u03c0\u03b5\u03c6\u03c4\u03b5 \u03c3\u03b5 \u03bc\u03b1\u03ba\u03c1\u03b9\u03ad\u03c2 \u03c3\u03ba\u03bf\u03bd\u03b9\u03c3\u03bc\u03ad\u03bd\u03b5\u03c2 \u03b4\u03ad\u03c3\u03bc\u03b5\u03c2. \u0388\u03b2\u03b3\u03b1\u03bb\u03b5 \u03c4\u03bf \u03c3\u03b7\u03bc\u03b5\u03b9\u03c9\u03bc\u03b1\u03c4\u03ac\u03c1\u03b9\u03cc \u03c4\u03bf\u03c5 \u03ba\u03b1\u03b9 \u03ac\u03c1\u03c7\u03b9\u03c3\u03b5 \u03bd\u03b1 \u03c3\u03c7\u03b5\u03b4\u03b9\u03ac\u03b6\u03b5\u03b9 \u2014 \u03c4\u03cc\u03c3\u03bf \u03b1\u03c0\u03bf\u03c1\u03c1\u03bf\u03c6\u03b7\u03bc\u03ad\u03bd\u03bf\u03c2 \u03c0\u03bf\u03c5 \u03b4\u03b5\u03bd \u03c0\u03c1\u03cc\u03c3\u03b5\u03be\u03b5 \u03c4\u03b9\u03c2 \u03c6\u03c9\u03bd\u03ad\u03c2 \u03c4\u03c9\u03bd \u03c3\u03c5\u03bc\u03bc\u03b1\u03b8\u03b7\u03c4\u03ce\u03bd \u03c4\u03bf\u03c5 \u03bd\u03b1 \u03be\u03b5\u03b8\u03c9\u03c1\u03b9\u03ac\u03b6\u03bf\u03c5\u03bd, \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c0\u03bf\u03c5 \u03b4\u03b5\u03bd \u03ad\u03bc\u03b5\u03b9\u03bd\u03b5 \u03c4\u03af\u03c0\u03bf\u03c4\u03b1 \u03ac\u03bb\u03bb\u03bf \u03c0\u03b1\u03c1\u03ac \u03bf \u03ac\u03bd\u03b5\u03bc\u03bf\u03c2.\n\n\u038c\u03c4\u03b1\u03bd \u03bf\u03b9 \u03b4\u03ac\u03c3\u03ba\u03b1\u03bb\u03bf\u03b9 \u03c4\u03bf \u03ba\u03b1\u03c4\u03ac\u03bb\u03b1\u03b2\u03b1\u03bd, \u03bf \u03bf\u03c5\u03c1\u03b1\u03bd\u03cc\u03c2 \u03b5\u03af\u03c7\u03b5 \u03b3\u03af\u03bd\u03b5\u03b9 \u03b2\u03b1\u03b8\u03cd \u03bc\u03c0\u03bb\u03b5 \u03c4\u03bf\u03c5 \u03c3\u03bf\u03cd\u03c1\u03bf\u03c5\u03c0\u03bf\u03c5.\n\n\u0392\u03b1\u03b8\u03b9\u03ac \u03bc\u03ad\u03c3\u03b1 \u03c3\u03c4\u03bf \u03b4\u03ac\u03c3\u03bf\u03c2, \u03bf \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ba\u03b1\u03b8\u03cc\u03c4\u03b1\u03bd \u03c3\u03b5 \u03bc\u03b9\u03b1 \u03b2\u03c1\u03cd\u03b1 \u03c0\u03ad\u03c4\u03c1\u03b1. \u0397 \u03c0\u03b5\u03c4\u03b1\u03bb\u03bf\u03cd\u03b4\u03b1 \u03b5\u03af\u03c7\u03b5 \u03c7\u03b1\u03b8\u03b5\u03af. \u03a4\u03bf \u03bc\u03bf\u03bd\u03bf\u03c0\u03ac\u03c4\u03b9 \u03b4\u03b5\u03bd \u03c6\u03b1\u03b9\u03bd\u03cc\u03c4\u03b1\u03bd \u03c0\u03bf\u03c5\u03b8\u03b5\u03bd\u03ac. \u03a4\u03b1 \u03b4\u03ad\u03bd\u03c4\u03c1\u03b1 \u03ad\u03bc\u03bf\u03b9\u03b1\u03b6\u03b1\u03bd \u03af\u03b4\u03b9\u03b1 \u03b1\u03c0\u03cc \u03ba\u03ac\u03b8\u03b5 \u03ba\u03b1\u03c4\u03b5\u03cd\u03b8\u03c5\u03bd\u03c3\u03b7.\n\n\u0388\u03bd\u03b1 \u03ba\u03bb\u03b1\u03b4\u03af \u03ad\u03c3\u03c0\u03b1\u03c3\u03b5. \u0393\u03cd\u03c1\u03b9\u03c3\u03b5 \u03b1\u03c0\u03cc\u03c4\u03bf\u03bc\u03b1.\n\n\u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03be\u03b5\u03c0\u03c1\u03cc\u03b2\u03b1\u03bb\u03b5 \u03c0\u03af\u03c3\u03c9 \u03b1\u03c0\u03cc \u03bc\u03b9\u03b1 \u03c6\u03b1\u03c1\u03b4\u03b9\u03ac \u03b2\u03b5\u03bb\u03b1\u03bd\u03b9\u03b4\u03b9\u03ac, \u03bc\u03b5 \u03c4\u03bf \u03c3\u03b7\u03bc\u03b5\u03b9\u03c9\u03bc\u03b1\u03c4\u03ac\u03c1\u03b9\u03bf \u03b1\u03ba\u03cc\u03bc\u03b1 \u03c3\u03c4\u03bf \u03c7\u03ad\u03c1\u03b9 \u03ba\u03b1\u03b9 \u03c4\u03b1 \u03b3\u03c5\u03b1\u03bb\u03b9\u03ac \u03bb\u03af\u03b3\u03bf \u03c3\u03c4\u03c1\u03b1\u03b2\u03ac.\n\n\u00ab\u03a9\u00bb, \u03b5\u03af\u03c0\u03b5 \u03bf \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2. \u00ab\u0395\u03c3\u03cd \u03b5\u03af\u03c3\u03b1\u03b9.\u00bb\n\n\u00ab\u03a9\u00bb, \u03b5\u03af\u03c0\u03b5 \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2. \u00ab\u039f \u03b1\u03c0\u03b5\u03c1\u03af\u03c3\u03ba\u03b5\u03c0\u03c4\u03bf\u03c2.\u00bb\n\n\u00ab\u039c\u03b5 \u03c3\u03c5\u03b3\u03c7\u03c9\u03c1\u03b5\u03af\u03c2; \u03a7\u03ac\u03b8\u03b7\u03ba\u03b5\u03c2 \u03ba\u03b9 \u03b5\u03c3\u03cd.\u00bb\n\n\u00ab\u0388\u03c7\u03c9 \u03c0\u03c1\u03bf\u03c3\u03c9\u03c1\u03b9\u03bd\u03ac \u03b1\u03c0\u03bf\u03c0\u03c1\u03bf\u03c3\u03b1\u03bd\u03b1\u03c4\u03bf\u03bb\u03b9\u03c3\u03c4\u03b5\u03af. \u03a5\u03c0\u03ac\u03c1\u03c7\u03b5\u03b9 \u03b4\u03b9\u03b1\u03c6\u03bf\u03c1\u03ac.\u00bb\n\n\u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ac\u03bd\u03bf\u03b9\u03be\u03b5 \u03c4\u03bf \u03c3\u03c4\u03cc\u03bc\u03b1 \u03c4\u03bf\u03c5 \u2014 \u03ba\u03b1\u03b9 \u03bc\u03b5\u03c4\u03ac \u03c4\u03bf \u03ad\u03ba\u03bb\u03b5\u03b9\u03c3\u03b5 \u03c0\u03ac\u03bb\u03b9. \u0394\u03b5\u03bd \u03ae\u03c4\u03b1\u03bd \u03b7 \u03c3\u03c4\u03b9\u03b3\u03bc\u03ae.\n\n\u00ab\u0395\u03bd\u03c4\u03ac\u03be\u03b5\u03b9\u00bb, \u03b5\u03af\u03c0\u03b5. \u00ab\u03a0\u03c1\u03bf\u03c2 \u03c4\u03bf \u03c0\u03b1\u03c1\u03cc\u03bd, \u03b1\u03c2 \u03b2\u03bf\u03b7\u03b8\u03ae\u03c3\u03bf\u03c5\u03bc\u03b5 \u03bf \u03ad\u03bd\u03b1\u03c2 \u03c4\u03bf\u03bd \u03ac\u03bb\u03bb\u03bf\u03bd. \u039c\u03b5\u03c4\u03ac \u03c7\u03c9\u03c1\u03af\u03b6\u03bf\u03c5\u03bc\u03b5 \u03b4\u03c1\u03cc\u03bc\u03bf\u03c5\u03c2 \u03ba\u03b1\u03b9 \u03ba\u03ac\u03bd\u03bf\u03c5\u03bc\u03b5 \u03cc\u03c4\u03b9 \u03b1\u03c5\u03c4\u03cc \u03b4\u03b5\u03bd \u03c3\u03c5\u03bd\u03ad\u03b2\u03b7 \u03c0\u03bf\u03c4\u03ad. \u03a3\u03c5\u03bc\u03c6\u03c9\u03bd\u03af\u03b1;\u00bb\n\n\u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03b1\u03bd\u03ad\u03b2\u03b1\u03c3\u03b5 \u03c4\u03b1 \u03b3\u03c5\u03b1\u03bb\u03b9\u03ac \u03c4\u03bf\u03c5. \u00ab\u03a3\u03c5\u03bc\u03c6\u03c9\u03bd\u03af\u03b1. \u03a4\u03b9 \u03c0\u03c1\u03bf\u03c4\u03b5\u03af\u03bd\u03b5\u03b9\u03c2;\u00bb\n\n\u00ab\u0392\u03c1\u03af\u03c3\u03ba\u03bf\u03c5\u03bc\u03b5 \u03ad\u03bd\u03b1 \u03c0\u03bf\u03c4\u03ac\u03bc\u03b9 \u03ba\u03b1\u03b9 \u03c4\u03bf \u03b1\u03ba\u03bf\u03bb\u03bf\u03c5\u03b8\u03bf\u03cd\u03bc\u03b5 \u03ba\u03b1\u03c4\u03b7\u03c6\u03bf\u03c1\u03b9\u03ba\u03ac. \u03a4\u03bf \u03bd\u03b5\u03c1\u03cc \u03c0\u03ac\u03bd\u03c4\u03b1 \u03bf\u03b4\u03b7\u03b3\u03b5\u03af \u03c3\u03c4\u03b7\u03bd \u03c0\u03cc\u03bb\u03b7.\u00bb\n\n\u00ab\u0391\u03c5\u03c4\u03cc \u03b5\u03af\u03bd\u03b1\u03b9... \u03c3\u03c4\u03b7\u03bd \u03c0\u03c1\u03b1\u03b3\u03bc\u03b1\u03c4\u03b9\u03ba\u03cc\u03c4\u03b7\u03c4\u03b1 \u03bc\u03b9\u03b1 \u03ba\u03b1\u03bb\u03ae \u03b9\u03b4\u03ad\u03b1\u00bb, \u03b5\u03af\u03c0\u03b5 \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2, \u03bb\u03af\u03b3\u03bf \u03ad\u03ba\u03c0\u03bb\u03b7\u03ba\u03c4\u03bf\u03c2.\n\n\u00ab\u039c\u03b7\u03bd \u03b1\u03ba\u03bf\u03cd\u03c2 \u03c4\u03cc\u03c3\u03bf \u03c3\u03bf\u03ba\u03b1\u03c1\u03b9\u03c3\u03bc\u03ad\u03bd\u03bf\u03c2.\u00bb \u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ad\u03b2\u03b3\u03b1\u03bb\u03b5 \u03b1\u03c0\u03cc \u03c4\u03bf \u03c3\u03b1\u03ba\u03af\u03b4\u03b9\u03cc \u03c4\u03bf\u03c5 \u03ad\u03bd\u03b1\u03bd \u03c6\u03b1\u03ba\u03cc. \u03a4\u03bf\u03bd \u03ac\u03bd\u03b1\u03c8\u03b5 \u03ba\u03b1\u03b9 \u03bc\u03b9\u03b1 \u03b6\u03b5\u03c3\u03c4\u03ae \u03b4\u03ad\u03c3\u03bc\u03b7 \u03c6\u03c9\u03c4\u03cc\u03c2 \u03ad\u03ba\u03bf\u03c8\u03b5 \u03c4\u03bf \u03c3\u03ba\u03bf\u03c4\u03ac\u03b4\u03b9.\n\n\u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03c4\u03bf\u03bd \u03ba\u03bf\u03af\u03c4\u03b1\u03be\u03b5. \u00ab\u0388\u03c6\u03b5\u03c1\u03b5\u03c2 \u03c6\u03b1\u03ba\u03cc \u03c3\u03b5 \u03b5\u03ba\u03b4\u03c1\u03bf\u03bc\u03ae \u03c3\u03c4\u03bf \u03b4\u03ac\u03c3\u03bf\u03c2;\u00bb\n\n\u00ab\u03a0\u03b1\u03bd\u03c4\u03bf\u03cd \u03c0\u03b1\u03af\u03c1\u03bd\u03c9 \u03c6\u03b1\u03ba\u03cc. \u03a0\u03bf\u03c4\u03ad \u03b4\u03b5\u03bd \u03be\u03ad\u03c1\u03b5\u03b9\u03c2.\u00bb\n\n\u0393\u03b9\u03b1 \u03c0\u03c1\u03ce\u03c4\u03b7 \u03c6\u03bf\u03c1\u03ac \u03c0\u03bf\u03c5 \u03b8\u03c5\u03bc\u03cc\u03c4\u03b1\u03bd \u03ba\u03b1\u03bd\u03b5\u03af\u03c2 \u03c4\u03bf\u03c5\u03c2, \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03c7\u03b1\u03bc\u03bf\u03b3\u03ad\u03bb\u03b1\u03c3\u03b5 \u03c3\u03b5 \u03ba\u03ac\u03c4\u03b9 \u03c0\u03bf\u03c5 \u03b5\u03af\u03c0\u03b5 \u03bf \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2.\n\n\u039e\u03b5\u03ba\u03af\u03bd\u03b7\u03c3\u03b1\u03bd \u03bc\u03b1\u03b6\u03af \u2014 \u03bf \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ac\u03bd\u03bf\u03b9\u03b3\u03b5 \u03c4\u03bf\u03bd \u03b4\u03c1\u03cc\u03bc\u03bf \u03bc\u03b5 \u03c4\u03bf\u03bd \u03c6\u03b1\u03ba\u03cc, \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03c0\u03bb\u03bf\u03b7\u03b3\u03bf\u03cd\u03c3\u03b5 \u03b1\u03c0\u03cc \u03c4\u03bf\u03bd \u03c7\u03ac\u03c1\u03c4\u03b7 \u03c0\u03bf\u03c5 \u03b5\u03af\u03c7\u03b5 \u03b1\u03c0\u03bf\u03bc\u03bd\u03b7\u03bc\u03bf\u03bd\u03b5\u03cd\u03c3\u03b5\u03b9 \u03c3\u03c4\u03bf \u03bb\u03b5\u03c9\u03c6\u03bf\u03c1\u03b5\u03af\u03bf. \u03a4\u03bf \u03b4\u03ac\u03c3\u03bf\u03c2 \u03c4\u03b7 \u03bd\u03cd\u03c7\u03c4\u03b1 \u03ae\u03c4\u03b1\u03bd \u03b3\u03b5\u03bc\u03ac\u03c4\u03bf \u03ae\u03c7\u03bf\u03c5\u03c2, \u03ba\u03b1\u03b9 \u03ba\u03b1\u03bd\u03b5\u03af\u03c2 \u03b4\u03b5\u03bd \u03b5\u03af\u03c0\u03b5 \u03c0\u03c9\u03c2 \u03c6\u03bf\u03b2\u03cc\u03c4\u03b1\u03bd. \u0391\u03bb\u03bb\u03ac \u03bc\u03b5 \u03ba\u03ac\u03b8\u03b5 \u03b2\u03ae\u03bc\u03b1 \u03c0\u03b5\u03c1\u03c0\u03b1\u03c4\u03bf\u03cd\u03c3\u03b1\u03bd \u03bb\u03af\u03b3\u03bf \u03c0\u03b9\u03bf \u03ba\u03bf\u03bd\u03c4\u03ac \u03bf \u03ad\u03bd\u03b1\u03c2 \u03c3\u03c4\u03bf\u03bd \u03ac\u03bb\u03bb\u03bf\u03bd.\n\n\u039b\u03af\u03b3\u03b7 \u03ce\u03c1\u03b1 \u03b1\u03c1\u03b3\u03cc\u03c4\u03b5\u03c1\u03b1 \u03b2\u03c1\u03ae\u03ba\u03b1\u03bd \u03c4\u03bf \u03c0\u03bf\u03c4\u03ac\u03bc\u03b9, \u03b1\u03ba\u03c1\u03b9\u03b2\u03ce\u03c2 \u03b5\u03ba\u03b5\u03af \u03c0\u03bf\u03c5 \u03c4\u03bf \u03b5\u03af\u03c7\u03b5 \u03c0\u03c1\u03bf\u03b2\u03bb\u03ad\u03c8\u03b5\u03b9 \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2. \u039a\u03ac\u03b8\u03b9\u03c3\u03b1\u03bd \u03c3\u03c4\u03b7\u03bd \u03cc\u03c7\u03b8\u03b7 \u03bd\u03b1 \u03be\u03b5\u03ba\u03bf\u03c5\u03c1\u03b1\u03c3\u03c4\u03bf\u03cd\u03bd.\n\n\u00ab\u03a0\u03b5\u03b9\u03bd\u03ac\u03c9\u00bb, \u03c0\u03b1\u03c1\u03b1\u03b4\u03ad\u03c7\u03c4\u03b7\u03ba\u03b5 \u03bf \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2.\n\n\u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03ac\u03bd\u03bf\u03b9\u03be\u03b5 \u03c4\u03b7\u03bd \u03c4\u03c3\u03ac\u03bd\u03c4\u03b1 \u03c4\u03bf\u03c5 \u03ba\u03b1\u03b9 \u03ad\u03b2\u03b3\u03b1\u03bb\u03b5 \u03b4\u03cd\u03bf \u03bc\u03c0\u03ac\u03c1\u03b5\u03c2 \u03b4\u03b7\u03bc\u03b7\u03c4\u03c1\u03b9\u03b1\u03ba\u03ce\u03bd, \u03ad\u03bd\u03b1 \u03bc\u03ae\u03bb\u03bf \u03ba\u03b1\u03b9 \u03ad\u03bd\u03b1 \u03c3\u03b1\u03ba\u03bf\u03c5\u03bb\u03ac\u03ba\u03b9 \u03b1\u03c0\u03bf\u03be\u03b7\u03c1\u03b1\u03bc\u03ad\u03bd\u03b1 \u03c3\u03cd\u03ba\u03b1. \u0386\u03c0\u03bb\u03c9\u03c3\u03b5 \u03c4\u03b7 \u03bc\u03b9\u03c3\u03ae \u03bc\u03b5\u03c1\u03af\u03b4\u03b1 \u03c7\u03c9\u03c1\u03af\u03c2 \u03bd\u03b1 \u03c0\u03b5\u03b9 \u03bb\u03ad\u03be\u03b7.\n\n\u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03c4\u03bf\u03bd \u03ba\u03bf\u03af\u03c4\u03b1\u03be\u03b5. \u00ab\u0388\u03c6\u03b5\u03c1\u03b5\u03c2 \u03b5\u03c0\u03b9\u03c0\u03bb\u03ad\u03bf\u03bd \u03c6\u03b1\u03b3\u03b7\u03c4\u03cc;\u00bb\n\n\u00ab\u03a0\u03ac\u03bd\u03c4\u03b1 \u03c0\u03b1\u03af\u03c1\u03bd\u03c9 \u03b5\u03c0\u03b9\u03c0\u03bb\u03ad\u03bf\u03bd. \u0393\u03b9\u03b1 \u03ba\u03ac\u03b8\u03b5 \u03b5\u03bd\u03b4\u03b5\u03c7\u03cc\u03bc\u03b5\u03bd\u03bf.\u00bb\n\n\u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03b3\u03ad\u03bb\u03b1\u03c3\u03b5 \u2014 \u03ad\u03bd\u03b1 \u03b1\u03bb\u03b7\u03b8\u03b9\u03bd\u03cc, \u03b6\u03b5\u03c3\u03c4\u03cc \u03b3\u03ad\u03bb\u03b9\u03bf. \u00ab\u0395\u03af\u03bc\u03b1\u03c3\u03c4\u03b5 \u03af\u03b4\u03b9\u03bf\u03b9, \u03be\u03ad\u03c1\u03b5\u03b9\u03c2. \u0395\u03c3\u03cd \u03c3\u03ba\u03ad\u03c6\u03c4\u03b5\u03c3\u03b1\u03b9 \u03bc\u03c0\u03c1\u03bf\u03c3\u03c4\u03ac, \u03b5\u03b3\u03ce \u03b4\u03c1\u03c9 \u03b3\u03c1\u03ae\u03b3\u03bf\u03c1\u03b1. \u03a4\u03bf \u03af\u03b4\u03b9\u03bf \u03c0\u03c1\u03ac\u03b3\u03bc\u03b1, \u03c3\u03c4\u03b7\u03bd \u03bf\u03c5\u03c3\u03af\u03b1. \u0391\u03c0\u03bb\u03ce\u03c2 \u03c3\u03b5 \u03b4\u03b9\u03b1\u03c6\u03bf\u03c1\u03b5\u03c4\u03b9\u03ba\u03ad\u03c2 \u03ba\u03b1\u03c4\u03b5\u03c5\u03b8\u03cd\u03bd\u03c3\u03b5\u03b9\u03c2.\u00bb\n\n\u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03c4\u03bf \u03c3\u03ba\u03ad\u03c6\u03c4\u03b7\u03ba\u03b5. \u00ab\u03a5\u03c0\u03bf\u03b8\u03ad\u03c4\u03c9\u00bb, \u03b5\u03af\u03c0\u03b5 \u03ae\u03c3\u03c5\u03c7\u03b1.\n\n\u039a\u03ac\u03b8\u03b9\u03c3\u03b1\u03bd \u03b4\u03af\u03c0\u03bb\u03b1 \u03c3\u03c4\u03bf \u03c0\u03bf\u03c4\u03ac\u03bc\u03b9 \u03ba\u03b1\u03b9 \u03ad\u03c6\u03b1\u03b3\u03b1\u03bd, \u03ba\u03b1\u03b9 \u03b3\u03b9\u03b1 \u03c0\u03c1\u03ce\u03c4\u03b7 \u03c6\u03bf\u03c1\u03ac \u03bc\u03af\u03bb\u03b7\u03c3\u03b1\u03bd \u03b1\u03bb\u03b7\u03b8\u03b9\u03bd\u03ac \u2014 \u03b3\u03b9\u03b1 \u03c4\u03b1 \u03ac\u03c3\u03c4\u03c1\u03b1 \u03c0\u03ac\u03bd\u03c9 \u03c4\u03bf\u03c5\u03c2, \u03b3\u03b9\u03b1 \u03c4\u03bf \u03b1\u03bd \u03bf\u03b9 \u03c0\u03b5\u03c4\u03b1\u03bb\u03bf\u03cd\u03b4\u03b5\u03c2 \u03b8\u03c5\u03bc\u03bf\u03cd\u03bd\u03c4\u03b1\u03b9 \u03c4\u03b7 \u03b6\u03c9\u03ae \u03c4\u03bf\u03c5\u03c2 \u03c9\u03c2 \u03ba\u03ac\u03bc\u03c0\u03b9\u03b5\u03c2, \u03b3\u03b9\u03b1 \u03c4\u03bf \u03b3\u03b9\u03b1\u03c4\u03af \u03c4\u03b1 \u03c0\u03bf\u03c4\u03ac\u03bc\u03b9\u03b1 \u03ba\u03c5\u03c1\u03c4\u03ce\u03bd\u03bf\u03c5\u03bd \u03c0\u03ac\u03bd\u03c4\u03b1 \u03bc\u03b5 \u03c4\u03bf\u03bd \u03c4\u03c1\u03cc\u03c0\u03bf \u03c0\u03bf\u03c5 \u03ba\u03c5\u03c1\u03c4\u03ce\u03bd\u03bf\u03c5\u03bd.\n\n\u039c\u03b9\u03bb\u03bf\u03cd\u03c3\u03b1\u03bd \u03b1\u03ba\u03cc\u03bc\u03b1 \u03cc\u03c4\u03b1\u03bd \u03bf \u03ba\u03cd\u03c1\u03b9\u03bf\u03c2 \u039d\u03b9\u03ba\u03cc\u03bb\u03b1\u03c2 \u03c4\u03bf\u03c5\u03c2 \u03b2\u03c1\u03ae\u03ba\u03b5, \u03bc\u03b5 \u03c4\u03bf\u03bd \u03c6\u03b1\u03ba\u03cc \u03c4\u03bf\u03c5 \u03bd\u03b1 \u03b1\u03b9\u03c9\u03c1\u03b5\u03af\u03c4\u03b1\u03b9 \u03bc\u03ad\u03c3\u03b1 \u03c3\u03c4\u03b1 \u03b4\u03ad\u03bd\u03c4\u03c1\u03b1 \u03ba\u03b1\u03b9 \u03c4\u03b7 \u03c6\u03c9\u03bd\u03ae \u03c4\u03bf\u03c5 \u03b2\u03c1\u03b1\u03c7\u03bd\u03ae \u03b1\u03c0\u03cc \u03c4\u03bf \u03bd\u03b1 \u03c6\u03c9\u03bd\u03ac\u03b6\u03b5\u03b9 \u03c4\u03b1 \u03bf\u03bd\u03cc\u03bc\u03b1\u03c4\u03ac \u03c4\u03bf\u03c5\u03c2.\n\n\u0391\u03ba\u03bf\u03bb\u03bf\u03cd\u03b8\u03b7\u03c3\u03b1\u03bd \u03b1\u03b3\u03ba\u03b1\u03bb\u03b9\u03ad\u03c2 \u03ba\u03b1\u03b9 \u03b4\u03ac\u03ba\u03c1\u03c5\u03b1 \u03ba\u03b1\u03b9, \u03bd\u03b1\u03b9, \u03ba\u03ac\u03c0\u03bf\u03b9\u03bf\u03c2 \u03b3\u03bf\u03bd\u03b9\u03ba\u03cc\u03c2 \u03b1\u03c0\u03bf\u03ba\u03bb\u03b5\u03b9\u03c3\u03bc\u03cc\u03c2. \u0391\u03bb\u03bb\u03ac \u03bf \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ba\u03b1\u03b9 \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03b4\u03b5\u03bd \u03ad\u03bd\u03bf\u03b9\u03b1\u03b6\u03b5 \u03ba\u03b1\u03b9 \u03c0\u03bf\u03bb\u03cd.\n\n\u0393\u03b9\u03b1\u03c4\u03af \u03ba\u03ac\u03c4\u03b9 \u03b5\u03af\u03c7\u03b5 \u03b1\u03bb\u03bb\u03ac\u03be\u03b5\u03b9 \u03b5\u03ba\u03b5\u03af\u03bd\u03b7 \u03c4\u03b7 \u03bd\u03cd\u03c7\u03c4\u03b1 \u03c3\u03c4\u03bf \u03b4\u03ac\u03c3\u03bf\u03c2.\n\n\u039c\u03b5\u03c4\u03ac \u03b1\u03c0\u03cc \u03b5\u03ba\u03b5\u03af\u03bd\u03b7 \u03c4\u03b7 \u03bd\u03cd\u03c7\u03c4\u03b1, \u03ac\u03c1\u03c7\u03b9\u03c3\u03b1\u03bd \u03bd\u03b1 \u03ba\u03ac\u03b8\u03bf\u03bd\u03c4\u03b1\u03b9 \u03c3\u03c4\u03bf \u03af\u03b4\u03b9\u03bf \u03c4\u03c1\u03b1\u03c0\u03ad\u03b6\u03b9 \u03c3\u03c4\u03bf \u03b3\u03b5\u03cd\u03bc\u03b1. \u039c\u03b5\u03c4\u03ac \u03bd\u03b1 \u03b3\u03c5\u03c1\u03af\u03b6\u03bf\u03c5\u03bd \u03c3\u03c0\u03af\u03c4\u03b9 \u03bc\u03b1\u03b6\u03af. \u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03c4\u03c1\u03b1\u03b2\u03bf\u03cd\u03c3\u03b5 \u03c4\u03bf\u03bd \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7 \u03c3\u03b5 \u03c0\u03b5\u03c1\u03b9\u03c0\u03ad\u03c4\u03b5\u03b9\u03b5\u03c2 \u03c0\u03bf\u03c5 \u03b4\u03b5\u03bd \u03b8\u03b1 \u03c4\u03bf\u03bb\u03bc\u03bf\u03cd\u03c3\u03b5 \u03c0\u03bf\u03c4\u03ad \u03bc\u03cc\u03bd\u03bf\u03c2 \u03c4\u03bf\u03c5. \u039a\u03b1\u03b9 \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03c6\u03c1\u03cc\u03bd\u03c4\u03b9\u03b6\u03b5 \u03ae\u03c3\u03c5\u03c7\u03b1 \u03bd\u03b1 \u03bc\u03b7\u03bd \u03ba\u03b1\u03c4\u03b1\u03bb\u03ae\u03b3\u03bf\u03c5\u03bd \u03c3\u03b5 \u03ba\u03b1\u03c4\u03b1\u03c3\u03c4\u03c1\u03bf\u03c6\u03ae \u03b5\u03ba\u03b5\u03af\u03bd\u03b5\u03c2 \u03bf\u03b9 \u03c0\u03b5\u03c1\u03b9\u03c0\u03ad\u03c4\u03b5\u03b9\u03b5\u03c2.\n\n\u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03ad\u03b3\u03b9\u03bd\u03b5 \u03bf \u03c3\u03bf\u03b2\u03b1\u03c1\u03cc\u03c2 \u2014 \u03c0\u03ac\u03bd\u03c4\u03b1 \u03ad\u03bd\u03b1 \u03b2\u03ae\u03bc\u03b1 \u03bc\u03c0\u03c1\u03bf\u03c3\u03c4\u03ac, \u03c0\u03ac\u03bd\u03c4\u03b1 \u03ad\u03c4\u03bf\u03b9\u03bc\u03bf\u03c2 \u03bc\u03b5 \u03ad\u03bd\u03b1 \u03c3\u03c7\u03ad\u03b4\u03b9\u03bf, \u03bc\u03b9\u03b1 \u03bb\u03cd\u03c3\u03b7, \u03ba\u03b1\u03b9 \u03ad\u03bd\u03b1 \u03c3\u03bd\u03b1\u03ba.\n\n\u039a\u03b1\u03b9 \u03bf \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ad\u03b3\u03b9\u03bd\u03b5 \u03b7 \u03c3\u03c0\u03af\u03b8\u03b1 \u03c0\u03bf\u03c5 \u03ad\u03b2\u03b3\u03b1\u03b6\u03b5 \u03c4\u03bf\u03bd \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7 \u03b1\u03c0\u03cc \u03c4\u03bf \u03ba\u03b5\u03c6\u03ac\u03bb\u03b9 \u03c4\u03bf\u03c5 \u03ba\u03b1\u03b9 \u03c4\u03bf\u03bd \u03ad\u03c6\u03b5\u03c1\u03bd\u03b5 \u03c3\u03c4\u03bf\u03bd \u03ba\u03cc\u03c3\u03bc\u03bf \u2014 \u03c0\u03b9\u03bf \u03b4\u03c5\u03bd\u03b1\u03c4\u03cc, \u03c0\u03b9\u03bf \u03c4\u03bf\u03bb\u03bc\u03b7\u03c1\u03cc, \u03c0\u03b9\u03bf \u03b6\u03c9\u03bd\u03c4\u03b1\u03bd\u03cc \u03b1\u03c0\u03cc \u03cc,\u03c4\u03b9 \u03ae\u03c4\u03b1\u03bd \u03bc\u03cc\u03bd\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03c0\u03bf\u03c4\u03ad.\n\n\u0389\u03c4\u03b1\u03bd \u03c4\u03b5\u03bb\u03b5\u03af\u03c9\u03c2 \u03b4\u03b9\u03b1\u03c6\u03bf\u03c1\u03b5\u03c4\u03b9\u03ba\u03bf\u03af. \u0391\u03c5\u03c4\u03ae \u03ae\u03c4\u03b1\u03bd \u03b7 \u03bf\u03c5\u03c3\u03af\u03b1.\n\n\u039a\u03b1\u03b9 \u03b1\u03c0\u03cc \u03b5\u03ba\u03b5\u03af\u03bd\u03b7 \u03c4\u03b7 \u03bd\u03cd\u03c7\u03c4\u03b1 \u03c3\u03c4\u03bf \u03b4\u03ac\u03c3\u03bf\u03c2, \u03ad\u03b3\u03b9\u03bd\u03b1\u03bd \u03bf\u03b9 \u03ba\u03b1\u03bb\u03cd\u03c4\u03b5\u03c1\u03bf\u03b9 \u03c6\u03af\u03bb\u03bf\u03b9 \u03c3\u03c4\u03bf\u03bd \u03ba\u03cc\u03c3\u03bc\u03bf.\n\n\u03a4\u03ad\u03bb\u03bf\u03c2." }
+  }
+};
+let cardLang = { 1: 'en' };
+let readerStoryId = 1;
+let readerLang = 'en';
+
+// ── Card language toggle ─────────────────────────────────────────────────────
+function setCardLang(storyId, lang, btn) {
+  cardLang[storyId] = lang;
+  const row = btn.closest('.card-lang-toggle');
+  row.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── Read: text reader ────────────────────────────────────────────────────────
+function showStoryText(storyId) {
+  readerStoryId = storyId;
+  readerLang = cardLang[storyId] || 'en';
+  renderStoryText();
+  showPage('story-reader');
+  // sync lang buttons
+  document.getElementById('reader-btn-en').classList.toggle('active', readerLang === 'en');
+  document.getElementById('reader-btn-gr').classList.toggle('active', readerLang === 'gr');
+}
+
+function setReaderLang(lang, btn) {
+  readerLang = lang;
+  const row = btn.closest('.reader-lang-toggle');
+  row.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderStoryText();
+}
+
+function renderStoryText() {
+  const data = storyText[readerStoryId][readerLang];
+  const paras = data.text.split('\n\n').filter(p => p.trim());
+  const body = document.getElementById('story-reader-body');
+  body.innerHTML = '<h2>' + data.title + '</h2>' +
+    paras.map(p => '<p>' + p.trim().replace(/\n/g, ' ') + '</p>').join('');
+  body.scrollTop = 0;
+}
+
+// ── Watch & Listen ───────────────────────────────────────────────────────────
+let walAudio = null;
+let walStoryId = 1;
+let walLang = 'en';
+let walAutoTimer = null;
+
+function showWatchAndListen(storyId) {
+  walStoryId = storyId;
+  walLang = cardLang[storyId] || 'en';
+  // Go to comic
+  showComicFromStory();
+  // Show the WAL bar
+  document.getElementById('wal-bar').classList.remove('hidden');
+  // Sync lang in WAL bar
+  document.getElementById('wal-btn-en').classList.toggle('active', walLang === 'en');
+  document.getElementById('wal-btn-gr').classList.toggle('active', walLang === 'gr');
+  // Load audio
+  walLoadAudio();
+}
+
+function walLoadAudio() {
+  if (walAudio) { walAudio.pause(); walAudio = null; }
+  const src = 'story' + walStoryId + '/story' + walStoryId + '_' + walLang + '.mp3';
+  walAudio = new Audio(src);
+  walAudio.addEventListener('timeupdate', walUpdateProgress);
+  walAudio.addEventListener('ended', () => { walSetPlayIcon(false); });
+  walAudio.addEventListener('canplay', () => { walAudio.play(); walSetPlayIcon(true); });
+  walAudio.addEventListener('error', () => {
+    document.getElementById('wal-time').textContent = 'Audio coming soon';
+  });
+  walUpdateProgress();
+}
+
+function walTogglePlay() {
+  if (!walAudio) return;
+  if (walAudio.paused) { walAudio.play(); walSetPlayIcon(true); }
+  else { walAudio.pause(); walSetPlayIcon(false); }
+}
+
+function walSetPlayIcon(playing) {
+  const btn = document.getElementById('wal-play-btn');
+  btn.innerHTML = playing
+    ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>'
+    : '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+}
+
+function walUpdateProgress() {
+  if (!walAudio) return;
+  const pct = walAudio.duration ? (walAudio.currentTime / walAudio.duration * 100) : 0;
+  document.getElementById('wal-progress-fill').style.width = pct + '%';
+  const fmt = t => isNaN(t) ? '0:00' : Math.floor(t/60) + ':' + String(Math.floor(t%60)).padStart(2,'0');
+  document.getElementById('wal-time').textContent = fmt(walAudio.currentTime) + ' / ' + fmt(walAudio.duration);
+}
+
+function walSeek(e) {
+  if (!walAudio || !walAudio.duration) return;
+  const rect = e.currentTarget.getBoundingClientRect();
+  walAudio.currentTime = ((e.clientX - rect.left) / rect.width) * walAudio.duration;
+}
+
+function walSetLang(lang, btn) {
+  walLang = lang;
+  const row = btn.closest('.wal-lang-toggle');
+  row.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const wasPlaying = walAudio && !walAudio.paused;
+  walLoadAudio();
+  if (!wasPlaying && walAudio) walAudio.pause();
 }
 
 </script>
