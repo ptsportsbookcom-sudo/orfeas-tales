@@ -1565,7 +1565,7 @@ function showPage(name) {
   if (name !== 'comic') {
     const wb = document.getElementById('wal-bar');
     if (wb) wb.classList.add('hidden');
-    if (walAudio) { walAudio.pause(); }
+    walStop();
   }
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
@@ -1857,43 +1857,133 @@ function renderStoryText() {
   body.scrollTop = 0;
 }
 
-// ── Watch & Listen ───────────────────────────────────────────────────────────
-let walAudio = null;
+// ── Watch & Listen — Web Speech API + MP3 fallback ───────────────────────────
 let walStoryId = 1;
 let walLang = 'en';
-let walAutoTimer = null;
+let walAudio = null;          // MP3 path (if file exists)
+let walSpeaking = false;
+let walPaused = false;
+let walParas = [];
+let walParaIdx = 0;
+let walTotalParas = 0;
+
+// Comic page boundaries (paragraph index where each page starts)
+const walPageBoundary = { 1: 0, 2: 6, 3: 12 };
 
 function showWatchAndListen(storyId) {
+  walStop();
   walStoryId = storyId;
   walLang = cardLang[storyId] || 'en';
-  // Go to comic
   showComicFromStory();
-  // Show the WAL bar
   document.getElementById('wal-bar').classList.remove('hidden');
-  // Sync lang in WAL bar
   document.getElementById('wal-btn-en').classList.toggle('active', walLang === 'en');
   document.getElementById('wal-btn-gr').classList.toggle('active', walLang === 'gr');
-  // Load audio
-  walLoadAudio();
-}
-
-function walLoadAudio() {
-  if (walAudio) { walAudio.pause(); walAudio = null; }
+  // Try MP3 first; fall back to Web Speech
   const src = 'story' + walStoryId + '/story' + walStoryId + '_' + walLang + '.mp3';
-  walAudio = new Audio(src);
-  walAudio.addEventListener('timeupdate', walUpdateProgress);
-  walAudio.addEventListener('ended', () => { walSetPlayIcon(false); });
-  walAudio.addEventListener('canplay', () => { walAudio.play(); walSetPlayIcon(true); });
-  walAudio.addEventListener('error', () => {
-    document.getElementById('wal-time').textContent = 'Audio coming soon';
+  const probe = new Audio(src);
+  probe.addEventListener('canplay', () => {
+    // Real MP3 exists — use it
+    walAudio = probe;
+    walAudio.addEventListener('timeupdate', walUpdateMp3Progress);
+    walAudio.addEventListener('ended', () => { walSetPlayIcon(false); walSpeaking = false; });
+    walAudio.play(); walSetPlayIcon(true); walSpeaking = true;
   });
-  walUpdateProgress();
+  probe.addEventListener('error', () => {
+    // No MP3 — use Web Speech API
+    walAudio = null;
+    walStartSpeech();
+  });
 }
 
-function walTogglePlay() {
+// ── Web Speech TTS ────────────────────────────────────────────────────────────
+function walStartSpeech() {
+  if (!window.speechSynthesis) {
+    document.getElementById('wal-time').textContent = 'No TTS available';
+    return;
+  }
+  const data = storyText[walStoryId][walLang];
+  walParas = data.text.split('\n\n').filter(p => p.trim());
+  walTotalParas = walParas.length;
+  walParaIdx = 0;
+  walSpeaking = true;
+  walPaused = false;
+  walSetPlayIcon(true);
+  walSpeakNext();
+}
+
+function walSpeakNext() {
+  if (!walSpeaking || walPaused || walParaIdx >= walTotalParas) {
+    if (walParaIdx >= walTotalParas) { walSetPlayIcon(false); walSpeaking = false; }
+    return;
+  }
+  const u = new SpeechSynthesisUtterance(walParas[walParaIdx]);
+  u.lang = walLang === 'en' ? 'en-GB' : 'el-GR';
+  u.rate = 0.88;
+  u.pitch = 1.05;
+  // Pick best available voice
+  const voices = speechSynthesis.getVoices();
+  const code = walLang === 'en' ? 'en' : 'el';
+  const voice = voices.find(v => v.lang.startsWith(code) && v.localService)
+             || voices.find(v => v.lang.startsWith(code))
+             || null;
+  if (voice) u.voice = voice;
+  u.onend = () => {
+    walParaIdx++;
+    walUpdateSpeechProgress();
+    // Auto-advance comic page
+    const newPage = walParaIdx < walPageBoundary[2] ? 1
+                  : walParaIdx < walPageBoundary[3] ? 2 : 3;
+    if (typeof currentComicPage !== 'undefined' && newPage !== currentComicPage) {
+      goToComicPage(newPage);
+    }
+    walSpeakNext();
+  };
+  u.onerror = () => { walParaIdx++; walSpeakNext(); };
+  speechSynthesis.speak(u);
+}
+
+function walUpdateSpeechProgress() {
+  const pct = walTotalParas ? (walParaIdx / walTotalParas * 100) : 0;
+  document.getElementById('wal-progress-fill').style.width = pct + '%';
+  document.getElementById('wal-time').textContent =
+    'Para ' + walParaIdx + ' / ' + walTotalParas;
+}
+
+// ── MP3 progress (when real file exists) ─────────────────────────────────────
+function walUpdateMp3Progress() {
   if (!walAudio) return;
-  if (walAudio.paused) { walAudio.play(); walSetPlayIcon(true); }
-  else { walAudio.pause(); walSetPlayIcon(false); }
+  const pct = walAudio.duration ? (walAudio.currentTime / walAudio.duration * 100) : 0;
+  document.getElementById('wal-progress-fill').style.width = pct + '%';
+  const fmt = t => isNaN(t) ? '0:00' : Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0');
+  document.getElementById('wal-time').textContent = fmt(walAudio.currentTime)+' / '+fmt(walAudio.duration);
+}
+
+// ── Controls ──────────────────────────────────────────────────────────────────
+function walTogglePlay() {
+  if (walAudio) {
+    // MP3 mode
+    if (walAudio.paused) { walAudio.play(); walSetPlayIcon(true); }
+    else { walAudio.pause(); walSetPlayIcon(false); }
+    return;
+  }
+  // Speech mode
+  if (!walSpeaking) { walStartSpeech(); return; }
+  if (walPaused) {
+    walPaused = false; walSetPlayIcon(true);
+    speechSynthesis.resume();
+  } else {
+    walPaused = true; walSetPlayIcon(false);
+    speechSynthesis.pause();
+  }
+}
+
+function walStop() {
+  if (walAudio) { walAudio.pause(); walAudio = null; }
+  if (window.speechSynthesis) speechSynthesis.cancel();
+  walSpeaking = false; walPaused = false; walParaIdx = 0;
+  walSetPlayIcon(false);
+  document.getElementById('wal-progress-fill').style.width = '0';
+  document.getElementById('wal-time').textContent = '0:00';
 }
 
 function walSetPlayIcon(playing) {
@@ -1901,14 +1991,6 @@ function walSetPlayIcon(playing) {
   btn.innerHTML = playing
     ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>'
     : '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
-}
-
-function walUpdateProgress() {
-  if (!walAudio) return;
-  const pct = walAudio.duration ? (walAudio.currentTime / walAudio.duration * 100) : 0;
-  document.getElementById('wal-progress-fill').style.width = pct + '%';
-  const fmt = t => isNaN(t) ? '0:00' : Math.floor(t/60) + ':' + String(Math.floor(t%60)).padStart(2,'0');
-  document.getElementById('wal-time').textContent = fmt(walAudio.currentTime) + ' / ' + fmt(walAudio.duration);
 }
 
 function walSeek(e) {
@@ -1919,12 +2001,11 @@ function walSeek(e) {
 
 function walSetLang(lang, btn) {
   walLang = lang;
-  const row = btn.closest('.wal-lang-toggle');
-  row.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.closest('.wal-lang-toggle').querySelectorAll('.lang-btn')
+    .forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const wasPlaying = walAudio && !walAudio.paused;
-  walLoadAudio();
-  if (!wasPlaying && walAudio) walAudio.pause();
+  walStop();
+  walStartSpeech();
 }
 
 </script>
