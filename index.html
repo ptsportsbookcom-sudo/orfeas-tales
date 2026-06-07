@@ -1339,6 +1339,8 @@
       <div class="wal-progress-fill" id="wal-progress-fill"></div>
     </div>
     <span class="wal-time" id="wal-time">0:00 / 0:00</span>
+    <button id="wal-sync-btn" onclick="walToggleSync()" title="Auto-advance panels with audio"
+      style="background:rgba(123,47,255,0.3);border:1px solid rgba(123,47,255,0.6);color:white;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;white-space:nowrap;">🔄 Sync ON</button>
     <div class="wal-lang-toggle">
       <button class="lang-btn active" id="wal-btn-en" onclick="walSetLang('en',this)">🇬🇧 EN</button>
       <button class="lang-btn" id="wal-btn-gr" onclick="walSetLang('gr',this)">🇬🇷 GR</button>
@@ -1802,8 +1804,8 @@ function goToComicPage(n) {
   if (reader) reader.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function comicPrev() { if (comicPage > 1) goToComicPage(comicPage - 1); }
-function comicNext() { if (comicPage < COMIC_PAGES) goToComicPage(comicPage + 1); }
+function comicPrev() { if (comicPage > 1) { walSyncPausedUntil = Date.now() + 15000; goToComicPage(comicPage - 1); } }
+function comicNext() { if (comicPage < COMIC_PAGES) { walSyncPausedUntil = Date.now() + 15000; goToComicPage(comicPage + 1); } }
 
 function showComicFromStory() {
   goToComicPage(1);
@@ -1997,12 +1999,32 @@ function walUpdateSpeechProgress() {
 }
 
 // ── MP3 progress (when real file exists) ─────────────────────────────────────
+let walSyncOn = true;
+let walSyncPausedUntil = 0; // timestamp: user manually navigated, pause auto-sync briefly
+
+function walToggleSync() {
+  walSyncOn = !walSyncOn;
+  const btn = document.getElementById('wal-sync-btn');
+  if (btn) {
+    btn.textContent = walSyncOn ? '🔄 Sync ON' : '⏸ Sync OFF';
+    btn.style.background = walSyncOn ? 'rgba(123,47,255,0.3)' : 'rgba(80,80,80,0.3)';
+    btn.style.borderColor = walSyncOn ? 'rgba(123,47,255,0.6)' : 'rgba(120,120,120,0.4)';
+  }
+}
+
 function walUpdateMp3Progress() {
   if (!walAudio) return;
   const pct = walAudio.duration ? (walAudio.currentTime / walAudio.duration * 100) : 0;
   document.getElementById('wal-progress-fill').style.width = pct + '%';
   const fmt = t => isNaN(t) ? '0:00' : Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0');
   document.getElementById('wal-time').textContent = fmt(walAudio.currentTime)+' / '+fmt(walAudio.duration);
+
+  // Auto-advance comic pages in sync with audio
+  if (walSyncOn && walAudio.duration && Date.now() > walSyncPausedUntil) {
+    const progress = walAudio.currentTime / walAudio.duration; // 0 to 1
+    const targetPage = Math.min(COMIC_PAGES, Math.floor(progress * COMIC_PAGES) + 1);
+    if (targetPage !== comicPage) goToComicPage(targetPage);
+  }
 }
 
 // ── Controls ──────────────────────────────────────────────────────────────────
