@@ -1113,10 +1113,15 @@
   display:flex; align-items:center; justify-content:center; flex-shrink:0;
 }
 .wal-progress-wrap {
-  flex:1; min-width:120px; max-width:300px; height:4px;
-  background:rgba(255,255,255,0.15); border-radius:2px; cursor:pointer; position:relative;
+  flex:1; min-width:120px; max-width:300px; height:20px;
+  background:transparent; cursor:pointer; position:relative;
+  display:flex; align-items:center;
 }
-.wal-progress-fill { height:100%; background:#7c3aed; border-radius:2px; width:0; transition:width 0.5s linear; }
+.wal-progress-wrap::before {
+  content:''; position:absolute; left:0; right:0; top:50%; transform:translateY(-50%);
+  height:4px; background:rgba(255,255,255,0.15); border-radius:2px;
+}
+.wal-progress-fill { height:4px; background:#7c3aed; border-radius:2px; width:0; transition:width 0.5s linear; position:relative; z-index:1; }
 .wal-time { font-size:0.78rem; color:rgba(255,255,255,0.6); min-width:80px; text-align:center; }
 .wal-lang-toggle { display:flex; gap:6px; }
 </style>
