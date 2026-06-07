@@ -96,6 +96,42 @@
   .music-btn:hover { background: rgba(123,47,255,0.2); color: var(--text); }
   .music-btn.playing { color: var(--gold); border-color: var(--gold-dim); }
 
+
+  /* ── HEADER NAV LINKS (desktop) ── */
+  .header-nav {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .header-nav-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .header-nav-btn:hover {
+    background: rgba(123,47,255,0.2);
+    color: var(--text);
+    border-color: rgba(123,47,255,0.5);
+  }
+  .header-nav-btn.comic-btn {
+    background: var(--purple);
+    color: white;
+    border-color: var(--purple);
+  }
+  .header-nav-btn.comic-btn:hover { opacity: 0.85; }
+
+  @media (max-width: 540px) {
+    .header-nav { display: none; }
+  }
+
   /* ── SIDE NAV ── */
   .nav-overlay {
     position: fixed;
@@ -986,6 +1022,11 @@
     <span></span><span></span><span></span>
   </button>
   <div class="logo"><span>★</span> ORFEAS TALES <span>★</span></div>
+  <div class="header-nav">
+    <button class="header-nav-btn" onclick="showPage('stories')">Stories</button>
+    <button class="header-nav-btn" onclick="showPage('characters')">Characters</button>
+    <button class="header-nav-btn comic-btn" onclick="showComicFromStory()">📖 Read Comic</button>
+  </div>
   <button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="Toggle background music">🎵</button>
 </header>
 <audio id="bg-music" src="music/The Pyre.mp3" loop preload="none"></audio>
@@ -1028,13 +1069,13 @@
     <h1>A Universe of<br>Adventures Awaits</h1>
     <p>Join Aristotelis and Thetokis on a magical journey through the cosmos. Meet incredible friends, discover hidden worlds, and face the darkness together.</p>
     <div class="hero-buttons">
-      <button class="btn-primary" onclick="showPage('stories')">
+      <button class="btn-primary" onclick="showComicFromStory()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Read the Comic
+      </button>
+      <button class="btn-secondary" onclick="showPage('stories')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         Explore Stories
-      </button>
-      <button class="btn-secondary" onclick="showPage('characters')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-        Meet the Characters
       </button>
     </div>
     <div class="stats-bar">
