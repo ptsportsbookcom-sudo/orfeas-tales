@@ -746,6 +746,49 @@
     100% { transform: translateY(0) rotate(360deg); }
   }
 
+  /* ── STORY COMIC PREVIEW ── */
+  .story-comic-preview {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    margin: 10px 0 12px;
+    height: 160px;
+    border: 2px solid rgba(123,47,255,0.3);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .story-comic-preview:hover { border-color: rgba(123,47,255,0.8); transform: scale(1.01); }
+  .story-comic-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+  .preview-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .story-comic-preview:hover .preview-overlay,
+  .story-comic-preview:active .preview-overlay { opacity: 1; }
+  .preview-overlay span {
+    color: white;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
   /* ══════════════════════════════════════════════
      COMIC READER
   ══════════════════════════════════════════════ */
