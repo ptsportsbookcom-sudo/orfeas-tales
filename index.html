@@ -84,17 +84,24 @@
 
   .music-btn {
     background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 50%;
-    width: 36px; height: 36px;
-    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 0 12px;
+    height: 34px;
+    display: flex; align-items: center; gap: 6px;
     cursor: pointer;
     color: var(--text-dim);
-    font-size: 1rem;
+    font-size: 0.9rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
     transition: all 0.2s;
+    white-space: nowrap;
   }
-  .music-btn:hover { background: rgba(123,47,255,0.2); color: var(--text); }
-  .music-btn.playing { color: var(--gold); border-color: var(--gold-dim); }
+  .music-btn:hover { background: rgba(123,47,255,0.2); color: var(--text); border-color: rgba(123,47,255,0.4); }
+  .music-btn.playing { color: var(--gold); border-color: var(--gold-dim); background: rgba(255,215,0,0.08); }
+  .music-btn .music-label { font-size: 0.72rem; letter-spacing: 0.3px; }
+  @media (max-width: 540px) { .music-btn .music-label { display: none; } .music-btn { padding: 0 8px; } }
 
 
   /* ── HEADER NAV LINKS (desktop) ── */
@@ -1064,13 +1071,13 @@
   <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
-  <div class="logo"><span>★</span> ORFEAS TALES <span>★</span></div>
+  <div class="logo" onclick="showPage('home')" style="cursor:pointer" title="Home"><span>★</span> ORFEAS TALES <span>★</span></div>
   <div class="header-nav">
     <button class="header-nav-btn" onclick="showPage('stories')">Stories</button>
     <button class="header-nav-btn" onclick="showPage('characters')">Characters</button>
     <button class="header-nav-btn comic-btn" onclick="showComicFromStory()">📖 Read Comic</button>
   </div>
-  <button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="Toggle background music">🎵</button>
+  <button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="Toggle background music">🎵 <span class="music-label">Music</span></button>
 </header>
 <audio id="bg-music" src="music/The Pyre.mp3" loop preload="none"></audio>
 
@@ -1621,13 +1628,13 @@ function toggleMusic() {
     bgMusic.pause();
     musicPlaying = false;
     btn.classList.remove('playing');
-    btn.textContent = '🎵';
+    btn.innerHTML = '🎵 <span class="music-label">Music</span>';
     btn.title = 'Play background music';
   } else {
     bgMusic.play().then(() => {
       musicPlaying = true;
       btn.classList.add('playing');
-      btn.textContent = '🔊';
+      btn.innerHTML = '🔊 <span class="music-label">On</span>';
       btn.title = 'Stop background music';
     }).catch(() => {});
   }
