@@ -1896,7 +1896,9 @@ function showWatchAndListen(storyId) {
   });
 }
 
-// ── TTS engine — ResponsiveVoice (Greek) / Web Speech (English) ───────────────
+// ── TTS: Google Translate audio (Greek) / Web Speech (English) ───────────────
+let walChunkAudio = null;  // current chunk Audio element for Greek TTS
+
 function walStartSpeech() {
   const data = storyText[walStoryId][walLang];
   walParas = data.text.split('\n\n').filter(p => p.trim());
@@ -1906,6 +1908,24 @@ function walStartSpeech() {
   walPaused = false;
   walSetPlayIcon(true);
   walSpeakNext();
+}
+
+// Split text into chunks ≤ maxLen chars, breaking at sentence boundaries
+function walChunkText(text, maxLen) {
+  const chunks = [];
+  // Split at punctuation followed by space
+  const parts = text.split(/(?<=[.!?;·,])\s+/);
+  let cur = '';
+  for (const p of parts) {
+    if (cur.length + p.length > maxLen && cur.length > 0) {
+      chunks.push(cur.trim());
+      cur = p;
+    } else {
+      cur += (cur ? ' ' : '') + p;
+    }
+  }
+  if (cur.trim()) chunks.push(cur.trim());
+  return chunks;
 }
 
 function walSpeakNext() {
@@ -1919,7 +1939,6 @@ function walSpeakNext() {
   const onDone = () => {
     walParaIdx++;
     walUpdateSpeechProgress();
-    // Auto-advance comic page
     const newPage = walParaIdx < walPageBoundary[2] ? 1
                   : walParaIdx < walPageBoundary[3] ? 2 : 3;
     if (typeof currentComicPage !== 'undefined' && newPage !== currentComicPage) {
@@ -1928,24 +1947,46 @@ function walSpeakNext() {
     walSpeakNext();
   };
 
-  if (walLang === 'gr' && typeof responsiveVoice !== 'undefined' && responsiveVoice.voiceSupport()) {
-    // ResponsiveVoice — Google neural Greek
-    responsiveVoice.speak(text, 'Greek Female', { rate: 0.88, pitch: 1, onend: onDone });
+  if (walLang === 'gr') {
+    // Greek: use Google Translate TTS audio chunks (no OS voice needed)
+    walSpeakGoogleTTS(text, onDone);
   } else {
-    // Web Speech API — English (or fallback)
-    if (!window.speechSynthesis) { document.getElementById('wal-time').textContent = 'No TTS'; return; }
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = walLang === 'en' ? 'en-GB' : 'el-GR';
-    u.rate = 0.88; u.pitch = 1.05;
-    const voices = speechSynthesis.getVoices();
-    const code = walLang === 'en' ? 'en' : 'el';
-    const voice = voices.find(v => v.lang.startsWith(code) && v.localService)
-               || voices.find(v => v.lang.startsWith(code)) || null;
-    if (voice) u.voice = voice;
-    u.onend = onDone;
-    u.onerror = () => { walParaIdx++; walSpeakNext(); };
-    speechSynthesis.speak(u);
+    // English: Web Speech API
+    walSpeakWebSpeech(text, onDone);
   }
+}
+
+function walSpeakGoogleTTS(paraText, onParaDone) {
+  const chunks = walChunkText(paraText, 180);
+  let idx = 0;
+  function nextChunk() {
+    if (!walSpeaking || idx >= chunks.length) { onParaDone(); return; }
+    const url = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=el&client=tw-ob&q='
+              + encodeURIComponent(chunks[idx]);
+    walChunkAudio = new Audio(url);
+    walChunkAudio.onended = () => { idx++; nextChunk(); };
+    walChunkAudio.onerror = () => { idx++; nextChunk(); };
+    walChunkAudio.play().catch(() => { idx++; nextChunk(); });
+  }
+  nextChunk();
+}
+
+function walSpeakWebSpeech(text, onDone) {
+  if (!window.speechSynthesis) { document.getElementById('wal-time').textContent = 'No TTS'; return; }
+  const go = () => {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-GB'; u.rate = 0.88; u.pitch = 1.05;
+    const voices = speechSynthesis.getVoices();
+    const v = voices.find(v => v.lang.startsWith('en') && v.name.includes('Google'))
+           || voices.find(v => v.lang.startsWith('en')) || null;
+    if (v) u.voice = v;
+    u.onend = onDone;
+    u.onerror = onDone;
+    speechSynthesis.speak(u);
+  };
+  // Wait for voices to load
+  if (speechSynthesis.getVoices().length > 0) { go(); }
+  else { speechSynthesis.onvoiceschanged = go; }
 }
 
 function walUpdateSpeechProgress() {
@@ -1967,26 +2008,27 @@ function walUpdateMp3Progress() {
 // ── Controls ──────────────────────────────────────────────────────────────────
 function walTogglePlay() {
   if (walAudio) {
-    // MP3 mode
+    // Real MP3 mode
     if (walAudio.paused) { walAudio.play(); walSetPlayIcon(true); }
     else { walAudio.pause(); walSetPlayIcon(false); }
     return;
   }
-  // Speech mode
   if (!walSpeaking) { walStartSpeech(); return; }
   if (walPaused) {
     walPaused = false; walSetPlayIcon(true);
-    speechSynthesis.resume();
+    if (walLang === 'gr' && walChunkAudio) walChunkAudio.play();
+    else if (window.speechSynthesis) speechSynthesis.resume();
   } else {
     walPaused = true; walSetPlayIcon(false);
-    speechSynthesis.pause();
+    if (walLang === 'gr' && walChunkAudio) walChunkAudio.pause();
+    else if (window.speechSynthesis) speechSynthesis.pause();
   }
 }
 
 function walStop() {
   if (walAudio) { walAudio.pause(); walAudio = null; }
+  if (walChunkAudio) { walChunkAudio.pause(); walChunkAudio = null; }
   if (window.speechSynthesis) speechSynthesis.cancel();
-  if (typeof responsiveVoice !== 'undefined') responsiveVoice.cancel();
   walSpeaking = false; walPaused = false; walParaIdx = 0;
   walSetPlayIcon(false);
   document.getElementById('wal-progress-fill').style.width = '0';
