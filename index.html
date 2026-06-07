@@ -709,6 +709,265 @@
     50% { transform: translateY(-20px) rotate(180deg); }
     100% { transform: translateY(0) rotate(360deg); }
   }
+
+  /* ══════════════════════════════════════════════
+     COMIC READER
+  ══════════════════════════════════════════════ */
+  #page-comic {
+    background: #f5f0e8;
+    min-height: 100vh;
+    padding-top: 72px;
+  }
+
+  .comic-reader {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 16px 12px 32px;
+  }
+
+  .comic-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: 2px solid #1a0a00;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #1a0a00;
+    cursor: pointer;
+    margin-bottom: 14px;
+    transition: background 0.15s;
+  }
+  .comic-back-btn:hover { background: rgba(26,10,0,0.08); }
+
+  .comic-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .comic-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: #1a0a00;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .comic-lang-toggle { display: flex; gap: 6px; }
+
+  .comic-lang-btn {
+    background: white;
+    border: 2px solid #1a0a00;
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: #1a0a00;
+    transition: all 0.15s;
+  }
+  .comic-lang-btn.active { background: #1a0a00; color: white; }
+
+  .comic-page { display: none; }
+  .comic-page.active { display: block; }
+
+  .comic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    background: #1a0a00;
+    border: 4px solid #1a0a00;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .comic-panel {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background: #222;
+  }
+
+  .comic-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Captions */
+  .panel-caption {
+    position: absolute;
+    left: 0; right: 0;
+    background: rgba(255,255,210,0.93);
+    color: #1a0a00;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 5px 8px;
+    text-align: center;
+    line-height: 1.4;
+    border-top: 2px solid #1a0a00;
+    border-bottom: 2px solid #1a0a00;
+    z-index: 5;
+  }
+  .caption-top { top: 0; border-top: none; }
+  .caption-bottom { bottom: 0; border-bottom: none; }
+
+  /* Speech bubbles */
+  .speech-bubble {
+    position: absolute;
+    background: white;
+    border: 2px solid #1a0a00;
+    border-radius: 10px;
+    padding: 4px 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: #1a0a00;
+    max-width: 52%;
+    line-height: 1.3;
+    z-index: 6;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.35);
+  }
+
+  /* Tail using ::after — diamond approach */
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: white;
+  }
+
+  .left-bubble { top: 6%; left: 4%; }
+  .left-bubble::after {
+    bottom: -5px; left: 10px;
+    transform: rotate(45deg);
+    border-right: 2px solid #1a0a00;
+    border-bottom: 2px solid #1a0a00;
+  }
+
+  .right-bubble { top: 6%; right: 4%; text-align: right; }
+  .right-bubble::after {
+    bottom: -5px; right: 10px;
+    transform: rotate(45deg);
+    border-left: 2px solid #1a0a00;
+    border-bottom: 2px solid #1a0a00;
+  }
+
+  .left-bubble.b2 { top: auto; bottom: 22%; }
+  .left-bubble.b2::after {
+    bottom: auto; top: -5px;
+    border-right: none; border-bottom: none;
+    border-left: 2px solid #1a0a00;
+    border-top: 2px solid #1a0a00;
+  }
+
+  .right-bubble.b2 { top: auto; bottom: 22%; }
+  .right-bubble.b2::after {
+    bottom: auto; top: -5px;
+    border-left: none; border-bottom: none;
+    border-right: 2px solid #1a0a00;
+    border-top: 2px solid #1a0a00;
+  }
+
+  .center-bubble {
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    max-width: 70%;
+    font-size: 0.65rem;
+  }
+  .center-bubble::after {
+    bottom: -5px; left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    border-right: 2px solid #1a0a00;
+    border-bottom: 2px solid #1a0a00;
+  }
+
+  /* Comic navigation */
+  .comic-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding: 0 2px;
+  }
+
+  .comic-nav-btn {
+    background: #1a0a00;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .comic-nav-btn:hover:not(:disabled) { opacity: 0.8; }
+  .comic-nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+
+  .comic-dots { display: flex; gap: 8px; align-items: center; }
+
+  .comic-dot {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: #c0b090;
+    cursor: pointer;
+    border: 2px solid #1a0a00;
+    transition: background 0.2s;
+  }
+  .comic-dot.active { background: #1a0a00; }
+
+  .comic-page-label {
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #7a6040;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  /* Read Comic button on story card */
+  .read-comic-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    background: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .read-comic-btn:hover { opacity: 0.85; }
+
+  @media (max-width: 480px) {
+    .comic-panel { aspect-ratio: 1 / 1; }
+    .speech-bubble { font-size: 0.55rem; padding: 3px 6px; }
+    .panel-caption { font-size: 0.55rem; }
+    .comic-nav-btn { padding: 8px 14px; font-size: 0.75rem; }
+  }
+
 </style>
 </head>
 <body>
@@ -729,7 +988,7 @@
   <div class="logo"><span>★</span> ORFEAS TALES <span>★</span></div>
   <button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="Toggle background music">🎵</button>
 </header>
-<audio id="bg-music" src="The Pyre.mp3" loop preload="none"></audio>
+<audio id="bg-music" src="music/The Pyre.mp3" loop preload="none"></audio>
 
 <!-- SIDE NAV -->
 <div class="nav-overlay" id="navOverlay" onclick="closeNav()"></div>
@@ -746,6 +1005,10 @@
   <button class="nav-link" onclick="showPage('characters')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
     Characters
+  </button>
+  <button class="nav-link" onclick="showPage('comic')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    Comic
   </button>
   <div class="nav-section-label" style="margin-top:12px">Navigation</div>
   <button class="nav-link" onclick="showPage('home')">
@@ -830,8 +1093,12 @@
               </div>
             </div>
           </div>
-          <div class="audio-note" id="audio-note-1">🎵 Add audio file: story1_en.mp3 / story1_gr.mp3 to this folder</div>
+          <div class="audio-note" id="audio-note-1">🎵 Add audio file: story1/story1_en.mp3 / story1/story1_gr.mp3 to this folder</div>
         </div>
+        <button class="read-comic-btn" onclick="showComicFromStory()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Read Comic
+        </button>
       </div>
     </div>
 
@@ -904,6 +1171,159 @@
   <div class="characters-grid" id="chars-grid"></div>
 </div>
 
+<!-- ══════════════════════════════
+     PAGE: COMIC
+══════════════════════════════ -->
+<div class="page" id="page-comic">
+  <div class="comic-reader">
+
+    <button class="comic-back-btn" onclick="showPage('stories')">← Back to Stories</button>
+
+    <div class="comic-header">
+      <div class="comic-title">Episode I — The Day Two Friends Met</div>
+      <div class="comic-lang-toggle">
+        <button class="comic-lang-btn active" onclick="setComicLang('en',this)">🇬🇧 EN</button>
+        <button class="comic-lang-btn" onclick="setComicLang('gr',this)">🇬🇷 GR</button>
+      </div>
+    </div>
+
+    <!-- PAGE 1: Panels 1–4 -->
+    <div class="comic-page active" id="cpage-1">
+      <div class="comic-grid">
+
+        <div class="comic-panel">
+          <img src="story1/panels/panel_01.webp" alt="Panel 1" loading="lazy">
+          <div class="panel-caption caption-top"
+               data-en="Two boys. Same school. Different worlds."
+               data-gr="Δύο αγόρια. Ίδιο σχολείο. Διαφορετικοί κόσμοι.">Two boys. Same school. Different worlds.</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story1/panels/panel_02.png" alt="Panel 2" loading="lazy">
+          <div class="speech-bubble center-bubble"
+               data-en="Class field trip to the forest — tomorrow!"
+               data-gr="Αύριο πηγαίνουμε εκδρομή στο δάσος!">Class field trip to the forest — tomorrow!</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story1/panels/panel_03.png" alt="Panel 3" loading="lazy">
+          <div class="panel-caption caption-top"
+               data-en="A perfect autumn morning. Pine and cool earth."
+               data-gr="Ένα τέλειο φθινοπωρινό πρωί. Μυρωδιά πεύκου.">A perfect autumn morning. Pine and cool earth.</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story1/panels/panel_04.png" alt="Panel 4" loading="lazy">
+          <div class="speech-bubble left-bubble"
+               data-en="Just a little further..."
+               data-gr="Μόνο λίγο ακόμα...">Just a little further...</div>
+          <div class="speech-bubble right-bubble b2"
+               data-en="One more specimen..."
+               data-gr="Ακόμα ένα δείγμα...">One more specimen...</div>
+        </div>
+
+      </div>
+      <div class="comic-page-label" data-en="Page 1 of 3" data-gr="Σελίδα 1 από 3">Page 1 of 3</div>
+    </div>
+
+    <!-- PAGE 2: Panels 5–8 -->
+    <div class="comic-page" id="cpage-2">
+      <div class="comic-grid">
+
+        <div class="comic-panel">
+          <img src="story1/panels/panel_05.png" alt="Panel 5" loading="lazy">
+          <div class="panel-caption caption-top"
+               data-en="Lost. Alone. The forest had swallowed everything."
+               data-gr="Χαμένος. Μόνος. Το δάσος είχε καταπιεί τα πάντα.">Lost. Alone. The forest had swallowed everything.</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story1/panels/panel_06.png" alt="Panel 6" loading="lazy">
+          <div class="speech-bubble left-bubble"
+               data-en='"Oh. It&apos;s you."'
+               data-gr='"Ω. Εσύ είσαι."'>"Oh. It's you."</div>
+          <div class="speech-bubble right-bubble b2"
+               data-en='"Oh. The reckless one."'
+               data-gr='"Ω. Ο απερίσκεπτος."'>"Oh. The reckless one."</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story1/panels/panel_07.png" alt="Panel 7" loading="lazy">
+          <div class="speech-bubble left-bubble"
+               data-en='"You&apos;re lost too!"'
+               data-gr='"Χάθηκες κι εσύ!"'>"You're lost too!"</div>
+          <div class="speech-bubble right-bubble b2"
+               data-en='"I am temporarily disoriented."'
+               data-gr='"Έχω προσωρινά αποπροσανατολιστεί."'>"I am temporarily disoriented."</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story1/panels/panel_08.png" alt="Panel 8" loading="lazy">
+          <div class="speech-bubble left-bubble"
+               data-en='"Find a river — water leads to the city!"'
+               data-gr='"Βρίσκουμε ποτάμι — οδηγεί στην πόλη!"'>"Find a river — water leads to the city!"</div>
+          <div class="speech-bubble right-bubble b2"
+               data-en='"That is... actually a good idea."'
+               data-gr='"Αυτό είναι... στ&apos;αλήθεια καλή ιδέα."'>"That is... actually a good idea."</div>
+        </div>
+
+      </div>
+      <div class="comic-page-label" data-en="Page 2 of 3" data-gr="Σελίδα 2 από 3">Page 2 of 3</div>
+    </div>
+
+    <!-- PAGE 3: Panels 9–12 -->
+    <div class="comic-page" id="cpage-3">
+      <div class="comic-grid">
+
+        <div class="comic-panel">
+          <img src="story1/panels/panel_09.png" alt="Panel 9" loading="lazy">
+          <div class="panel-caption caption-bottom"
+               data-en="Together, they followed the river downstream."
+               data-gr="Μαζί, ακολούθησαν το ποτάμι προς τα κάτω.">Together, they followed the river downstream.</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story1/panels/panel_10.png" alt="Panel 10" loading="lazy">
+          <div class="speech-bubble left-bubble"
+               data-en='"I&apos;m hungry."'
+               data-gr='"Πεινάω."'>"I'm hungry."</div>
+          <div class="speech-bubble right-bubble b2"
+               data-en='"I always pack extra. Just in case."'
+               data-gr='"Πάντα παίρνω επιπλέον. Για κάθε ενδεχόμενο."'>"I always pack extra."</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story1/panels/panel_11.png" alt="Panel 11" loading="lazy">
+          <div class="speech-bubble center-bubble"
+               data-en='"THERE YOU ARE!"'
+               data-gr='"ΕΠΙΤΕΛΟΥΣ ΣΑΣ ΒΡΗΚΑ!"'>"THERE YOU ARE!"</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story1/panels/panel_12.png" alt="Panel 12" loading="lazy">
+          <div class="panel-caption caption-bottom"
+               data-en="From that night on, they were the very best of friends."
+               data-gr="Από εκείνη τη νύχτα, έγιναν οι καλύτεροι φίλοι.">From that night on, they were the very best of friends.</div>
+        </div>
+
+      </div>
+      <div class="comic-page-label" data-en="Page 3 of 3" data-gr="Σελίδα 3 από 3">Page 3 of 3</div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="comic-nav">
+      <button class="comic-nav-btn" id="comic-prev" onclick="comicPrev()" disabled>◀ Prev</button>
+      <div class="comic-dots">
+        <span class="comic-dot active" onclick="goToComicPage(1)"></span>
+        <span class="comic-dot" onclick="goToComicPage(2)"></span>
+        <span class="comic-dot" onclick="goToComicPage(3)"></span>
+      </div>
+      <button class="comic-nav-btn" id="comic-next" onclick="comicNext()">Next ▶</button>
+    </div>
+
+  </div>
+</div>
+
 <!-- CHARACTER MODAL -->
 <div class="modal-overlay" id="charModal" onclick="closeModal(event)">
   <div class="modal" style="position:relative">
@@ -922,23 +1342,23 @@
 <script>
 // ── CHARACTER DATA ──────────────────────────────────────────
 const characters = [
-  { id:1,  name:"Aristotelis", role:"Human Adventurer",    file:"6_Aristotelis.png",  unlocked:true,
+  { id:1,  name:"Aristotelis", role:"Human Adventurer",    file:"characters/6_Aristotelis.png",  unlocked:true,
     desc:"A brave and curious human boy who loves exploring. He is Thetokis's best friend and the heart of the group — always the first to leap into adventure." },
-  { id:2,  name:"Thetokis",    role:"Human Inventor",      file:"7_Thetokis.png",     unlocked:true,
+  { id:2,  name:"Thetokis",    role:"Human Inventor",      file:"characters/7_Thetokis.png",     unlocked:true,
     desc:"A brilliant inventor with wild white hair and round glasses. He builds amazing gadgets and solves problems no one else can — Aristotelis's best friend since childhood." },
-  { id:3,  name:"Rilas",       role:"Gorilla — The Father",file:"8_Rilas.png",         unlocked:false, desc:"" },
-  { id:4,  name:"Rilena",      role:"Gorilla — The Mother",file:"9_Rilena.png",        unlocked:false, desc:"" },
-  { id:5,  name:"Rilaki",      role:"Gorilla Son",         file:"10_Rilaki.png",       unlocked:false, desc:"" },
-  { id:6,  name:"Maimudakis",  role:"Monkey — The Father", file:"11_Maimudakis.png",   unlocked:false, desc:"" },
-  { id:7,  name:"Maimudakena", role:"Monkey — The Mother", file:"12_Maimudakena.png",  unlocked:false, desc:"" },
-  { id:8,  name:"Dakis",       role:"First Son — Older",   file:"13_Dakis.png",        unlocked:false, desc:"" },
-  { id:9,  name:"Akis",        role:"Second Son — Younger",file:"14_Akis.png",         unlocked:false, desc:"" },
-  { id:10, name:"Arxigeas",    role:"Alien — The Father",  file:"1_Arxigeas.png",      unlocked:false, desc:"" },
-  { id:11, name:"Arxigeena",   role:"Alien — The Mother",  file:"2_Arxigeena.png",     unlocked:false, desc:"" },
-  { id:12, name:"Geas",        role:"Twin Son — Older",    file:"3_Geas.png",          unlocked:false, desc:"" },
-  { id:13, name:"Eas",         role:"Twin Son — Younger",  file:"4_Eas.png",           unlocked:false, desc:"" },
-  { id:14, name:"Geena",       role:"The Daughter",        file:"5_Geena.png",         unlocked:false, desc:"" },
-  { id:15, name:"Kakeas",      role:"The Villain",         file:"15_Kakeas.png",       unlocked:false, villain:true,
+  { id:3,  name:"Rilas",       role:"Gorilla — The Father",file:"characters/8_Rilas.png",         unlocked:false, desc:"" },
+  { id:4,  name:"Rilena",      role:"Gorilla — The Mother",file:"characters/9_Rilena.png",        unlocked:false, desc:"" },
+  { id:5,  name:"Rilaki",      role:"Gorilla Son",         file:"characters/10_Rilaki.png",       unlocked:false, desc:"" },
+  { id:6,  name:"Maimudakis",  role:"Monkey — The Father", file:"characters/11_Maimudakis.png",   unlocked:false, desc:"" },
+  { id:7,  name:"Maimudakena", role:"Monkey — The Mother", file:"characters/12_Maimudakena.png",  unlocked:false, desc:"" },
+  { id:8,  name:"Dakis",       role:"First Son — Older",   file:"characters/13_Dakis.png",        unlocked:false, desc:"" },
+  { id:9,  name:"Akis",        role:"Second Son — Younger",file:"characters/14_Akis.png",         unlocked:false, desc:"" },
+  { id:10, name:"Arxigeas",    role:"Alien — The Father",  file:"characters/1_Arxigeas.png",      unlocked:false, desc:"" },
+  { id:11, name:"Arxigeena",   role:"Alien — The Mother",  file:"characters/2_Arxigeena.png",     unlocked:false, desc:"" },
+  { id:12, name:"Geas",        role:"Twin Son — Older",    file:"characters/3_Geas.png",          unlocked:false, desc:"" },
+  { id:13, name:"Eas",         role:"Twin Son — Younger",  file:"characters/4_Eas.png",           unlocked:false, desc:"" },
+  { id:14, name:"Geena",       role:"The Daughter",        file:"characters/5_Geena.png",         unlocked:false, desc:"" },
+  { id:15, name:"Kakeas",      role:"The Villain",         file:"characters/15_Kakeas.png",       unlocked:false, villain:true,
     desc:"" },
 ];
 
@@ -1011,7 +1431,7 @@ let isPlaying = false;
 
 // Audio file paths — add your mp3 files to the same folder
 const audioFiles = {
-  1: { en: 'story1_en.mp3', gr: 'story1_gr.mp3' }
+  1: { en: 'story1/story1_en.mp3', gr: 'story1/story1_gr.mp3' }
 };
 
 function setLang(storyId, lang, btn) {
@@ -1049,7 +1469,7 @@ function togglePlay(storyId) {
       isPlaying = true;
       updatePlayBtn(storyId, true);
     }).catch(() => {
-      document.getElementById('audio-note-' + storyId).textContent = '⚠️ Audio file not found. Add story1_en.mp3 / story1_gr.mp3 to this folder.';
+      document.getElementById('audio-note-' + storyId).textContent = '⚠️ Audio file not found. Add story1/story1_en.mp3 / story1/story1_gr.mp3 to this folder.';
       document.getElementById('audio-note-' + storyId).style.display = 'block';
     });
   } else {
@@ -1164,6 +1584,49 @@ function toggleMusic() {
   resize();
   requestAnimationFrame(draw);
 })();
+
+// ── COMIC READER ─────────────────────────────────────────────
+let comicPage = 1;
+const COMIC_PAGES = 3;
+let comicLang = 'en';
+
+function setComicLang(lang, btn) {
+  comicLang = lang;
+  document.querySelectorAll('.comic-lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.textContent = (lang === 'gr') ? el.dataset.gr : el.dataset.en;
+  });
+}
+
+function goToComicPage(n) {
+  for (let i = 1; i <= COMIC_PAGES; i++) {
+    const pg = document.getElementById('cpage-' + i);
+    if (pg) pg.classList.remove('active');
+  }
+  const target = document.getElementById('cpage-' + n);
+  if (target) target.classList.add('active');
+  comicPage = n;
+  document.querySelectorAll('.comic-dot').forEach((d, i) => {
+    d.classList.toggle('active', i + 1 === n);
+  });
+  const prev = document.getElementById('comic-prev');
+  const next = document.getElementById('comic-next');
+  if (prev) prev.disabled = (n === 1);
+  if (next) next.disabled = (n === COMIC_PAGES);
+  const reader = document.querySelector('#page-comic .comic-reader');
+  if (reader) reader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function comicPrev() { if (comicPage > 1) goToComicPage(comicPage - 1); }
+function comicNext() { if (comicPage < COMIC_PAGES) goToComicPage(comicPage + 1); }
+
+function showComicFromStory() {
+  goToComicPage(1);
+  showPage('comic');
+}
+
 </script>
 </body>
 </html>
+        
