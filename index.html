@@ -1689,7 +1689,7 @@ const characters = [
     desc:"A brave and curious human boy who loves exploring. He is Theotokis's best friend and the heart of the group — always the first to leap into adventure." },
   { id:2,  name:"Theotokis",   role:"Child Prodigy",       file:"characters/7_Thetokis.png",     unlocked:true,
     desc:"The smartest kid around — Theotokis thinks faster, solves problems quicker, and always knows what to do. He is Aristotelis's best friend and the brains behind every adventure." },
-  { id:3,  name:"Rilas",       role:"Gorilla — The Escape Artist",file:"characters/8_Rilas.png",   unlocked:true,
+  { id:3,  name:"Rilas",       role:"Gorilla — The Escape Artist",file:"characters/rillas.png",   unlocked:true,
     desc:"Rillas is the friendliest gorilla you'll ever meet. Trapped in a zoo for years, he secretly taught himself to speak by listening to humans — and the first thing he did with that skill was make two best friends. He loves bananas, tall trees, and a very clever plan." },
   { id:4,  name:"Rilena",      role:"Gorilla — The Mother",file:"characters/9_Rilena.png",        unlocked:false, desc:"" },
   { id:5,  name:"Rilaki",      role:"Gorilla Son",         file:"characters/10_Rilaki.png",       unlocked:false, desc:"" },
@@ -1951,10 +1951,7 @@ function setComicLang(lang, btn) {
 }
 
 function goToComicPage(n) {
-  for (let i = 1; i <= COMIC_PAGES; i++) {
-    const pg = document.getElementById(comicPageIdFn(i));
-    if (pg) pg.classList.remove('active');
-  }
+  document.querySelectorAll('.comic-page').forEach(p => p.classList.remove('active'));
   const target = document.getElementById(comicPageIdFn(n));
   if (target) {
     target.classList.add('active');
