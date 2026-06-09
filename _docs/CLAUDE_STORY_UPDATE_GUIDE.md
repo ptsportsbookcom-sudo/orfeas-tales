@@ -13,7 +13,8 @@ Use this guide whenever adding or updating stories on Orfeas Tales.
 
 - Main website file: `index.html`
 - Story folders: `story1/`, `story2/`, then `story3/`, etc.
-- Story panels: `storyX/panels/panel_01.png`, `panel_02.png`, etc.
+- Story panels source files: `storyX/panels/panel_01.png`, `panel_02.png`, etc.
+- Website panel files: compressed WebP versions, e.g. `storyX/panels/panel_01.webp`.
 - Story text: `storyX/storyX_en.txt` and `storyX/storyX_gr.txt`
 - Story audio: `storyX/storyX_en.mp3` and `storyX/storyX_gr.mp3`
 - Characters: `characters/`
@@ -31,8 +32,11 @@ story3/
   story3_gr.mp3
   panels/
     panel_01.png
+    panel_01.webp
     panel_02.png
+    panel_02.webp
     panel_03.png
+    panel_03.webp
 ```
 
 Use two-digit panel names:
@@ -69,8 +73,10 @@ When adding a story, update these areas:
 - Use the same visual style as Stories 1 and 2.
 - Use `_docs/CHARACTERS.md` for exact character descriptions.
 - Always use the correct character reference workflow from `_docs/CHARACTERS.md`.
-- New panels should be compressed before publishing when possible.
-- If adding `<img>` tags manually, include:
+- Keep original PNGs as source/reference files when useful.
+- Publish compressed WebP files in `index.html` for website loading.
+- New panels should be compressed before publishing.
+- If adding `<img>` tags manually, use the `.webp` path and include:
 
 ```html
 loading="lazy" decoding="async"
