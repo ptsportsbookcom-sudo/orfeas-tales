@@ -114,6 +114,8 @@ After every story update, check:
 - English and Greek toggles work.
 - Read mode opens the right story.
 - Watch & Listen opens the right comic.
+- Mobile fullscreen Watch & Listen can enter and exit normally.
+- Browser Back/Forward works between Home, Stories, Characters, Read, and Watch & Listen.
 - Prev/Next comic navigation works.
 - Audio plays in English and Greek.
 - Characters page still loads.
