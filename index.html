@@ -2271,20 +2271,20 @@ function showWatchAndListen(storyId) {
   const src = 'story' + walStoryId + '/story' + walStoryId + '_' + walLang + '.mp3';
   const probe = new Audio(src);
   probe.addEventListener('canplay', () => {
-    // Real MP3 exists   use it
+    // Real MP3 exists  — use it
     walAudio = probe;
     walAudio.addEventListener('timeupdate', walUpdateMp3Progress);
     walAudio.addEventListener('ended', () => { walSetPlayIcon(false); walSpeaking = false; });
     walAudio.play(); walSetPlayIcon(true); walSpeaking = true;
   });
   probe.addEventListener('error', () => {
-    // No MP3   use Web Speech API
+    // No MP3  — use Web Speech API
     walAudio = null;
     walartSpeech();
   });
 }
 
-// % %  TTS: Google Translate audio (Greek) / Web Speech (English) % % % % % % % % % % % % % % % 
+// %% TTS: Google Translate audio (Greek) / Web Speech (English) %%%%%%%%%%%%%%%
 let walChunkAudio = null;  // current chunk Audio element for Greek TTS
 
 function walStartSpeech() {
@@ -2302,7 +2302,7 @@ function walStartSpeech() {
 function walChunkText(text, maxLen) {
   const chunks = [];
   // Split at punctuation followed by space
-  const parts = text.split(/(?<=[.!?;�,])\s[ ]+/);
+  const parts = text.split(/(?<=[.!?;·,])\s+/);
   let cur = '';
   for (const p of parts) {
     if (cur.length + p.length > maxLen && cur.length > 0) {
@@ -2383,15 +2383,15 @@ function walUpdateSpeechProgress() {
     'Para ' + walParaIdx + ' / ' + walTotalParas;
 }
 
-// % %  MP3 progress (when real file exists) % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % lSyncPausedUntil = 0; // timestamp: user manually navigated, pause auto-sync briefly
+// %% MP3 progress (when real file exists) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%lSyncPausedUntil = 0; // timestamp: user manually navigated, pause auto-sync briefly
 
 function walToggleSync() {
   walSyncOn = !walSyncOn;
   const btn = document.getElementById('wal-sync-btn');
   if (btn) {
-    btn.textContent = walSyncOn ? '�=� Sync ON' : '#� Sync OFF';
+    btn.textContent = walSyncOn ? '🔄 Sync ON' : '⏸ Sync OFF';
     btn.style.background = walSyncOn ? 'rgba(123,47,255,0.3)' : 'rgba(80,80,80,0.3)';
-    btn.style.borderColor = walSyncOn ? 'a(123,47,255,0.6)' : 'rgba(120,120,120,0.4)';
+    btn.style.borderColor = walSyncOn ? 'rgba(123,47,255,0.6)' : 'rgba(120,120,120,0.4)';
   }
 }
 
@@ -2410,7 +2410,7 @@ function walUpdateMp3Progress() {
   }
 }
 
-// % %  Controls % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+// %% Controls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function walTogglePlay() {
   if (walAudio) {
     // Real MP3 mode
