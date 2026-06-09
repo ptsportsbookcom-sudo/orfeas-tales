@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Orfeas Tales</title>
+<meta name="description" content="Orfeas Tales is a bilingual children's storybook website with English and Greek comics, narration, and character adventures made for Orfeas.">
+<meta name="theme-color" content="#08081f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Orfeas Tales">
+<meta property="og:description" content="Bilingual storybook comics in English and Greek, with narration, character adventures, and a growing world made for Orfeas.">
+<meta property="og:url" content="https://orfeas-tales.vercel.app/">
+<meta property="og:image" content="https://orfeas-tales.vercel.app/characters/00_collage_all.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Orfeas Tales">
+<meta name="twitter:description" content="Bilingual storybook comics in English and Greek, with narration, character adventures, and a growing world made for Orfeas.">
+<meta name="twitter:image" content="https://orfeas-tales.vercel.app/characters/00_collage_all.png">
+<link rel="canonical" href="https://orfeas-tales.vercel.app/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308081f'/%3E%3Cpath d='M32 8l5.8 17.2H56L41.3 35.8 46.9 53 32 42.4 17.1 53l5.6-17.2L8 25.2h18.2L32 8z' fill='%23ffd700'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -1013,9 +1026,14 @@
     background: #c0b090;
     cursor: pointer;
     border: 2px solid #1a0a00;
+    padding: 0;
     transition: background 0.2s;
   }
   .comic-dot.active { background: #1a0a00; }
+  .comic-dot:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
 
   .comic-page-label {
     text-align: center;
@@ -1049,8 +1067,8 @@
 
   @media (max-width: 480px) {
     .comic-panel { aspect-ratio: 1 / 1; }
-    .speech-bubble { font-size: 0.55rem; padding: 3px 6px; }
-    .panel-caption { font-size: 0.55rem; }
+    .speech-bubble { font-size: 0.62rem; line-height: 1.25; padding: 4px 7px; }
+    .panel-caption { font-size: 0.62rem; line-height: 1.25; }
     .comic-nav-btn { padding: 8px 14px; font-size: 0.75rem; }
   }
 
@@ -1139,7 +1157,7 @@
 
 <!-- HEADER -->
 <header>
-  <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
+  <button class="hamburger" id="menuBtn" onclick="toggleNav()" aria-label="Menu" aria-expanded="false" aria-controls="sideNav">
     <span></span><span></span><span></span>
   </button>
   <div class="logo" onclick="showPage('home')" style="cursor:pointer" title="Home"><span>★</span> ORFEAS TALES <span>★</span></div>
@@ -1153,10 +1171,10 @@
 
 <!-- SIDE NAV -->
 <div class="nav-overlay" id="navOverlay" onclick="closeNav()"></div>
-<nav class="side-nav" id="sideNav">
+<nav class="side-nav" id="sideNav" aria-hidden="true">
   <div class="nav-header">
     <div class="logo" style="font-size:0.8rem"><span>★</span> ORFEAS TALES <span>★</span></div>
-    <button class="close-nav" onclick="closeNav()">✕</button>
+    <button class="close-nav" onclick="closeNav()" aria-label="Close menu">✕</button>
   </div>
   <div class="nav-section-label">Explore</div>
   <button class="nav-link" onclick="showPage('stories')">
@@ -1183,8 +1201,8 @@
   <section class="hero">
     <div class="hero-planet"></div>
     <div class="hero-badge">2 Episodes Now Live</div>
-    <h1>A Universe of<br>Adventures Awaits</h1>
-    <p>Join Aristotelis and Theotokis on a magical journey through the cosmos. Meet incredible friends, discover hidden worlds, and face the darkness together.</p>
+    <h1>Stories Made<br>For Orfeas</h1>
+    <p>Follow Aristotelis, Theotokis, and their friends through bilingual comic adventures in English and Greek, with narration, character surprises, and a world that grows one story at a time.</p>
     <div class="hero-buttons">
       <button class="btn-primary" onclick="showPage('stories')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
@@ -1384,28 +1402,28 @@
       <div class="comic-grid">
 
         <div class="comic-panel">
-          <img src="story1/panels/panel_01.webp" alt="Panel 1">
+          <img src="story1/panels/panel_01.webp" alt="Panel 1" loading="lazy" decoding="async">
           <div class="panel-caption caption-top"
                data-en="Two boys. Same school. Different worlds."
                data-gr="Δύο αγόρια. Ίδιο σχολείο. Διαφορετικοί κόσμοι.">Two boys. Same school. Different worlds.</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story1/panels/panel_02.png" alt="Panel 2">
+          <img src="story1/panels/panel_02.png" alt="Panel 2" loading="lazy" decoding="async">
           <div class="speech-bubble center-bubble"
                data-en="Class field trip to the forest — tomorrow!"
                data-gr="Αύριο πηγαίνουμε εκδρομή στο δάσος!">Class field trip to the forest — tomorrow!</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story1/panels/panel_03.png" alt="Panel 3">
+          <img src="story1/panels/panel_03.png" alt="Panel 3" loading="lazy" decoding="async">
           <div class="panel-caption caption-top"
                data-en="A perfect autumn morning. Pine and cool earth."
                data-gr="Ένα τέλειο φθινοπωρινό πρωί. Μυρωδιά πεύκου.">A perfect autumn morning. Pine and cool earth.</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story1/panels/panel_04.png" alt="Panel 4">
+          <img src="story1/panels/panel_04.png" alt="Panel 4" loading="lazy" decoding="async">
           <div class="speech-bubble left-bubble"
                data-en="Just a little further..."
                data-gr="Μόνο λίγο ακόμα...">Just a little further...</div>
@@ -1423,14 +1441,14 @@
       <div class="comic-grid">
 
         <div class="comic-panel">
-          <img src="story1/panels/panel_05.png" alt="Panel 5">
+          <img src="story1/panels/panel_05.png" alt="Panel 5" loading="lazy" decoding="async">
           <div class="panel-caption caption-top"
                data-en="Lost. Alone. The forest had swallowed everything."
                data-gr="Χαμένος. Μόνος. Το δάσος είχε καταπιεί τα πάντα.">Lost. Alone. The forest had swallowed everything.</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story1/panels/panel_06.png" alt="Panel 6">
+          <img src="story1/panels/panel_06.png" alt="Panel 6" loading="lazy" decoding="async">
           <div class="speech-bubble left-bubble"
                data-en='"Oh. It&apos;s you."'
                data-gr='"Ω. Εσύ είσαι."'>"Oh. It's you."</div>
@@ -1440,7 +1458,7 @@
         </div>
 
         <div class="comic-panel">
-          <img src="story1/panels/panel_07.png" alt="Panel 7">
+          <img src="story1/panels/panel_07.png" alt="Panel 7" loading="lazy" decoding="async">
           <div class="speech-bubble left-bubble"
                data-en='"You&apos;re lost too!"'
                data-gr='"Χάθηκες κι εσύ!"'>"You're lost too!"</div>
@@ -1450,7 +1468,7 @@
         </div>
 
         <div class="comic-panel">
-          <img src="story1/panels/panel_08.png" alt="Panel 8">
+          <img src="story1/panels/panel_08.png" alt="Panel 8" loading="lazy" decoding="async">
           <div class="speech-bubble left-bubble"
                data-en='"Find a river — water leads to the city!"'
                data-gr='"Βρίσκουμε ποτάμι — οδηγεί στην πόλη!"'>"Find a river — water leads to the city!"</div>
@@ -1468,14 +1486,14 @@
       <div class="comic-grid">
 
         <div class="comic-panel">
-          <img src="story1/panels/panel_09.png" alt="Panel 9">
+          <img src="story1/panels/panel_09.png" alt="Panel 9" loading="lazy" decoding="async">
           <div class="panel-caption caption-bottom"
                data-en="Together, they followed the river downstream."
                data-gr="Μαζί, ακολούθησαν το ποτάμι προς τα κάτω.">Together, they followed the river downstream.</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story1/panels/panel_10.png" alt="Panel 10">
+          <img src="story1/panels/panel_10.png" alt="Panel 10" loading="lazy" decoding="async">
           <div class="speech-bubble left-bubble"
                data-en='"I&apos;m hungry."'
                data-gr='"Πεινάω."'>"I'm hungry."</div>
@@ -1485,14 +1503,14 @@
         </div>
 
         <div class="comic-panel">
-          <img src="story1/panels/panel_11.png" alt="Panel 11">
+          <img src="story1/panels/panel_11.png" alt="Panel 11" loading="lazy" decoding="async">
           <div class="speech-bubble center-bubble"
                data-en='"THERE YOU ARE!"'
                data-gr='"ΕΠΙΤΕΛΟΥΣ ΣΑΣ ΒΡΗΚΑ!"'>"THERE YOU ARE!"</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story1/panels/panel_12.png" alt="Panel 12">
+          <img src="story1/panels/panel_12.png" alt="Panel 12" loading="lazy" decoding="async">
           <div class="panel-caption caption-bottom"
                data-en="From that night on, they were the very best of friends."
                data-gr="Από εκείνη τη νύχτα, έγιναν οι καλύτεροι φίλοι.">From that night on, they were the very best of friends.</div>
@@ -1509,28 +1527,28 @@
       <div class="comic-grid">
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_01.png" alt="Panel 1">
+          <img src="story2/panels/panel_01.png" alt="Panel 1" loading="lazy" decoding="async">
           <div class="speech-bubble center-bubble"
                data-en="Hey — do you want to go to the zoo?"
                data-gr="Ρε, θέλεις να πας στο ζωολογικό κήπο;">Hey — do you want to go to the zoo?</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_02.png" alt="Panel 2">
+          <img src="story2/panels/panel_02.png" alt="Panel 2" loading="lazy" decoding="async">
           <div class="panel-caption caption-top"
                data-en="VROOM VROOM VROOM! Off to the zoo!"
                data-gr="ΒΡΟΥΜ ΒΡΟΥΜ ΒΡΟΥΜ! Πάμε για το ζωολογικό!">VROOM VROOM VROOM! Off to the zoo!</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_03.png" alt="Panel 3">
+          <img src="story2/panels/panel_03.png" alt="Panel 3" loading="lazy" decoding="async">
           <div class="panel-caption caption-top"
                data-en="They looked at the lions, the turtles, the snakes."
                data-gr="Είδαν τα λιοντάρια, τις χελώνες, τα φίδια.">They looked at the lions, the turtles, the snakes.</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_04.png" alt="Panel 4">
+          <img src="story2/panels/panel_04.png" alt="Panel 4" loading="lazy" decoding="async">
           <div class="speech-bubble right-bubble"
                data-en="Psssst! Hey! Over here!"
                data-gr="Ψτ! Ρε! Ελάτε εδώ!">Psssst! Hey! Over here!</div>
@@ -1548,28 +1566,28 @@
       <div class="comic-grid">
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_05.png" alt="Panel 5">
+          <img src="story2/panels/panel_05.png" alt="Panel 5" loading="lazy" decoding="async">
           <div class="speech-bubble center-bubble"
                data-en="Wait — are YOU talking to us?!"
                data-gr="Μα εσείς μας μιλάτε;!">Wait — are YOU talking to us?!</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_06.png" alt="Panel 6">
+          <img src="story2/panels/panel_06.png" alt="Panel 6" loading="lazy" decoding="async">
           <div class="speech-bubble center-bubble"
                data-en="I've been trapped here so long. I want to go to the jungle."
                data-gr="Έχω τόσον καιρό εγκλωβισμένος εδώ. Θέλω να πάω στη ζούγκλα.">I've been trapped here so long. I want to go to the jungle.</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_07.png" alt="Panel 7">
+          <img src="story2/panels/panel_07.png" alt="Panel 7" loading="lazy" decoding="async">
           <div class="speech-bubble center-bubble"
                data-en="Every Friday night, there's a guard who falls asleep all night long!"
                data-gr="Κάθε Παρασκευή βράδυ, υπάρχει ένας φρουρός που κοιμάται όλη τη νύχτα!">Every Friday night, there's a guard who falls asleep all night long!</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_08.png" alt="Panel 8">
+          <img src="story2/panels/panel_08.png" alt="Panel 8" loading="lazy" decoding="async">
           <div class="speech-bubble center-bubble"
                data-en="We should help him! Let's help him!"
                data-gr="Να τον βοηθήσουμε! Πάμε πίσω!">We should help him! Let's help him!</div>
@@ -1584,28 +1602,28 @@
       <div class="comic-grid">
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_09.png" alt="Panel 9">
+          <img src="story2/panels/panel_09.png" alt="Panel 9" loading="lazy" decoding="async">
           <div class="panel-caption caption-top"
                data-en="Friday — the guard was just sitting there, barely staying awake."
                data-gr="Παρασκευή — ο φρουρός καθόταν εκεί και μόλις νύσταζε.">Friday — the guard was just sitting there, barely staying awake.</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_10.png" alt="Panel 10">
+          <img src="story2/panels/panel_10.png" alt="Panel 10" loading="lazy" decoding="async">
           <div class="panel-caption caption-top"
                data-en="Saturday — they mapped every camera blind spot."
                data-gr="Σάββατο — χαρτογράφησαν κάθε τυφλό σημείο των καμερών.">Saturday — they mapped every camera blind spot.</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_11.png" alt="Panel 11">
+          <img src="story2/panels/panel_11.png" alt="Panel 11" loading="lazy" decoding="async">
           <div class="panel-caption caption-bottom"
                data-en="The guard was fast asleep. They crept silently and grabbed the keys."
                data-gr="Ο φρουρός έτρωε τον ύπνο του. Πήγαν σιγά σιγά και πήραν το κλειδί.">The guard was fast asleep. They crept silently and grabbed the keys.</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_12.png" alt="Panel 12">
+          <img src="story2/panels/panel_12.png" alt="Panel 12" loading="lazy" decoding="async">
           <div class="panel-caption caption-top"
                data-en="CHAOS! Gorillas everywhere!"
                data-gr="Πανικός! Έτρεξαν όλοι!">CHAOS! Gorillas everywhere!</div>
@@ -1620,14 +1638,14 @@
       <div class="comic-grid">
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_13.png" alt="Panel 13">
+          <img src="story2/panels/panel_13.png" alt="Panel 13" loading="lazy" decoding="async">
           <div class="speech-bubble center-bubble"
                data-en="Quick, quick! RUN! Get out!"
                data-gr="Γρήγορα, γρήγορα! Τρέξε!">Quick, quick! RUN! Get out!</div>
         </div>
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_14.png" alt="Panel 14">
+          <img src="story2/panels/panel_14.png" alt="Panel 14" loading="lazy" decoding="async">
           <div class="speech-bubble left-bubble"
                data-en="Oh no — are we going to jail?!"
                data-gr="Α, Παναγία μου! Τώρα να πάμε στη φυλακή;">Oh no — are we going to jail?!</div>
@@ -1637,7 +1655,7 @@
         </div>
 
         <div class="comic-panel">
-          <img src="story2/panels/panel_15.png" alt="Panel 15">
+          <img src="story2/panels/panel_15.png" alt="Panel 15" loading="lazy" decoding="async">
           <div class="panel-caption caption-bottom"
                data-en="From that day on, the three of them became the very best of friends."
                data-gr="Και έγιναν οι καλύτεροι φίλοι. Πήγαιναν και έκαναν πάρα πολλές περιπέτειες μαζί.">From that day on, the three of them became the very best of friends.</div>
@@ -1651,15 +1669,15 @@
     <div class="comic-nav">
       <button class="comic-nav-btn" id="comic-prev" onclick="comicPrev()" disabled>◀ Prev</button>
       <div id="comic-s1-nav" class="comic-dots">
-        <span class="comic-dot active" onclick="goToComicPage(1)"></span>
-        <span class="comic-dot" onclick="goToComicPage(2)"></span>
-        <span class="comic-dot" onclick="goToComicPage(3)"></span>
+        <button type="button" class="comic-dot active" onclick="goToComicPage(1)" aria-label="Go to comic page 1" aria-current="page"></button>
+        <button type="button" class="comic-dot" onclick="goToComicPage(2)" aria-label="Go to comic page 2"></button>
+        <button type="button" class="comic-dot" onclick="goToComicPage(3)" aria-label="Go to comic page 3"></button>
       </div>
       <div id="comic-s2-nav" class="comic-dots" style="display:none">
-        <span class="comic-dot" onclick="goToComicPage(1)"></span>
-        <span class="comic-dot" onclick="goToComicPage(2)"></span>
-        <span class="comic-dot" onclick="goToComicPage(3)"></span>
-        <span class="comic-dot" onclick="goToComicPage(4)"></span>
+        <button type="button" class="comic-dot" onclick="goToComicPage(1)" aria-label="Go to comic page 1"></button>
+        <button type="button" class="comic-dot" onclick="goToComicPage(2)" aria-label="Go to comic page 2"></button>
+        <button type="button" class="comic-dot" onclick="goToComicPage(3)" aria-label="Go to comic page 3"></button>
+        <button type="button" class="comic-dot" onclick="goToComicPage(4)" aria-label="Go to comic page 4"></button>
       </div>
       <button class="comic-nav-btn" id="comic-next" onclick="comicNext()">Next ▶</button>
     </div>
@@ -1669,9 +1687,9 @@
 
 <!-- CHARACTER MODAL -->
 <div class="modal-overlay" id="charModal" onclick="closeModal(event)">
-  <div class="modal" style="position:relative">
-    <button class="modal-close" onclick="closeModalDirect()">✕</button>
-    <img id="modal-img" src="" alt="">
+  <div class="modal" style="position:relative" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+    <button class="modal-close" onclick="closeModalDirect()" aria-label="Close character details">✕</button>
+    <img id="modal-img" src="" alt="" loading="lazy" decoding="async">
     <div class="modal-body">
       <div class="modal-name" id="modal-name"></div>
       <div class="modal-role" id="modal-role"></div>
@@ -1716,7 +1734,7 @@ function buildCharacters() {
     if (c.unlocked) card.onclick = () => openModal(c);
     card.innerHTML = `
       <div class="char-img-wrap">
-        <img src="${c.file}" alt="${c.name}">
+        <img src="${c.file}" alt="${c.name}" loading="lazy" decoding="async">
         ${c.unlocked ? '<div class="unlock-badge">+ Unlocked</div>' : `
         <div class="lock-overlay">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1750,12 +1768,23 @@ function showPage(name) {
 }
 
 function toggleNav() {
-  document.getElementById('sideNav').classList.toggle('open');
-  document.getElementById('navOverlay').classList.toggle('open');
+  const sideNav = document.getElementById('sideNav');
+  const navOverlay = document.getElementById('navOverlay');
+  const menuBtn = document.getElementById('menuBtn');
+  sideNav.classList.toggle('open');
+  navOverlay.classList.toggle('open');
+  const isOpen = sideNav.classList.contains('open');
+  sideNav.setAttribute('aria-hidden', String(!isOpen));
+  if (menuBtn) menuBtn.setAttribute('aria-expanded', String(isOpen));
 }
 function closeNav() {
-  document.getElementById('sideNav').classList.remove('open');
-  document.getElementById('navOverlay').classList.remove('open');
+  const sideNav = document.getElementById('sideNav');
+  const navOverlay = document.getElementById('navOverlay');
+  const menuBtn = document.getElementById('menuBtn');
+  sideNav.classList.remove('open');
+  navOverlay.classList.remove('open');
+  sideNav.setAttribute('aria-hidden', 'true');
+  if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
 }
 
 // ── MODAL ────────────────────────────────────────────────────
@@ -1772,6 +1801,12 @@ function closeModal(e) {
 function closeModalDirect() {
   document.getElementById('charModal').classList.remove('open');
 }
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  closeNav();
+  closeModalDirect();
+});
 
 // ── AUDIO PLAYER ─────────────────────────────────────────────
 const audioEl = document.getElementById('audio-el');
@@ -1965,7 +2000,10 @@ function goToComicPage(n) {
   comicPage = n;
   const activeNav = document.getElementById(COMIC_PAGES === 4 ? 'comic-s2-nav' : 'comic-s1-nav');
   if (activeNav) activeNav.querySelectorAll('.comic-dot').forEach((d, i) => {
-    d.classList.toggle('active', i + 1 === n);
+    const isActive = i + 1 === n;
+    d.classList.toggle('active', isActive);
+    if (isActive) d.setAttribute('aria-current', 'page');
+    else d.removeAttribute('aria-current');
   });
   const prev = document.getElementById('comic-prev');
   const next = document.getElementById('comic-next');
