@@ -1,40 +1,93 @@
-# 👋 New Claude Session — Start Here
+# Orfeas Tales — New Chat Start Here
 
-Hi! This is the Orfeas Tales project. Read this first, then check PROGRESS.md for what to do next.
+_Last updated: 2026-06-09 (session 7)_
 
-## Quick Summary
-- Children's interactive website: https://orfeas-tales.vercel.app
-- Built for Pantelis's son Orfeas
-- Dogman-style comic books with bilingual (EN + GR) audio narration
-- GitHub auto-deploys to Vercel: https://github.com/ptsportsbookcom-sudo/orfeas-tales
-- All files in: `D:\Orfeas tales\`
+## What Is This Project?
 
-## Read These Docs (in order)
-1. `PROJECT.md` — full project overview, folder structure, characters, tech stack
-2. `PROGRESS.md` — what's done ✅ and what's next 🔄
-3. `CHARACTERS.md` — ⚠️ READ THIS for Midjourney prompts + visual specs (character consistency)
-4. `DECISIONS.md` — WHY things were built the way they were (important before changing anything)
-5. `CLAUDE_STORY_UPDATE_GUIDE.md` — exact checklist for adding/updating stories without breaking the site
+A Greek/English children's comic website built by Pantelis for his son Orfeas. Each story is a Dogman-style comic (panels + speech bubbles + audio narration) with EN/GR toggle. Live at https://orfeas-tales.vercel.app
+
+## Read These Docs First (in order)
+
+1. This file ← you are here
+2. `_docs/PROGRESS.md` — what's done, what's next
+3. `_docs/CHARACTERS.md` — **critical before any Midjourney work**
+4. `_docs/DECISIONS.md` — why things were done the way they were
+5. `_docs/CLAUDE_STORY_UPDATE_GUIDE.md` — step-by-step process for adding stories
 
 ## Most Important Things to Know
-- **Don't move files** without updating paths in `index.html`
-- **Always use `panel_master_ref.webp` as `--cref`** when generating new Midjourney panels — this is how characters stay consistent across stories
-- **CHARACTERS.md** has exact Midjourney prompts for every character — use them
-- **Audio tool**: `tts-generator.html` in root folder — open in Chrome, paste text, generates MP3
-- **GitHub uploads**: Use `mcp__Claude_in_Chrome__file_upload` — navigate to `github.com/ptsportsbookcom-sudo/orfeas-tales/upload/main`, find the file input ref, upload files from `D:\Orfeas tales\`, commit. See DECISIONS.md for full steps. DO NOT use git/bash/terminal — proxy blocks GitHub.
-- **Audio sync**: panels auto-advance as audio plays (1/3 and 2/3 marks). "🔄 Sync ON" button in the WAL bar. Pages change at ~2:10 and ~4:20 for a 6.5-min story — not instantly.
-- **Stories 1 and 2 are fully complete** — panels, EN+GR audio, auto-sync, bilingual bubbles all live on https://orfeas-tales.vercel.app
-- **Greek dialect rule**: All written text (story text, speech bubbles, captions) must be in standard Modern Greek — NOT Cypriot dialect. Audio recordings can stay Cypriot. See DECISIONS.md.
-- **Story 3 is next** — Pantelis will record narration when ready, then share MP3 with Claude to start the pipeline
 
-## For Claude: Before Starting Work
-- Check the `Last updated` date at the top of PROGRESS.md — that's how fresh the info is
-- Read PROGRESS.md "Next Steps" section carefully before doing anything
-- If something looks wrong or outdated, ask Pantelis before proceeding
+### The Website
+- Single file: `D:\Orfeas tales\index.html` — all CSS/JS inline (~137 KB)
+- 2 stories live, Story 3 not started yet
+- Deployed to Vercel via GitHub — auto-deploys on every push to `main`
+- GitHub: https://github.com/ptsportsbookcom-sudo/orfeas-tales
 
-## Pantelis's Preferences
-- Wants Dogman-style comic look (not just slideshows)
-- Wants consistency across stories — same characters, same style
-- Stories in both English and Greek
-- Doesn't like unnecessary complexity — keep it simple
-- Gets frustrated when things don't work as expected — be upfront about limitations
+### How to Push Files to GitHub (ONLY method that works)
+The proxy blocks git/terminal. Use the Claude in Chrome extension:
+1. Navigate to `https://github.com/ptsportsbookcom-sudo/orfeas-tales/upload/main`
+2. Use `mcp__Claude_in_Chrome__find` → "file input upload" → get ref
+3. Call `mcp__Claude_in_Chrome__file_upload` with paths from `D:\Orfeas tales\`
+4. Triple-click the commit message field and type the message
+5. Scroll down, click "Commit changes"
+
+For files in subfolders (e.g. `_docs/`), navigate to the subfolder upload URL first:
+`https://github.com/ptsportsbookcom-sudo/orfeas-tales/upload/main/_docs`
+
+### Watch & Listen (WAL) — Key Facts
+- Opens a fullscreen-capable comic reader with audio + TTS narration
+- EN/GR language toggle syncs both audio and panel text
+- Sync button (`🔄 Sync ON` / `⏸ Sync OFF`) auto-advances panels with audio
+- **Mobile fullscreen**: tap Fullscreen button → enters fullscreen; Exit button or Back exits
+- **Browser Back/Forward** works correctly between all pages (uses `history.pushState`)
+- WAL state variables: `walSyncOn`, `walSyncPausedUntil`, `walLang`, `walAudio`, etc.
+- All WAL variables are declared with `let` in the WAL init block (~line 2195)
+
+### Images
+- All live panel/character images in `index.html` use **WebP** (compressed for web)
+- Original **PNG** source files are kept in their folders as reference — **do not delete them**
+- `characters/og-image.jpg` is used for social sharing previews
+- All `<img>` tags use `loading="lazy" decoding="async"`
+
+### Audio Generation
+- Tool: `tts-generator.html` in `D:\Orfeas tales\` — open in Chrome
+- **Must run from** a translate.google.com tab (CORS requirement)
+- Generates MP3 via Google Translate TTS API (free, no login)
+- ~2 min per language
+
+### Greek Text Rule
+- Story text, speech bubbles, captions: **standard Modern Greek only**
+- Audio narration: Cypriot dialect is fine (it's a family recording)
+- Do NOT write Cypriot dialect in any text that appears on screen
+
+### Character Consistency (Midjourney)
+- **ALWAYS use `_docs/CHARACTERS.md`** before generating any panels
+- Master style ref: `https://cdn.midjourney.com/35197821-c4da-45e8-89c9-a71ca313d5dd/0_1_640_N.webp`
+- Use `--cref [URL] --cw 80` directly in prompt text (not the UI button)
+- For each new story: generate a story-specific master ref first (see DECISIONS.md)
+
+## Current Status (as of 2026-06-09)
+
+### ✅ Fully Live and Working
+- Story 1 — "The Lost Friends" (12 panels, 3 pages, EN+GR audio, auto-sync)
+- Story 2 — "Rillas the Escape Artist" (15 panels, 4 pages, EN+GR audio, auto-sync)
+- SEO/social metadata, robots.txt, sitemap.xml
+- All images compressed to WebP, lazy-loaded
+- Accessibility: accessible comic nav buttons, menu/modal labels, Escape key closes
+- Watch & Listen: mobile fullscreen, Exit button, Back exits fullscreen
+- Browser Back/Forward navigation across all pages
+
+### 🔜 Next: Story 3
+1. Pantelis records narration → shares with Claude
+2. Claude transcribes → cleans to standard Greek + English
+3. Generate story-specific master ref in Midjourney
+4. Generate 12–15 panels using `--cref [story ref] --cw 80`
+5. Generate audio with `tts-generator.html`
+6. Add comic reader in `index.html` (new `s3p-` IDs, `COMIC_PAGES[3]`, `storyText[3]`)
+7. Update hero stats bar (3 stories, new character count)
+8. Push to GitHub
+
+## Do Not Touch Unless Pantelis Asks
+- Story text, audio, panel images, character names
+- Folder structure
+- Background music (`music/The Pyre.mp3`)
+- Original PNG source files

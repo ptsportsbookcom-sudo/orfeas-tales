@@ -73,9 +73,10 @@ When adding a story, update these areas:
 - Use the same visual style as Stories 1 and 2.
 - Use `_docs/CHARACTERS.md` for exact character descriptions.
 - Always use the correct character reference workflow from `_docs/CHARACTERS.md`.
-- Keep original PNGs as source/reference files when useful.
-- Publish compressed WebP files in `index.html` for website loading.
-- New panels should be compressed before publishing.
+- Save new panels as PNG from Midjourney first — **keep the PNG as the source/reference file**.
+- Compress to WebP for website use (Python PIL or any image tool).
+- `index.html` must always reference the `.webp` path, not the `.png`.
+- Do not delete original PNG source files unless Pantelis explicitly asks.
 - If adding `<img>` tags manually, use the `.webp` path and include:
 
 ```html
@@ -114,12 +115,18 @@ After every story update, check:
 - English and Greek toggles work.
 - Read mode opens the right story.
 - Watch & Listen opens the right comic.
+- **Language sync**: toggling EN/GR in WAL switches both audio and panel text simultaneously.
+- **Sync toggle**: `🔄 Sync ON` and `⏸ Sync OFF` both appear correctly (no garbled text or missing emoji).
+- **Audio/panel auto-sync**: panels advance as audio plays when Sync is ON.
 - Mobile fullscreen Watch & Listen can enter and exit normally.
+- Exit button visible in fullscreen; pressing it exits cleanly.
+- Mobile/browser Back exits fullscreen first (does not jump back a page).
 - Browser Back/Forward works between Home, Stories, Characters, Read, and Watch & Listen.
 - Prev/Next comic navigation works.
 - Audio plays in English and Greek.
 - Characters page still loads.
 - Mobile layout still looks readable.
+- No console errors on page load.
 
 ## Navigation Architecture
 
@@ -130,3 +137,15 @@ If you add a new page, add it to `VALID_PAGES` and give it a URL in `getUrlForPa
 ## Safe Change Rule
 
 Make changes in small batches. If a change affects story navigation, comic rendering, or audio playback, test before making the next change.
+
+## Last Verified
+
+**2026-06-09** — Full site verification after all session 7 improvements deployed:
+- Site loads, all pages navigate correctly
+- Watch & Listen opens, audio plays in EN and GR
+- Language sync works (toggle switches audio + panel text together)
+- Sync button shows `🔄 Sync ON` / `⏸ Sync OFF` correctly
+- Audio/panel auto-sync works
+- Mobile fullscreen enters and exits cleanly
+- Browser Back/Forward works across all pages
+- No encoding issues or null bytes detected in deployed file
