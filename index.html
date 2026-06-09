@@ -2418,7 +2418,9 @@ function walTogglePlay() {
     else { walAudio.pause(); walSetPlayIcon(false); }
     return;
   }
-  if (!walSped = false; walSetPlayIcon(true);
+  if (!walSpeaking) { walStartSpeech(); return; }
+  if (walPaused) {
+    walPaused = false; walSetPlayIcon(true);
     if (walLang === 'gr' && walChunkAudio) walChunkAudio.play();
     else if (window.speechSynthesis) speechSynthesis.resume();
   } else {
