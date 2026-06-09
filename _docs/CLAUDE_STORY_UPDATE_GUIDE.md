@@ -121,6 +121,12 @@ After every story update, check:
 - Characters page still loads.
 - Mobile layout still looks readable.
 
+## Navigation Architecture
+
+The site uses `history.pushState` for SPA page transitions. Each `showPage(name)` call pushes a `{ orfeasPage: name }` state. `history.replaceState` is called on init with `{ orfeasPage: 'home' }`. A `popstate` listener handles browser Back/Forward for all pages, and separately handles fullscreen Watch & Listen exit (via `walExitFullscreen({ fromPopState: true })`).
+
+If you add a new page, add it to `VALID_PAGES` and give it a URL in `getUrlForPage`.
+
 ## Safe Change Rule
 
 Make changes in small batches. If a change affects story navigation, comic rendering, or audio playback, test before making the next change.
