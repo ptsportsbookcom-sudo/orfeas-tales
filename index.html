@@ -1142,6 +1142,84 @@
 .wal-progress-fill { height:4px; background:#7c3aed; border-radius:2px; width:0; transition:width 0.5s linear; position:relative; z-index:1; }
 .wal-time { font-size:0.78rem; color:rgba(255,255,255,0.6); min-width:80px; text-align:center; }
 .wal-lang-toggle { display:flex; gap:6px; }
+.wal-fullscreen-btn {
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.18);
+  color:white;
+  border-radius:6px;
+  padding:4px 8px;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.wal-fullscreen-btn:hover { background:rgba(255,255,255,0.14); }
+.wal-exit-btn { display:none; }
+
+body.comic-fullscreen {
+  overflow:hidden;
+  overscroll-behavior:none;
+}
+body.comic-fullscreen header,
+body.comic-fullscreen .planet {
+  display:none;
+}
+#page-comic.fullscreen-mode {
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  padding-top:0;
+  min-height:100dvh;
+  overflow:hidden;
+  background:#f5f0e8;
+}
+#page-comic.fullscreen-mode .wal-bar {
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:1002;
+  padding:8px max(12px, env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-right));
+  background:rgba(15,15,46,0.96);
+  border-top:1px solid rgba(124,58,237,0.45);
+  border-bottom:none;
+  box-shadow:0 -8px 28px rgba(0,0,0,0.28);
+}
+#page-comic.fullscreen-mode .wal-enter-btn { display:none; }
+#page-comic.fullscreen-mode .wal-exit-btn { display:inline-flex; align-items:center; }
+#page-comic.fullscreen-mode .comic-reader {
+  width:100%;
+  max-width:none;
+  height:100dvh;
+  margin:0;
+  padding:10px 8px calc(96px + env(safe-area-inset-bottom));
+  overflow:auto;
+}
+#page-comic.fullscreen-mode .comic-back-btn {
+  display:none;
+}
+#page-comic.fullscreen-mode .comic-header {
+  margin-bottom:8px;
+}
+#page-comic.fullscreen-mode .comic-title {
+  font-size:0.78rem;
+}
+#page-comic.fullscreen-mode .comic-grid {
+  gap:3px;
+}
+#page-comic.fullscreen-mode .comic-nav {
+  position:sticky;
+  bottom:0;
+  background:rgba(245,240,232,0.92);
+  padding:8px 0 4px;
+}
+@media (max-width: 560px) {
+  #page-comic.fullscreen-mode .wal-bar { gap:8px; justify-content:space-between; }
+  #page-comic.fullscreen-mode .wal-progress-wrap { order:2; flex-basis:100%; max-width:none; }
+  #page-comic.fullscreen-mode .wal-time { min-width:66px; font-size:0.7rem; }
+  #page-comic.fullscreen-mode .lang-btn { padding:5px 8px; font-size:0.68rem; }
+  #page-comic.fullscreen-mode .comic-reader { padding-inline:4px; }
+}
 </style>
 <script src="https://code.responsivevoice.org/responsivevoice.js?key=FREE"></script>
 </head>
@@ -1379,6 +1457,8 @@
     <span class="wal-time" id="wal-time">0:00 / 0:00</span>
     <button id="wal-sync-btn" onclick="walToggleSync()" title="Auto-advance panels with audio"
       style="background:rgba(123,47,255,0.3);border:1px solid rgba(123,47,255,0.6);color:white;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;white-space:nowrap;">🔄 Sync ON</button>
+    <button class="wal-fullscreen-btn wal-enter-btn" id="wal-fullscreen-btn" onclick="walEnterFullscreen()" title="Open fullscreen story mode">⛶ Fullscreen</button>
+    <button class="wal-fullscreen-btn wal-exit-btn" id="wal-exit-fullscreen-btn" onclick="walExitFullscreen()" title="Exit fullscreen story mode">Exit</button>
     <div class="wal-lang-toggle">
       <button class="lang-btn active" id="wal-btn-en" onclick="walSetLang('en',this)">🇬🇧 EN</button>
       <button class="lang-btn" id="wal-btn-gr" onclick="walSetLang('gr',this)">🇬🇷 GR</button>
@@ -1756,6 +1836,7 @@ buildCharacters();
 function showPage(name) {
   // hide Watch & Listen bar when leaving comic
   if (name !== 'comic') {
+    walExitFullscreen({ updateHistory: false });
     const wb = document.getElementById('wal-bar');
     if (wb) wb.classList.add('hidden');
     walStop();
@@ -1804,6 +1885,7 @@ function closeModalDirect() {
 
 document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
+  if (walFullscreenOn) walExitFullscreen();
   closeNav();
   closeModalDirect();
 });
@@ -1979,7 +2061,8 @@ let comicPageIdFn = n => 'cpage-' + n;  // story-specific page ID builder
 function setComicLang(lang, btn) {
   comicLang = lang;
   document.querySelectorAll('.comic-lang-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  const activeBtn = btn || document.querySelector(`.comic-lang-btn[onclick*="'${lang}'"]`);
+  if (activeBtn) activeBtn.classList.add('active');
   document.querySelectorAll('[data-en]').forEach(el => {
     el.textContent = (lang === 'gr') ? el.dataset.gr : el.dataset.en;
   });
@@ -2098,15 +2181,66 @@ let walPaused = false;
 let walParas = [];
 let walParaIdx = 0;
 let walTotalParas = 0;
+let walFullscreenOn = false;
+let walFullscreenHistoryOn = false;
 
 // Comic page boundaries (paragraph index where each page starts)
 const walPageBoundary = { 1: 0, 2: 6, 3: 12 };
+
+function walSetFullscreenState(on) {
+  const page = document.getElementById('page-comic');
+  if (!page) return;
+  walFullscreenOn = on;
+  page.classList.toggle('fullscreen-mode', on);
+  document.body.classList.toggle('comic-fullscreen', on);
+  const enterBtn = document.getElementById('wal-fullscreen-btn');
+  const exitBtn = document.getElementById('wal-exit-fullscreen-btn');
+  if (enterBtn) enterBtn.setAttribute('aria-pressed', String(on));
+  if (exitBtn) exitBtn.setAttribute('aria-hidden', String(!on));
+}
+
+async function walEnterFullscreen() {
+  if (walFullscreenOn) return;
+  walSetFullscreenState(true);
+  if (!walFullscreenHistoryOn) {
+    history.pushState({ orfeasComicFullscreen: true }, '', location.href);
+    walFullscreenHistoryOn = true;
+  }
+  const page = document.getElementById('page-comic');
+  if (page?.requestFullscreen) {
+    try { await page.requestFullscreen(); } catch (_) {}
+  }
+  goToComicPage(comicPage);
+}
+
+function walExitFullscreen(options = {}) {
+  if (!walFullscreenOn && !walFullscreenHistoryOn) return;
+  walSetFullscreenState(false);
+  if (document.fullscreenElement && document.exitFullscreen) {
+    document.exitFullscreen().catch(() => {});
+  }
+  if (walFullscreenHistoryOn) {
+    walFullscreenHistoryOn = false;
+    if (options.updateHistory !== false && !options.fromPopState) history.back();
+  }
+}
+
+window.addEventListener('popstate', () => {
+  if (walFullscreenOn) walExitFullscreen({ fromPopState: true });
+});
+
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement && walFullscreenOn) {
+    walExitFullscreen();
+  }
+});
 
 function showWatchAndListen(storyId) {
   walStop();
   walStoryId = storyId;
   walLang = cardLang[storyId] || 'en';
   showComicFromStory();
+  setComicLang(walLang);
   document.getElementById('wal-bar').classList.remove('hidden');
   document.getElementById('wal-btn-en').classList.toggle('active', walLang === 'en');
   document.getElementById('wal-btn-gr').classList.toggle('active', walLang === 'gr');
@@ -2300,6 +2434,14 @@ function walSeek(e) {
 
 function walSetLang(lang, btn) {
   walLang = lang;
+  cardLang[walStoryId] = lang;
+  setComicLang(lang);
+  const cardToggle = document.getElementById('card' + walStoryId + '-' + lang);
+  if (cardToggle) {
+    cardToggle.closest('.card-lang-toggle').querySelectorAll('.lang-btn')
+      .forEach(b => b.classList.remove('active'));
+    cardToggle.classList.add('active');
+  }
   btn.closest('.wal-lang-toggle').querySelectorAll('.lang-btn')
     .forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
