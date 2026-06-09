@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>TTS Generator</title>
+<style>body{font-family:sans-serif;max-width:700px;margin:40px auto;padding:20px}
+button{padding:10px 20px;font-size:16px;cursor:pointer;margin:5px}
+#log{background:#f0f0f0;padding:10px;height:200px;overflow-y:auto;font-size:13px;white-space:pre}
+.btn-gen{background:#2ea44f;color:#fff;border:none;border-radius:6px}
+.btn-gen:disabled{background:#94d3a2}
+</style>
+</head>
+<body>
+<h2>Orfeas Tales TTS Generator</h2>
+<p>Select story and language, then click Generate.</p>
+<select id="storyLang">
+  <option value="3-en">Story 3 — English</option>
+  <option value="3-gr">Story 3 — Greek</option>
+  <option value="2-en">Story 2 — English</option>
+  <option value="2-gr">Story 2 — Greek</option>
+  <option value="1-en">Story 1 — English</option>
+  <option value="1-gr">Story 1 — Greek</option>
+</select>
+<br><br>
+<button class="btn-gen" id="genBtn" onclick="generate()">🎙️ Generate MP3</button>
+<div id="log">Ready.\n</div>
+
+<script>
+const STORIES = {
+  '3-en': { lang: 'en', filename: 'story3_en.mp3', text: `Rillas the Wrestler. Theodokis and Aristotelis found out that ACW wrestling was coming to Nicosia! "I want to go!" said Aristotelis. "No way," said Theodokis. "I like books. Let's do something else." "Come on, you're going to love it! They don't actually hit each other. It's a show! A great show! Please, do me the favour." Fine, he was convinced. "Should we bring Rillas too?" said Aristotelis. "Man, how are we going to bring Rillas? He's a gorilla! How are we going to get him into a wrestling match?" "Leave it to me, buddy. Let's go ask him." They hopped on their quad bikes and rode through the jungle. They arrived at Rillas's house and shouted up: "Rillas! Rillas, come downstairs!" Rillas was half asleep. "What's going on? What do you want?" "Do you want to go to wrestling on Sunday?" "But will there be people there?" "Yes!" "And can I come too?" "Come on, buddy, don't worry. We'll sort it out. We'll come pick you up next Sunday." When Sunday arrived, Aristotelis said: "Come on, Rillas, put these clothes on. You're going to dress up as a wrestler." "Alright. But guys, will there be bananas? Otherwise I'm not coming." "Yes, yes, lots of bananas! Don't worry." "Alright then!" They rode their quad bikes to the ACW arena. At the entrance, Aristotelis showed his ticket and went in. Theodokis showed his ticket and went in. Rillas went to walk in. "Hold it!" said the doorman. "Only wrestlers in boots are allowed in here." Rillas looked at him. "Does Nicosia need a wrestler? I am a wrestler! I don't need boots." "And will there be bananas?" Rillas asked. "The winner gets whatever he wants!" "Oh," said Rillas. "Good idea. Alright then!" Inside the arena, Aristotelis and Theodokis sat down and waited. "Where is Rillas? What if they figure out he's a gorilla?" "I don't know. Come on, sit down and let's watch the show." The show began. The fighters wrestled, the crowd cheered. Then the announcer said: "Ladies and gentlemen! Today we have a brand new wrestler. He is Rillas the Gorilla!" Theodokis and Aristotelis looked at each other. "Did you hear that? There must be another wrestler called Rillas! What a coincidence!" "Ladies and gentlemen! In the right corner, Polydefkis the Fox! In the left corner, Rillas the Gorilla! Ding ding ding!" Not even two minutes passed. Rillas grabbed Polydefkis and launched him clean out of the ring. Done! Then the other athletes came one by one. Not one of them lasted. It didn't even take thirty seconds. He finished them all. "Oh, Holy Mary!" cried Theodokis. "They're going to realise he's a gorilla! We'll go to jail!" "Quiet!" said Aristotelis. "Look at him! The crowd is going absolutely crazy! Rillas! Rillas! Rillas!" Then came the big announcement: "Ladies and gentlemen! Because Rillas the Gorilla is so impressive, we have decided on a special challenge. ALL athletes will enter the ring at once, and the last one standing wins whatever he wants!" Thirty athletes entered. They had a plan: "We'll all go after him at the same time! We'll beat him!" They started. Rillas tossed them left and right like toys. He did one enormous spin and they flew! At one point there were ten of them on top of him. "Now we have him!" GRRRRR! He threw all ten off! Three were left and he finished them with a knockout too. The crowd exploded! Rillas! Rillas! Rillas! "Ladies and gentlemen, the winner: Rillas the Gorilla! Mr. Rillas, would you like to remove your mask?" "No. I prefer to remain a man of mystery." "And what prize would you like?" "I want one thousand bananas." "One thousand bananas?" "Don't make me say one thousand and one!" "Ladies and gentlemen, we will give him one thousand and one bananas!" Theodokis went and found Rillas. "Man, what happened in there?" "I came through that door, and they all came at me. I decided to protect myself. I was very careful and I didn't hurt anyone." "Man, we were incredibly lucky that no one figured out what you were!" "Boys, we have a problem. How are we going to get one thousand and one bananas home on the quad bikes?" "We'll figure it out." They loaded everything onto the quad bikes and headed home. Rillas was very happy. One thousand and one bananas! For a whole week he wouldn't need to do anything. He would stay home and rest. "Hey boys, when do we go to wrestling again?" Theodokis looked at him. "Never! Because we were lucky we didn't go to jail." And they all lived happily ever after. The End.` }
+};
+
+function splitText(text, maxLen = 175) {
+  const chunks = [];
+  let remaining = text.trim();
+  while (remaining.length > 0) {
+    if (remaining.length <= maxLen) { chunks.push(remaining); break; }
+    let cut = remaining.lastIndexOf('. ', maxLen);
+    if (cut < 60) cut = remaining.lastIndexOf(' ', maxLen);
+    if (cut < 10) cut = maxLen;
+    chunks.push(remaining.slice(0, cut + 1).trim());
+    remaining = remaining.slice(cut + 1).trim();
+  }
+  return chunks;
+}
+
+function log(msg) {
+  const el = document.getElementById('log');
+  el.textContent += msg + '\n';
+  el.scrollTop = el.scrollHeight;
+}
+
+async function generate() {
+  const key = document.getElementById('storyLang').value;
+  const story = STORIES[key];
+  if (!story) { log('Story not configured yet.'); return; }
+
+  const btn = document.getElementById('genBtn');
+  btn.disabled = true;
+
+  const chunks = splitText(story.text);
+  log(`Starting: ${chunks.length} chunks for ${story.filename}`);
+
+  const buffers = [];
+  for (let i = 0; i < chunks.length; i++) {
+    const url = `https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(chunks[i])}&tl=${story.lang}&client=gtx&ttsspeed=0.85`;
+    try {
+      const resp = await fetch(url);
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const buf = await resp.arrayBuffer();
+      buffers.push(buf);
+      log(`  [${i+1}/${chunks.length}] ${buf.byteLength} bytes`);
+    } catch(e) {
+      log(`  [${i+1}] ERROR: ${e.message}`);
+    }
+    await new Promise(r => setTimeout(r, 120));
+  }
+
+  if (buffers.length === 0) { log('No audio fetched! Check console for CORS errors.'); btn.disabled = false; return; }
+
+  const totalLen = buffers.reduce((s, b) => s + b.byteLength, 0);
+  const combined = new Uint8Array(totalLen);
+  let offset = 0;
+  for (const buf of buffers) { combined.set(new Uint8Array(buf), offset); offset += buf.byteLength; }
+
+  const blob = new Blob([combined], {type: 'audio/mpeg'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = story.filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  log(`\nDone! ${buffers.length}/${chunks.length} chunks. ${(totalLen/1024).toFixed(0)} KB. Saved as ${story.filename}`);
+  btn.disabled = false;
+}
+</script>
+</body>
+</html>
