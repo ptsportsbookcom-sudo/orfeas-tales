@@ -1364,15 +1364,29 @@ body.comic-fullscreen .planet {
       </div>
     </div>
 
-    <!-- Stories 3–7 — LOCKED -->
+    <!-- Stories 3–7 — Story 3 UNLOCKED -->
 
-    <div class="story-card locked">
+    <!-- Story 3 — UNLOCKED -->
+    <div class="story-card unlocked">
       <div class="ep-num">03</div>
       <div class="story-info">
         <div class="story-ep-label">Episode III</div>
-        <div class="story-title">Three Against the World</div>
+        <div class="story-title">Rillas the Wrestler</div>
+        <div class="story-desc">Rillas dresses up as a luchador and enters the ACW wrestling arena — and nobody can stop him. Not the doorman, not thirty athletes, not even a pile-on of ten!</div>
+        <div class="story-meta">8 min read · 15 panels</div>
+        <div class="card-lang-toggle">
+          <button class="lang-btn active" id="card3-en" onclick="setCardLang(3,'en',this)">🇬🇧 EN</button>
+          <button class="lang-btn" id="card3-gr" onclick="setCardLang(3,'gr',this)">🇬🇷 GR</button>
+        </div>
+        <div class="story-actions">
+          <button class="btn-story-read" onclick="showStoryText(3)">
+            📖 Read
+          </button>
+          <button class="btn-story-watch" onclick="showWatchAndListen(3)">
+            🎬 Watch &amp; Listen
+          </button>
+        </div>
       </div>
-      <div class="story-action"><div class="lock-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div></div>
     </div>
 
     <div class="story-card locked">
@@ -1745,6 +1759,166 @@ body.comic-fullscreen .planet {
       <div class="comic-page-label" data-en="Page 4 of 4" data-gr="Σελίδα 4 από 4">Page 4 of 4</div>
     </div>
 
+    <!-- ══ STORY 3 PAGES (hidden until activated) ══ -->
+
+    <!-- S3 PAGE 1: Panels 1–4 -->
+    <div class="comic-page" id="s3p-1">
+      <div class="comic-grid">
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_01.webp" alt="Panel 1" loading="lazy" decoding="async">
+          <div class="panel-caption caption-bottom"
+               data-en="Theodokis and Aristotelis found out that ACW wrestling was coming to Nicosia!"
+               data-gr="Ο Θεοδόκης κι ο Αριστοτέλης ανακάλυψαν ότι το ACW Wrestling έρχεται στη Λευκωσία!">Theodokis and Aristotelis found out that ACW wrestling was coming to Nicosia!</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_02.webp" alt="Panel 2" loading="lazy" decoding="async">
+          <div class="speech-bubble left-bubble"
+               data-en='"Come on — you&apos;re going to love it! Please, do me the favour!"'
+               data-gr='"Άντε, θα σου αρέσει! Κάνε μου αυτή τη χάρη!"'>"Come on — you're going to love it!"</div>
+          <div class="speech-bubble right-bubble b2"
+               data-en='"Fine. You convinced me."'
+               data-gr='"Εντάξει. Με έπεισες."'>"Fine. You convinced me."</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_03.webp" alt="Panel 3" loading="lazy" decoding="async">
+          <div class="panel-caption caption-top"
+               data-en="VROOM VROOM VROOM! Through the jungle to Rillas's treehouse!"
+               data-gr="ΒΡΟΥΜ ΒΡΟΥΜ ΒΡΟΥΜ! Μέσα από τη ζούγκλα για το δεντρόσπιτο του Ρίλλα!">VROOM VROOM VROOM! Through the jungle to Rillas's treehouse!</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_04.webp" alt="Panel 4" loading="lazy" decoding="async">
+          <div class="speech-bubble left-bubble"
+               data-en='"Rillas! Come downstairs! Do you want to go to wrestling on Sunday?"'
+               data-gr='"Ρίλλα! Κατέβα κάτω! Θέλεις να πας πάλη την Κυριακή;"'>"Rillas! Come downstairs!"</div>
+          <div class="speech-bubble right-bubble b2"
+               data-en='"What&apos;s going on? What do you want?!"'
+               data-gr='"Τι τρέχει; Τι θέλετε;!"'>"What's going on?!"</div>
+        </div>
+
+      </div>
+      <div class="comic-page-label" data-en="Page 1 of 4" data-gr="Σελίδα 1 από 4">Page 1 of 4</div>
+    </div>
+
+    <!-- S3 PAGE 2: Panels 5–8 -->
+    <div class="comic-page" id="s3p-2">
+      <div class="comic-grid">
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_05.webp" alt="Panel 5" loading="lazy" decoding="async">
+          <div class="speech-bubble left-bubble"
+               data-en='"Will there be bananas? Otherwise I&apos;m not coming!"'
+               data-gr='"Θα υπάρχουν μπανάνες; Αλλιώς δεν πάω!"'>"Will there be bananas?!"</div>
+          <div class="speech-bubble right-bubble b2"
+               data-en='"Yes, yes — lots of bananas! Don&apos;t worry!"'
+               data-gr='"Ναι, ναι — πάρα πολλές μπανάνες! Μην ανησυχείς!"'>"Lots of bananas! Don't worry!"</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_06.webp" alt="Panel 6" loading="lazy" decoding="async">
+          <div class="speech-bubble center-bubble"
+               data-en='"Come on, Rillas! Put these on — you&apos;re going to dress up as a wrestler!"'
+               data-gr='"Άντε, Ρίλλα! Βάλε αυτά — θα ντυθείς παλαιστής!"'>"Put these on — you're a wrestler now!"</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_07.webp" alt="Panel 7" loading="lazy" decoding="async">
+          <div class="panel-caption caption-top"
+               data-en="At the ACW arena — Aristotelis entered. Theodokis entered. Then Rillas went to walk in..."
+               data-gr="Στην αρένα ACW — Μπήκε ο Αριστοτέλης, μπήκε ο Θεοδόκης. Τότε ο Ρίλλας πήγε να μπει...">At the ACW arena — Aristotelis entered. Theodokis entered. Then Rillas went to walk in...</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_08.webp" alt="Panel 8" loading="lazy" decoding="async">
+          <div class="speech-bubble left-bubble"
+               data-en='"Hold it! Only wrestlers in boots are allowed in here."'
+               data-gr='"Εκεί! Μόνο παλαιστές με μπότες επιτρέπονται εδώ μέσα."'>"Only wrestlers in boots allowed!"</div>
+          <div class="speech-bubble right-bubble b2"
+               data-en='"Does Nicosia need a wrestler? I AM a wrestler!"'
+               data-gr='"Χρειάζεται η Λευκωσία παλαιστή; Εγώ ΕΙΜΑΙ παλαιστής!"'>"I AM a wrestler!"</div>
+        </div>
+
+      </div>
+      <div class="comic-page-label" data-en="Page 2 of 4" data-gr="Σελίδα 2 από 4">Page 2 of 4</div>
+    </div>
+
+    <!-- S3 PAGE 3: Panels 9–12 -->
+    <div class="comic-page" id="s3p-3">
+      <div class="comic-grid">
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_09.webp" alt="Panel 9" loading="lazy" decoding="async">
+          <div class="speech-bubble left-bubble"
+               data-en='"Where is Rillas?! What if they figure out he&apos;s a gorilla?!"'
+               data-gr='"Πού είναι ο Ρίλλας;! Τι γίνεται αν καταλάβουν ότι είναι γορίλλας;!"'>"What if they figure out he's a gorilla?!"</div>
+          <div class="speech-bubble right-bubble b2"
+               data-en='"Sit down! Let&apos;s watch the show!"'
+               data-gr='"Κάτσε κάτω! Ας δούμε την παράσταση!"'>"Sit down! Let's watch the show!"</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_10.webp" alt="Panel 10" loading="lazy" decoding="async">
+          <div class="speech-bubble center-bubble"
+               data-en='"Ladies and gentlemen... RILLAS THE GORILLA!"'
+               data-gr='"Κυρίες και κύριοι... ΡΙΛΛΑΣ Ο ΓΟΡΙΛΛΑΣ!"'>"Ladies and gentlemen... RILLAS THE GORILLA!"</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_11.webp" alt="Panel 11" loading="lazy" decoding="async">
+          <div class="panel-caption caption-bottom"
+               data-en="Not even two minutes — Rillas grabbed Polydefkis and launched him clean out of the ring!"
+               data-gr="Δεν πέρασαν ούτε δύο λεπτά — ο Ρίλλας άρπαξε τον Πολυδεύκη και τον εκτόξευσε έξω από το ρινγκ!">Not even two minutes — Rillas launched Polydefkis clean out of the ring!</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_12.webp" alt="Panel 12" loading="lazy" decoding="async">
+          <div class="panel-caption caption-top"
+               data-en="All thirty athletes entered — they had a plan: &quot;We&apos;ll all go after him at the same time!&quot;"
+               data-gr="Μπήκαν και τριάντα αθλητές — είχαν σχέδιο: «Θα του πέσουμε όλοι μαζί!»">All thirty athletes entered — they had a plan!</div>
+        </div>
+
+      </div>
+      <div class="comic-page-label" data-en="Page 3 of 4" data-gr="Σελίδα 3 από 4">Page 3 of 4</div>
+    </div>
+
+    <!-- S3 PAGE 4: Panels 13–15 -->
+    <div class="comic-page" id="s3p-4">
+      <div class="comic-grid">
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_13.webp" alt="Panel 13" loading="lazy" decoding="async">
+          <div class="speech-bubble left-bubble"
+               data-en='"Now we&apos;ve got him!"'
+               data-gr='"Τώρα τον έχουμε!"'>"Now we've got him!"</div>
+          <div class="speech-bubble right-bubble b2"
+               data-en='"GRRRRRR!"'
+               data-gr='"ΓΡΡΡΡΡΡ!"'>"GRRRRRR!"</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_14.webp" alt="Panel 14" loading="lazy" decoding="async">
+          <div class="panel-caption caption-bottom"
+               data-en="He did one enormous spin — and they flew in every direction!"
+               data-gr="Έκανε μια τεράστια στροφή — και πέταξαν προς κάθε κατεύθυνση!">He did one enormous spin — and they flew!</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story 3/panels/panel_15.webp" alt="Panel 15" loading="lazy" decoding="async">
+          <div class="speech-bubble left-bubble"
+               data-en='"The winner: Rillas the Gorilla! What prize do you want?"'
+               data-gr='"Ο νικητής: Ρίλλας ο Γορίλλας! Τι έπαθλο θέλεις;"'>"The winner: Rillas the Gorilla! What prize do you want?"</div>
+          <div class="speech-bubble right-bubble b2"
+               data-en='"I want... a thousand and one bananas!"'
+               data-gr='"Θέλω... χίλιες και μία μπανάνες!"'>"A thousand and one bananas!"</div>
+        </div>
+
+      </div>
+      <div class="comic-page-label" data-en="Page 4 of 4" data-gr="Σελίδα 4 από 4">Page 4 of 4</div>
+    </div>
+
     <!-- Navigation -->
     <div class="comic-nav">
       <button class="comic-nav-btn" id="comic-prev" onclick="comicPrev()" disabled>◀ Prev</button>
@@ -1754,6 +1928,12 @@ body.comic-fullscreen .planet {
         <button type="button" class="comic-dot" onclick="goToComicPage(3)" aria-label="Go to comic page 3"></button>
       </div>
       <div id="comic-s2-nav" class="comic-dots" style="display:none">
+        <button type="button" class="comic-dot" onclick="goToComicPage(1)" aria-label="Go to comic page 1"></button>
+        <button type="button" class="comic-dot" onclick="goToComicPage(2)" aria-label="Go to comic page 2"></button>
+        <button type="button" class="comic-dot" onclick="goToComicPage(3)" aria-label="Go to comic page 3"></button>
+        <button type="button" class="comic-dot" onclick="goToComicPage(4)" aria-label="Go to comic page 4"></button>
+      </div>
+      <div id="comic-s3-nav" class="comic-dots" style="display:none">
         <button type="button" class="comic-dot" onclick="goToComicPage(1)" aria-label="Go to comic page 1"></button>
         <button type="button" class="comic-dot" onclick="goToComicPage(2)" aria-label="Go to comic page 2"></button>
         <button type="button" class="comic-dot" onclick="goToComicPage(3)" aria-label="Go to comic page 3"></button>
@@ -1911,12 +2091,14 @@ document.addEventListener('keydown', e => {
 // ── AUDIO PLAYER ─────────────────────────────────────────────
 const audioEl = document.getElementById('audio-el');
 let currentStory = null;
-let currentLang = { 1: 'en' };
+let currentLang = { 1: 'en', 2: 'en', 3: 'en' };
 let isPlaying = false;
 
 // Audio file paths — add your mp3 files to the same folder
 const audioFiles = {
-  1: { en: 'story1/story1_en.mp3', gr: 'story1/story1_gr.mp3' }
+  1: { en: 'story1/story1_en.mp3', gr: 'story1/story1_gr.mp3' },
+  2: { en: 'story2/story2_en.mp3', gr: 'story2/story2_gr_128.mp3' },
+  3: { en: 'story 3/story3_en.mp3', gr: 'story 3/story3_gr.mp3' }
 };
 
 function setLang(storyId, lang, btn) {
@@ -2120,19 +2302,29 @@ function comicNext() { if (comicPage < COMIC_PAGES) { walSyncPausedUntil = Date.
 function showComicFromStory() {
   const s1nav = document.getElementById('comic-s1-nav');
   const s2nav = document.getElementById('comic-s2-nav');
+  const s3nav = document.getElementById('comic-s3-nav');
   const title = document.getElementById('comic-title');
-  if (walStoryId === 2) {
+  if (walStoryId === 3) {
+    COMIC_PAGES = 4;
+    comicPageIdFn = n => 's3p-' + n;
+    if (title) title.textContent = 'Episode III — Rillas the Wrestler';
+    if (s1nav) s1nav.style.display = 'none';
+    if (s2nav) s2nav.style.display = 'none';
+    if (s3nav) s3nav.style.display = 'flex';
+  } else if (walStoryId === 2) {
     COMIC_PAGES = 4;
     comicPageIdFn = n => 's2p-' + n;
     if (title) title.textContent = 'Episode II — Rillas the Gorilla';
     if (s1nav) s1nav.style.display = 'none';
     if (s2nav) s2nav.style.display = 'flex';
+    if (s3nav) s3nav.style.display = 'none';
   } else {
     COMIC_PAGES = 3;
     comicPageIdFn = n => 'cpage-' + n;
     if (title) title.textContent = 'Episode I — The Day Two Friends Met';
     if (s1nav) s1nav.style.display = 'flex';
     if (s2nav) s2nav.style.display = 'none';
+    if (s3nav) s3nav.style.display = 'none';
   }
   goToComicPage(1);
   showPage('comic');
@@ -2147,340 +2339,8 @@ const storyText = {
   },
   2: {
     en: { title: "Rillas the Gorilla", text: "Rillas the Gorilla\n\nOnce upon a time, there were Theotokis and Aristotelis.\n\nTheotokis called Aristotelis on the phone and said: \"Hey, do you want to go to the zoo?\"\n\n\"What would I do at the zoo?\"\n\n\"Come on! There are animals there — it'll be great!\"\n\n\"Alright, alright.\"\n\nThey jumped on their four-wheel dirt bikes — VROOM VROOM VROOM! — and zoomed off to the zoo.\n\nThey looked at the lions, the turtles, the snakes. They walked around and saw everything.\n\nThen, they passed a cage with a single gorilla sitting alone. All by himself.\n\nAs they walked past, they heard: \"Psssst! Hey! Over here!\"\n\n\"Did you hear something?\"\n\n\"I heard... something. I don't know...\"\n\n\"Hey — turn around!\"\n\nThey turned around and stared at the gorilla. The gorilla was staring right back at them.\n\n\"Wait — are YOU talking to us?!\"\n\n\"Yes, I'm talking to you! Did you not know I can talk? I've been listening to humans for years — I learned. My name is Rillas the Gorilla!\"\n\nThe two boys stood there with their mouths wide open.\n\n\"I'm Theotokis, and this is my best friend Aristotelis. How can we help you, Rillas?\"\n\n\"Boys, I've been trapped in here for so long. I'm not happy. I want to go to the jungle. Can you help me?\"\n\n\"We don't know... do you have a plan?\"\n\n\"I chose you two because you seem like good kids. Will you be my friends?\"\n\nTheotokis and Aristotelis stepped aside and whispered to each other.\n\n\"We should help him! Let's help him!\"\n\nThey turned back. \"Okay Rillas — do you have a plan?\"\n\n\"Yes! Listen carefully. Every Friday night, there's a guard who is very bad at his job — he falls asleep all night long! If you can sneak over and grab the keys, you can open my cage. But the cameras — I'll cause a panic with the other gorillas as a distraction, and while everyone is running around, you grab the keys and let me out.\"\n\n\"Yes, yes! But not this Friday — next week. We'll come back first to watch the zoo and map everything out, then we'll tell you we're ready.\"\n\n\"Perfect.\"\n\nSo Theotokis and Aristotelis made their plan. They had to find the sleepy guard, and find a path where the cameras couldn't see them.\n\nThe following Friday they spotted the guard — just sitting there, looking left, looking right, barely staying awake.\n\nOn Saturday they found all the camera blind spots and mapped a route no camera could catch.\n\n\"Alright — and we wear our caps to hide our faces!\"\n\nThe week passed. Friday arrived. Just before the zoo closed, they saw the guard was already nodding off. They had one hour to pull this off. Caps on, they slipped inside.\n\nThe guard was slumped on his bench, fast asleep.\n\nThey crept silently along their mapped route and grabbed the keys from the guard's belt.\n\n\"Okay Rillas — NOW! Cause the panic!\"\n\n\"Got it!\"\n\nRillas ran over to the other gorillas and said something to them — and it started. CHAOS! Gorillas everywhere! The guards were running around, throwing bananas trying to calm the gorillas down.\n\nTheotokis and Aristotelis sprinted to Rillas's cage and unlocked it.\n\n\"Quick, quick! RUN! Get out before they catch you!\"\n\n\"But where do I go?!\"\n\n\"OUT of the zoo — climb a tree!\"\n\nRillas burst out of the cage and scrambled up a tree just outside the zoo walls. The boys ran out after him — and that's when they realised something was very wrong.\n\nThe whole street was blocked. Police cars everywhere.\n\nSomeone had already noticed a gorilla was missing.\n\nThen they heard it — a helicopter overhead.\n\n\"Oh no,\" whispered Theotokis. \"Are we going to jail?!\"\n\n\"Relax — we wait until the police leave.\"\n\nThey crept under Rillas's tree and whispered up at him.\n\n\"Rillas! Stay up there — stay still! We'll come back for you when it's safe!\"\n\n\"Okay, okay.\"\n\nThey waited. And waited. The whole night passed.\n\nFinally, as dawn broke, the police packed up and left. They said they'd come back in the morning.\n\nNow was their chance.\n\nThey took Rillas to his new home — a tall tree deep in a quiet, hidden spot where no car could ever reach. It was perfect.\n\nThey sat together and ate bananas.\n\nAnd from that day on, the three of them became the best of friends. They went on many adventures together — and every one of them is another story.\n\nThe End." },
-    gr: { title: "Ρίλλας ο Γορίλλας", text: "Ρίλλας ο Γορίλλας\n\nΜια φορά κι έναν καιρό, ήταν ο Θεοτόκης κι ο Αριστοτέλης.\n\nΠαίρνει ο Θεοτόκης τον Αριστοτέλη τηλέφωνο και του λέει: «Ρε, θέλεις να πας στο ζωολογικό κήπο;»\n\n«Μα τι θα κάνω εγώ στο ζωολογικό κήπο, ρε;»\n\n«Άσε τα! Ρε φίλε, είναι ζώα εκεί — θα περάσουμε τέλεια!»\n\n«Εντάξει, εντάξει.»\n\nΒγήκαν, ανέβηκαν στις τετράτροχες μηχανές τους — ΒΡΟΥΜ ΒΡΟΥΜ ΒΡΟΥΜ! — και πήγαν στο ζωολογικό κήπο. Περνούσαν από εδώ, περνούσαν από εκεί. Είδαν τα λιοντάρια, είδαν τις χελώνες, είδαν τα φίδια.\n\nΚάποια στιγμή, είδαν έναν γορίλλα που ήταν μόνος του. Ναι — ήταν εντελώς μόνος στο κλουβί. Και καθώς περνούσαν, άκουσαν:\n\n«Ψτ! Ψτ! Ρε!»\n\n«Ακούς κάτι;»\n\n«Ακούω κάτι... δεν ξέρω...»\n\n«Ρε, γυρίστε πίσω!»\n\nΓύρισαν πίσω. Βλέπουν τον γορίλλα να τους μιλά. Απίστευτο! Έπαθαν πλάκα.\n\n«Μα εσύ μας μιλάς;»\n\n«Εγώ σας μιλάω! Δεν το ξέρατε ότι μπορώ να μιλάω; Έχω χρόνια που ακούω τους ανθρώπους — έμαθα. Το όνομά μου είναι Ρίλλας ο Γορίλλας!»\n\n«Χαίρομαι! Εγώ είμαι ο Θεοτόκης, και ο καλύτερός μου φίλος ο Αριστοτέλης. Πώς μπορούμε να σε βοηθήσουμε, Ρίλλα;»\n\n«Ρε παιδιά, είμαι εγκλωβισμένος εδώ μέσα εδώ και τόσον καιρό. Δεν είμαι ευτυχισμένος. Θέλω να πάω στη ζούγκλα. Μπορείτε να με βοηθήσετε;»\n\n«Δεν ξέρουμε... Έχεις κάποιο σχέδιο;»\n\n«Γιατί εσάς διάλεξα; Επειδή φαίνεστε πολύ καλά παιδιά και σκέφτηκα ότι μπορείτε να με βοηθήσετε. Θέλετε να γίνουμε φίλοι;»\n\nΈνα λεπτό — ξεκίνησαν να συζητούν μεταξύ τους ο Θεοτόκης κι ο Αριστοτέλης.\n\n«Να τον βοηθήσουμε, να τον βοηθήσουμε! Πάμε πίσω!»\n\n«Έλα, Ρίλλα — έχεις κάποιο σχέδιο;»\n\n«Ναι! Ακούστε με. Κάθε Παρασκευή βράδυ, υπάρχει ένας φρουρός που δεν είναι καλός στη δουλειά του — κοιμάται όλη τη νύχτα! Αν μπορείτε να πάτε να πάρετε τα κλειδιά, μπορείτε να ανοίξετε το κλουβί μου. Αλλά οι κάμερες; Θα κάνω εγώ πανικό με τους άλλους γορίλλες για αντιπερισπασμό, κι εσείς πάρτε τα κλειδιά και ελευθερώστε με.»\n\n«Ναι, ναι! Εντάξει — αλλά όχι αυτή την Παρασκευή. Την επόμενη, θα έρθουμε πρώτα να παρακολουθήσουμε και μετά σου λέμε.»\n\n«Εντάξει.»\n\nΈτσι, κατέστρωσαν το σχέδιο ο Θεοτόκης κι ο Αριστοτέλης. Έπρεπε να εντοπίσουν τον φρουρό που κοιμάται. Και να βρουν μια διαδρομή που οι κάμερες δεν μπορούσαν να τους πιάσουν.\n\nΤην Παρασκευή βρήκαν τον φρουρό — εκεί κάθεται, κοιτά εδώ, κοιτά εκεί, νυστάζει. Δεν ήταν καθόλου καλός στη δουλειά του.\n\nΤο Σάββατο βρήκαν όλες τις κάμερες και χάραξαν μια διαδρομή που καμία κάμερα δεν μπορούσε να τους δει.\n\n«Εντάξει — και να βάλουμε τα καπέλα μας για να κρύψουμε τα πρόσωπά μας!»\n\nΠέρασε η εβδομάδα. Ήρθε η Παρασκευή. Λίγο πριν κλείσει ο ζωολογικός κήπος, είδαν ότι ο φρουρός ήδη νύσταζε. Είχαν μία ώρα για να τα καταφέρουν. Έβαλαν τα καπέλα τους και μπήκαν μέσα.\n\nΟ φρουρός κοιμόταν βαθιά στον πάγκο του.\n\nΠροχώρησαν αθόρυβα στη διαδρομή που είχαν χαρτογραφήσει και πήραν τα κλειδιά από τη ζώνη του φρουρού.\n\n«Άντε, Ρίλλα! Τώρα κάνε τον πανικό!»\n\n«Εντάξει!»\n\nΠήγε, πλησίασε τους άλλους γορίλλες, τους ψιθύρισε κάτι — και ξεκίνησε! Χάος! Γορίλλες παντού! Οι φρουροί έτρεχαν πανικόβλητοι πετώντας μπανάνες για να ηρεμήσουν τα ζώα.\n\nΈτρεξαν ο Θεοτόκης κι ο Αριστοτέλης, άνοιξαν το κλουβί.\n\n«Γρήγορα, γρήγορα! Φύγε! Τρέξε πριν σε πιάσουν!»\n\n«Μα πού να πάω;»\n\n«Έξω από τον ζωολογικό κήπο — σκαρφάλωσε σε ένα δέντρο!»\n\nΦεύγει ο Ρίλλας έξω και σκαρφαλώνει σε ένα δέντρο. Φεύγουν κι αυτοί — ο Θεοτόκης κι ο Αριστοτέλης έξω — και τότε βλέπουν ότι κάτι πάει πολύ στραβά!\n\nΟλόκληρος ο δρόμος είχε κλείσει. Αστυνομικά αυτοκίνητα παντού.\n\nΚάποιος είχε ήδη πάρει χαμπάρι ότι λείπει ένας γορίλλας. Και πάνω από τα κεφάλια τους — ελικόπτερο!\n\n«Θεέ μου!» λέει ο Θεοτόκης. «Τώρα τι κάνουμε; Θα πάμε φυλακή;»\n\n«Ηρέμησε — περιμένουμε να φύγει η αστυνομία.»\n\nΠήγαν κάτω από το δέντρο και φώναξαν χαμηλόφωνα:\n\n«Ρίλλα! Ρίλλα!»\n\n«Μείνε εκεί που είσαι! Θα έρθουμε να σε πάρουμε όταν φύγει η αστυνομία!»\n\n«Εντάξει.»\n\nΠερίμεναν. Και περίμεναν. Πέρασε όλη η νύχτα. Τελικά, καθώς ξημέρωνε, η αστυνομία μάζεψε τα πράγματά της κι έφυγε — είπαν ότι θα επέστρεφαν το πρωί.\n\nΉρθε η ώρα τους.\n\nΠήγαν τον Ρίλλα στο νέο του σπίτι — ένα ψηλό δέντρο βαθιά σε ένα ήσυχο, κρυφό μέρος όπου κανένα αυτοκίνητο δεν μπορούσε να φτάσει. Ήταν τέλειο.\n\nΚάθισαν μαζί και έφαγαν μπανάνες.\n\nΚι από εκείνη τη μέρα, οι τρεις τους έγιναν οι καλύτεροι φίλοι. Πήγαιναν μαζί σε πολλές περιπέτειες — και η κάθε μια είναι μια άλλη ιστορία.\n\nΤέλος." }
+    gr: { title: "Ρίλλας ο Γορίλλας (Β)", text: "Ρίλλας ο Γορίλλας\n\nΜια φορά κι έναν καιρό, ήταν ο Θεοτόκης κι ο Αριστοτέλης.\n\nΠαίρνει ο Θεοτόκης τον Αριστοτέλη τηλέφωνο και του λέει: «Ρε, θέλεις να πας στο ζωολογικό κήπο;»\n\n«Μα τι θα κάνω εγώ στο ζωολογικό κήπο, ρε;»\n\n«Άσε τα! Ρε φίλε, είναι ζώα εκεί — θα περάσουμε τέλεια!»\n\n«Εντάξει, εντάξει.»\n\nΒγήκαν, ανέβηκαν στις τετράτροχες μηχανές τους — ΒΡΟΥΜ ΒΡΟΥΜ ΒΡΟΥΜ! — και πήγαν στο ζωολογικό κήπο. Περνούσαν από εδώ, περνούσαν από εκεί. Είδαν τα λιοντάρια, είδαν τις χελώνες, είδαν τα φίδια.\n\nΚάποια στιγμή, είδαν έναν γορίλλα που ήταν μόνος του. Ναι — ήταν εντελώς μόνος στο κλουβί. Και καθώς περνούσαν, άκουσαν:\n\n«Ψτ! Ψτ! Ρε!»\n\n«Ακούς κάτι;»\n\n«Ακούω κάτι... δεν ξέρω...»\n\n«Ρε, γυρίστε πίσω!»\n\nΓύρισαν πίσω. Βλέπουν τον γορίλλα να τους μιλά. Απίστευτο! Έπαθαν πλάκα.\n\n«Μα εσύ μας μιλάς;»\n\n«Εγώ σας μιλάω! Δεν το ξέρατε ότι μπορώ να μιλάω; Έχω χρόνια που ακούω τους ανθρώπους — έμαθα. Το όνομά μου είναι Ρίλλας ο Γορίλλας!»\n\n«Χαίρομαι! Εγώ είμαι ο Θεοτόκης, και ο καλύτερός μου φίλος ο Αριστοτέλης. Πώς μπορούμε να σε βοηθήσουμε, Ρίλλα;»\n\n«Ρε παιδιά, είμαι εγκλωβισμένος εδώ μέσα εδώ και τόσον καιρό. Δεν είμαι ευτυχισμένος. Θέλω να πάω στη ζούγκλα. Μπορείτε να με βοηθήσετε;»\n\n«Δεν ξέρουμε... Έχεις κάποιο σχέδιο;»\n\n«Γιατί εσάς διάλεξα; Επειδή φαίνεστε πολύ καλά παιδιά και σκέφτηκα ότι μπορείτε να με βοηθήσετε. Θέλετε να γίνουμε φίλοι;»\n\nΈνα λεπτό — ξεκίνησαν να συζητούν μεταξύ τους ο Θεοτόκης κι ο Αριστοτέλης.\n\n«Να τον βοηθήσουμε, να τον βοηθήσουμε! Πάμε πίσω!»\n\n«Έλα, Ρίλλα — έχεις κάποιο σχέδιο;»\n\n«Ναι! Ακούστε με. Κάθε Παρασκευή βράδυ, υπάρχει ένας φρουρός που δεν είναι καλός στη δουλειά του — κοιμάται όλη τη νύχτα! Αν μπορείτε να πάτε να πάρετε τα κλειδιά, μπορείτε να ανοίξετε το κλουβί μου. Αλλά οι κάμερες; Θα κάνω εγώ πανικό με τους άλλους γορίλλες για αντιπερισπασμό, κι εσείς πάρτε τα κλειδιά και ελευθερώστε με.»\n\n«Ναι, ναι! Εντάξει — αλλά όχι αυτή την Παρασκευή. Την επόμενη, θα έρθουμε πρώτα να παρακολουθήσουμε και μετά σου λέμε.»\n\n«Εντάξει.»\n\nΈτσι, κατέστρωσαν το σχέδιο ο Θεοτόκης κι ο Αριστοτέλης. Έπρεπε να εντοπίσουν τον φρουρό που κοιμάται. Και να βρουν μια διαδρομή που οι κάμερες δεν μπορούσαν να τους πιάσουν.\n\nΤην Παρασκευή βρήκαν τον φρουρό — εκεί κάθεται, κοιτά εδώ, κοιτά εκεί, νυστάζει. Δεν ήταν καθόλου καλός στη δουλειά του.\n\nΤο Σάββατο βρήκαν όλες τις κάμερες και χάραξαν μια διαδρομή που καμία κάμερα δεν μπορούσε να τους δει.\n\n«Εντάξει — και να βάλουμε τα καπέλα μας για να κρύψουμε τα πρόσωπά μας!»\n\nΠέρασε η εβδομάδα. Ήρθε η Παρασκευή. Λίγο πριν κλείσει ο ζωολογικός κήπος, είδαν ότι ο φρουρός ήδη νύσταζε. Είχαν μία ώρα για να τα καταφέρουν. Έβαλαν τα καπέλα τους και μπήκαν μέσα.\n\nΟ φρουρός κοιμόταν βαθιά στον πάγκο του.\n\nΠροχώρησαν αθόρυβα στη διαδρομή που είχαν χαρτογραφήσει και πήραν τα κλειδιά από τη ζώνη του φρουρού.\n\n«Άντε, Ρίλλα! Τώρα κάνε τον πανικό!»\n\n«Εντάξει!»\n\nΠήγε, πλησίασε τους άλλους γορίλλες, τους ψιθύρισε κάτι — και ξεκίνησε! Χάος! Γορίλλες παντού! Οι φρουροί έτρεχαν πανικόβλητοι πετώντας μπανάνες για να ηρεμήσουν τα ζώα.\n\nΈτρεξαν ο Θεοτόκης κι ο Αριστοτέλης, άνοιξαν το κλουβί.\n\n«Γρήγορα, γρήγορα! Φύγε! Τρέξε πριν σε πιάσουν!»\n\n«Μα πού να πάω;»\n\n«Έξω από τον ζωολογικό κήπο — σκαρφάλωσε σε ένα δέντρο!»\n\nΦεύγει ο Ρίλλας έξω και σκαρφαλώνει σε ένα δέντρο. Φεύγουν κι αυτοί — ο Θεοτόκης κι ο Αριστοτέλης έξω — και τότε βλέπουν ότι κάτι πάει πολύ στραβά!\n\nΟλόκληρος ο δρόμος είχε κλείσει. Αστυνομικά αυτοκίνητα παντού.\n\nΚάποιος είχε ήδη πάρει χαμπάρι ότι λείπει ένας γορίλλας. Και πάνω από τα κεφάλια τους — ελικόπτερο!\n\n«Θεέ μου!» λέει ο Θεοτόκης. «Τώρα τι κάνουμε; Θα πάμε φυλακή;»\n\n«Ηρέμησε — περιμένουμε να φύγει η αστυνομία.»\n\nΠήγαν κάτω από το δέντρο και φώναξαν χαμηλόφωνα:\n\n«Ρίλλα! Ρίλλα!»\n\n«Μείνε εκεί που είσαι! Θα έρθουμε να σε πάρουμε όταν φύγει η αστυνομία!»\n\n«Εντάξει.»\n\nΠερίμεναν. Και περίμεναν. Πέρασε όλη η νύχτα. Τελικά, καθώς ξημέρωνε, η αστυνομία μάζεψε τα πράγματά της κι έφυγε — είπαν ότι θα επέστρεφαν το πρωί.\n\nΉρθε η ώρα τους.\n\nΠήγαν τον Ρίλλα στο νέο του σπίτι — ένα ψηλό δέντρο βαθιά σε ένα ήσυχο, κρυφό μέρος όπου κανένα αυτοκίνητο δεν μπορούσε να φτάσει. Ήταν τέλειο.\n\nΚάθισαν μαζί και έφαγαν μπανάνες.\n\nΚι από εκείνη τη μέρα, οι τρεις τους έγιναν οι καλύτεροι φίλοι. Πήγαιναν μαζί σε πολλές περιπέτειες — και η κάθε μια είναι μια άλλη ιστορία.\n\nΤέλος." }
   }
-};
-let cardLang = { 1: 'en', 2: 'en' };
-let readerStoryId = 1;
-let readerLang = 'en';
-
-// ── Card language toggle ─────────────────────────────────────────────────────
-function setCardLang(storyId, lang, btn) {
-  cardLang[storyId] = lang;
-  const row = btn.closest('.card-lang-toggle');
-  row.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-// ── Read: text reader ────────────────────────────────────────────────────────
-function showStoryText(storyId) {
-  readerStoryId = storyId;
-  readerLang = cardLang[storyId] || 'en';
-  renderStoryText();
-  showPage('story-reader');
-  // sync lang buttons
-  document.getElementById('reader-btn-en').classList.toggle('active', readerLang === 'en');
-  document.getElementById('reader-btn-gr').classList.toggle('active', readerLang === 'gr');
-}
-
-function setReaderLang(lang, btn) {
-  readerLang = lang;
-  const row = btn.closest('.reader-lang-toggle');
-  row.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderStoryText();
-}
-
-function renderStoryText() {
-  const data = storyText[readerStoryId][readerLang];
-  const paras = data.text.split('\n\n').filter(p => p.trim());
-  const body = document.getElementById('story-reader-body');
-  body.innerHTML = '<h2>' + data.title + '</h2>' +
-    paras.map(p => '<p>' + p.trim().replace(/\n/g, ' ') + '</p>').join('');
-  body.scrollTop = 0;
-}
-
-// ── Watch & Listen — Web Speech API + MP3 fallback ───────────────────────────
-let walStoryId = 1;
-let walLang = 'en';
-let walAudio = null;          // MP3 path (if file exists)
-let walSpeaking = false;
-let walPaused = false;
-let walParas = [];
-let walParaIdx = 0;
-let walTotalParas = 0;
-let walFullscreenOn = false;
-let walFullscreenHistoryOn = false;
-let walSyncOn = true;
-let walSyncPausedUntil = 0;
-
-// Comic page boundaries (paragraph index where each page starts)
-const walPageBoundary = { 1: 0, 2: 6, 3: 12 };
-
-function walSetFullscreenState(on) {
-  const page = document.getElementById('page-comic');
-  if (!page) return;
-  walFullscreenOn = on;
-  page.classList.toggle('fullscreen-mode', on);
-  document.body.classList.toggle('comic-fullscreen', on);
-  const enterBtn = document.getElementById('wal-fullscreen-btn');
-  const exitBtn = document.getElementById('wal-exit-fullscreen-btn');
-  if (enterBtn) enterBtn.setAttribute('aria-pressed', String(on));
-  if (exitBtn) exitBtn.setAttribute('aria-hidden', String(!on));
-}
-
-async function walEnterFullscreen() {
-  if (walFullscreenOn) return;
-  walSetFullscreenState(true);
-  if (!walFullscreenHistoryOn) {
-    history.pushState({ orfeasComicFullscreen: true }, '', location.href);
-    walFullscreenHistoryOn = true;
-  }
-  const page = document.getElementById('page-comic');
-  if (page?.requestFullscreen) {
-    try { await page.requestFullscreen(); } catch (_) {}
-  }
-  goToComicPage(comicPage);
-}
-
-function walExitFullscreen(options = {}) {
-  if (!walFullscreenOn && !walFullscreenHistoryOn) return;
-  walSetFullscreenState(false);
-  if (document.fullscreenElement && document.exitFullscreen) {
-    document.exitFullscreen().catch(() => {});
-  }
-  if (walFullscreenHistoryOn) {
-    walFullscreenHistoryOn = false;
-    if (options.updateHistory !== false && !options.fromPopState) history.back();
-  }
-}
-
-window.addEventListener('popstate', e => {
-  if (walFullscreenOn) {
-    walExitFullscreen({ fromPopState: true });
-    return;
-  }
-  const page = e.state?.orfeasPage || 'home';
-  showPage(page, { updateHistory: false });
-});
-
-document.addEventListener('fullscreenchange', () => {
-  if (!document.fullscreenElement && walFullscreenOn) {
-    walExitFullscreen();
-  }
-});
-
-function showWatchAndListen(storyId) {
-  walStop();
-  walStoryId = storyId;
-  walLang = cardLang[storyId] || 'en';
-  showComicFromStory();
-  setComicLang(walLang);
-  document.getElementById('wal-bar').classList.remove('hidden');
-  document.getElementById('wal-btn-en').classList.toggle('active', walLang === 'en');
-  document.getElementById('wal-btn-gr').classList.toggle('active', walLang === 'gr');
-  // Try MP3 first; fall back to Web Speech
-  const src = 'story' + walStoryId + '/story' + walStoryId + '_' + walLang + '.mp3';
-  const probe = new Audio(src);
-  probe.addEventListener('canplay', () => {
-    // Real MP3 exists  — use it
-    walAudio = probe;
-    walAudio.addEventListener('timeupdate', walUpdateMp3Progress);
-    walAudio.addEventListener('ended', () => { walSetPlayIcon(false); walSpeaking = false; });
-    walAudio.play(); walSetPlayIcon(true); walSpeaking = true;
-  });
-  probe.addEventListener('error', () => {
-    // No MP3  — use Web Speech API
-    walAudio = null;
-    walartSpeech();
-  });
-}
-
-// %% TTS: Google Translate audio (Greek) / Web Speech (English) %%%%%%%%%%%%%%%
-let walChunkAudio = null;  // current chunk Audio element for Greek TTS
-
-function walStartSpeech() {
-  const data = storyText[walStoryId][walLang];
-  walParas = data.text.split('\n\n').filter(p => p.trim());
-  walTotalParas = walParas.length;
-  walParaIdx = 0;
-  walSpeaking = true;
-  walPaused = false;
-  walSetPlayIcon(true);
-  walSpeakNext();
-}
-
-// Split text into chus, breaking at sentence boundaries
-function walChunkText(text, maxLen) {
-  const chunks = [];
-  // Split at punctuation followed by space
-  const parts = text.split(/(?<=[.!?;·,])\s+/);
-  let cur = '';
-  for (const p of parts) {
-    if (cur.length + p.length > maxLen && cur.length > 0) {
-      chunks.push(cur.trim());
-      cur = p;
-    } else {
-      cur += (cur ? ' ' : '') + p;
-    }
-  }
-  if (cur.trim()) chunks.push(cur.trim());
-  return chunks;
-}
-
-function walSpeakNext() {
-  if (!walSpeaking || walsed || walParaIdx >= walTotalParas) {
-    if (walParaIdx >= walTotalParas) { walSetPlayIcon(false); walSpeaking = false; }
-    return;
-  }
-
-  const text = walParas[walParaIdx];
-
-  const onDone = () => {
-    walParaIdx++;
-    walUpdateSpeechProgress();
-    if (walSyncOn && walTotalParas > 0) {
-      const newPage = Math.min(COMIC_PAGES, Math.floor(walParaIdx / walTotalParas * COMIC_PAGES) + 1);
-      if (newPage !== comicPage) goToComicPage(newPage);
-    }
-    walSpeakNext();
-  };
-
-  if (walLang === 'gr') {
-    // Greek: use Google Translate TTS audio chunks (no OS voice needed)
-    walSpeakGoogleTTS(text, onDone);
-  } else {
-    // English: Web Speech API
-    walSpeakWebSpeech(text, onDone);
-  }
-}
-
-function walSpeakGoogleTTS(paraText, onParaDone) {
-  const chunks = walChunkText(paraText, 180);
-  let idx = 0;
-  function nextChunk() {
-    if (!walSpeaking || idx >= chunks.length) { onParaDone(); return; }
-    const url = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=el&client=tw-ob&q='
-              + encodeURIComponent(chunks[idx]);
-    walChunkAudio = new Audio(url);
-    walChunkAudio.onended = () => { idx++; nextChunk(); };
-    walChunkAudio.onerror = () => { idx++; nextChunk(); };
-    walChunkAudio.play().catch(() => { idx++; nextChunk(); });
-  }
-  nextChunk();
-}
-
-function walSpeakWebSpeech(text, onDone) {
-  if (!window.speechSynthesis) { document.getElementById('wal-time').textContent = 'No TTS'; return; }
-  const go = () => {
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'en-GB'; u.rate = 0.88; u.pitch = 1.05;
-    const voices = speechSynthesis.getVoices();
-    const v = voices.find(v => v.lang.startsWith('en') && v.name.includes('Google'))
-           || voices.find(v => v.lang.startsWith('en')) || null;
-    if (v) u.voice = v;
-    u.onend = onDone;
-    u.onerror = onDone;
-    speechSynthesis.speak(u);
-  };
-  // Wait for voices to load
-  if (speechSynthesis.getVoices().length > 0) { go(); }
-  else { speechSynthesis.onvoiceschanged = go; }
-}
-
-function walUpdateSpeechProgress() {
-  const pct = walTotalParas ? (walParaIdx / walTotalParas * 100) : 0;
-  document.getElementById('wal-progress-fill').style.width = pct + '%';
-  document.getElementById('wal-time').textContent =
-    'Para ' + walParaIdx + ' / ' + walTotalParas;
-}
-
-// %% MP3 progress (when real file exists) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%lSyncPausedUntil = 0; // timestamp: user manually navigated, pause auto-sync briefly
-
-function walToggleSync() {
-  walSyncOn = !walSyncOn;
-  const btn = document.getElementById('wal-sync-btn');
-  if (btn) {
-    btn.textContent = walSyncOn ? '🔄 Sync ON' : '⏸ Sync OFF';
-    btn.style.background = walSyncOn ? 'rgba(123,47,255,0.3)' : 'rgba(80,80,80,0.3)';
-    btn.style.borderColor = walSyncOn ? 'rgba(123,47,255,0.6)' : 'rgba(120,120,120,0.4)';
-  }
-}
-
-function walUpdateMp3Progress() {
-  if (!walAudio) return;
-  const pct = walAudio.duration ? (walAudio.currentTime / walAudio.duration * 100) : 0;
-  document.getElementById('wal-progress-fill').style.width = pct + '%';
-  const fmt = t => isNaN(t) ? '0:00' : Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0');
-  document.getElementById('wal-time').textContent = fmt(walAudio.currentTime)+' / '+fmt(walAudio.duration);
-
-  // Auto-advance comic pages in sync with audio
-  if (walSyncOn && walAudio.duration && Date.now() > walSyncPausedUntil) {
-    const progress = walAudio.currentTime / walAudio.duration; // 0 to 1
-    const targetPage = Math.min(COMIC_PAGES, Math.floor(progress * COMIC_PAGES) + 1);
-    if (targetPage !== comicPage) goToComicPage(targetPage);
-  }
-}
-
-// %% Controls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function walTogglePlay() {
-  if (walAudio) {
-    // Real MP3 mode
-    if (walAudio.paused) { walAudio.play(); walSetPlayIcon(true); }
-    else { walAudio.pause(); walSetPlayIcon(false); }
-    return;
-  }
-  if (!walSpeaking) { walStartSpeech(); return; }
-  if (walPaused) {
-    walPaused = false; walSetPlayIcon(true);
-    if (walLang === 'gr' && walChunkAudio) walChunkAudio.play();
-    else if (window.speechSynthesis) speechSynthesis.resume();
-  } else {
-    walPaused = true; walSetPlayIcon(false);
-    if (walLang === 'gr' && walChunkAudio) walChunkAudio.pause();
-    else if (window.speechSynthesis) speechSynthesis.pause();
-  }
-}
-
-function walStop() {
-  if (walAudio) { walAudio.pause(); walAudio = null; }
-  if (walChunkAudio) { walChunkAudio.pause(); walChunkAudio = null; }
-  if (window.speechSynthesis) speechSynthesis.cancel();
-  walSpeaking = false; walPaused = false; walParaIdx = 0;
-  walSetPlayIcon(false);
-  document.getElementById('wal-progress-fill').style.width = '0';
-  document.getElementById('wal-time').textContent = '0:00';
-}
-
-function walSetPlayIcon(playing) {
-  const btn = document.getElementById('wal-play-btn');
-  btn.innerHTML = playing
-    ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>'
-    : '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
-}
-
-function walSeek(e) {
-  if (!walAudio || !walAudio.duration) return;
-  const rect = e.currentTarget.getBoundingClientRect();
-  walAudio.currentTime = ((e.clientX - rect.left) / rect.width) * walAudio.duration;
-}
-
-function walSetLang(lang, btn) {
-  walLang = lang;
-  cardLang[walStoryId] = lang;
-  setComicLang(lang);
-  const cardToggle = document.getElementById('card' + walStoryId + '-' + lang);
-  if (cardToggle) {
-    cardToggle.closest('.card-lang-toggle').querySelectorAll('.lang-btn')
-      .forEach(b => b.classList.remove('active'));
-    cardToggle.classList.add('active');
-  }
-  btn.closest('.wal-lang-toggle').querySelectorAll('.lang-btn')
-    .forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  walStop();
-  // Try MP3 first, fall back to speech (mirrors showWatchAndListen logic)
-  const src = 'story' + walStoryId + '/story' + walStoryId + '_' + lang + '.mp3';
-  const probe = new Audio(src);
-  probe.addEventListener('canplay', () => {
-    walAudio = probe;
-    walAudio.addEventListener('timeupdate', walUpdateMp3Progress);
-    walAudio.addEventListener('ended', () => { walSetPlayIcon(false); walSpeaking = false; });
-    walAudio.play(); walSetPlayIcon(true); walSpeaking = true;
-  });
-  probe.addEventListener('error', () => { walAudio = null; walStartSpeech(); });
-}
-
-</script>
-</body>
-</html>
+  ,
+  3: {
+    en: { title: "Rillas the Wrestler", text: "Rillas the Wrestler\n\nTheodokis and Aristotelis found out that ACW wrestling was coming to Nicosia!\n\n\"I want to go!\" said Aristotelis.\n\n\"No way,\" said Theodokis. \"I like books. Let's do something else.\"\n\n\"Come on, you're going to love it! They don't actually hit each other — it's a show! A great show! Please, do me the favour.\"\n\nFine, he was convinced.\n\n\"Should we bring Rillas too?\" said Aristotelis.\n\n\"Man, how are we going to bring Rillas? He's a gorilla! How are we going to get him into a wrestling match?\"\n\n\"Leave it to me, buddy. Let's go ask him.\"\n\nThey hopped on their quad bikes and rode all the way through the jungle. They arrived at Rillas's house and shouted up: \"Rillas! Rillas, come downstairs!\"\n\nRillas was half asleep. \"What's going on? W
