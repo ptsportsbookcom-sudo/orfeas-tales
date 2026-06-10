@@ -1,5 +1,5 @@
 # Orfeas Tales — Progress Tracker
-_Last updated: 2026-06-09 (session 7)_
+_Last updated: 2026-06-10 (session 9)_
 
 ## ✅ Done
 
@@ -35,6 +35,16 @@ _Last updated: 2026-06-09 (session 7)_
 
 ### ✅ Story 2 — "Rillas the Escape Artist" — COMPLETE
 Story 2 is fully live. 15 panels, 4 comic pages, EN+GR audio, bilingual bubbles, auto-sync. All pushed to GitHub/Vercel.
+
+### Session 8 — 2026-06-09 (Story 3 text complete)
+- [x] **Story 3 narration received** — WhatsApp audio recorded by Pantelis (6:31, Cypriot Greek dialect)
+- [x] **Story 3 transcribed** — Pantelis used gemini.google.com directly (Claude's browser-based transcription attempts failed due to HuggingFace ZeroGPU quota exhaustion)
+- [x] **`story3_gr.txt` rewritten** from real transcript — standard Modern Greek, correct characters and plot
+- [x] **`story3_en.txt` rewritten** from real transcript — correct English version
+- Story 3 title: **"Ο Ρίλλας ο Γορίλλας" / "Rillas the Gorilla"**
+- Key story facts: ACW wrestling comes to Nicosia; Aristotelis (book-lover Theodokis reluctantly agrees); they recruit Rillas; Rillas disguised as wrestler with mask; doorman lets him in when he hears the winner gets anything; Rillas wins everything including a 30-athlete battle royale; prize = 1,001 bananas; Theodokis: "never again, we were lucky we didn't go to jail"
+- Characters: Θεοδόκης (Theodokis), Αριστοτέλης (Aristotelis), Ρίλλας (Rillas) — quad bikes ("γουρούνες") as transport
+- Opponent in first match: Πολυδεύκης ο Αλουπός (Polydefkis the Fox)
 
 ### 🔜 Story 3 — When Ready
 Same pipeline as Stories 1 & 2:
@@ -89,7 +99,10 @@ Same pipeline as Stories 1 & 2:
 - [x] **Null bytes and control chars cleaned** — 119 `%\x00` null bytes and 2 `\x14` control chars removed from JS section-separator comments in `index.html`
 - [x] **All changes pushed to GitHub** — live on Vercel; full verification pass done (site loads, WAL opens, Sync toggle works, navigation works)
 
-## ⚠️ Known Issues / Decisions to Revisit
-- Panel 05 shows both boys together rather than separately lost — may want to regenerate
-- Torch appears in some school/daytime scenes (Midjourney ignored the "no torch" instruction in a couple panels) — acceptable for now
-- `debug_row3_full.png`, `debug_row3_labels.png`, `crop_characters.html` still in root — cannot delete (Windows permissions from sandbox), user can delete manually
+### Session 9 — 2026-06-10 (English audio fixed for Stories 2 & 3)
+
+#### Problem
+- `story2_en.mp3` and `story3_en.mp3` on GitHub/Vercel contained **Greek narration** (wrong AAC source files had been converted in a previous session — both the Greek and English filenames had been populated from the same Greek recording).
+
+#### What Was Done
+- [x] **`generate_audio.js` created** — Node.js script saved to `D:\Orfeas tales\generate_au

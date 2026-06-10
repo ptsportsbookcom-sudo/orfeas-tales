@@ -139,10 +139,14 @@ Dogman comic book style, bold thick outlines, flat colours
 **Fix applied**: Python string replacement to restore the correct Unicode characters; `let walSyncOn = true` and `let walSyncPausedUntil = 0` added to the WAL variable declarations block.
 **Rule for future**: If WAL functions ever need to be re-extracted from the live site, test the Sync toggle immediately after deployment. If `typeof walSyncOn === 'undefined'`, the declaration block was lost.
 
-## Audio ↔ Panel Auto-Sync (2026-06-07)
-**Decision**: Auto-advance comic pages synced to audio playback progress; manual nav pauses sync 15 sec
-**Why**: Story panels and audio were not aligned — user noticed the mismatch. Simple time-based sync (currentTime/duration * pages) works without needing per-panel timestamps.
-**How it works**: `timeupdate` listener fires → calculates targetPage → calls `goToComicPage()` if page changed
-**Toggle**: "🔄 Sync ON" button in WAL bar — user can disable if they want to read at their own pace
-**Manual nav pause**: pressing ◀ / ▶ sets `walSyncPausedUntil = Date.now() + 15000` so auto-sync doesn't fight the user
-**Alternatives considered**: Per-panel timestamps (too much manual work for each story), no sync (leaves panels misaligned)
+## TTS Audio Generation Method (2026-06-10)
+**Decision**: Use `generate_audio.js` (Node.js) to generate MP3s, not `tts-generator.html` (browser)
+**Why**: Google Translate TTS API blocks requests from all browser origins we can use:
+- Vercel site origin → CORS blocked ("Failed to fetch")
+- `file://` origin → CORS blocked (null origin)  
+- CORS proxies (corsproxy.io, allorigins) → 403 Forbidden for TTS endpoint
+- Bash sandbox → proxy blocks `translate.googleapis.com` entirely
+- Node.js on user's machine → works perfectly (no system proxy picked up by default)
+**Script**: `D:\Orfeas tales\generate_audio.js` — contains Story 2 EN and Story 3 EN text; run with `node generate_audio.js`
+**To add a new story**: add a new entry to the `STORIES` object in `generate_audio.js`
+**Alt

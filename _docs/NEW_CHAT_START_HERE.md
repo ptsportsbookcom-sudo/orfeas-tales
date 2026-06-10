@@ -1,6 +1,6 @@
 # Orfeas Tales — New Chat Start Here
 
-_Last updated: 2026-06-09 (session 7)_
+_Last updated: 2026-06-10 (session 9)_
 
 ## What Is This Project?
 
@@ -49,10 +49,11 @@ For files in subfolders (e.g. `_docs/`), navigate to the subfolder upload URL fi
 - All `<img>` tags use `loading="lazy" decoding="async"`
 
 ### Audio Generation
-- Tool: `tts-generator.html` in `D:\Orfeas tales\` — open in Chrome
-- **Must run from** a translate.google.com tab (CORS requirement)
-- Generates MP3 via Google Translate TTS API (free, no login)
-- ~2 min per language
+- **Primary tool**: `generate_audio.js` in `D:\Orfeas tales\` — run with `node generate_audio.js` from a terminal in that folder (Cursor IDE works great)
+- No browser, no CORS issues — Node.js calls Google Translate TTS directly
+- Saves MP3s directly to `D:\Orfeas tales\` root; move to correct story subfolder after
+- `tts-generator.html` also exists but has CORS issues from all browser origins (file://, Vercel, proxies all fail)
+- ~1–2 min for both stories; 64kbps mono to stay under 10MB for GitHub upload
 
 ### Greek Text Rule
 - Story text, speech bubbles, captions: **standard Modern Greek only**
@@ -65,29 +66,19 @@ For files in subfolders (e.g. `_docs/`), navigate to the subfolder upload URL fi
 - Use `--cref [URL] --cw 80` directly in prompt text (not the UI button)
 - For each new story: generate a story-specific master ref first (see DECISIONS.md)
 
-## Current Status (as of 2026-06-09)
+## Current Status (as of 2026-06-10)
 
 ### ✅ Fully Live and Working
 - Story 1 — "The Lost Friends" (12 panels, 3 pages, EN+GR audio, auto-sync)
-- Story 2 — "Rillas the Escape Artist" (15 panels, 4 pages, EN+GR audio, auto-sync)
+- Story 2 — "Rillas the Gorilla / Zoo Escape" (15 panels, 4 pages, EN+GR audio, auto-sync)
+- Story 3 — **text complete** (`story3_en.txt`, `story3_gr.txt`); panels + comic reader + audio **still needed**
+- All audio files return HTTP 200 with correct content (EN=English, GR=Greek) ✓
 - SEO/social metadata, robots.txt, sitemap.xml
 - All images compressed to WebP, lazy-loaded
 - Accessibility: accessible comic nav buttons, menu/modal labels, Escape key closes
 - Watch & Listen: mobile fullscreen, Exit button, Back exits fullscreen
 - Browser Back/Forward navigation across all pages
+- `audioFiles` uses `?v=2` cache-buster on all MP3 URLs
 
-### 🔜 Next: Story 3
-1. Pantelis records narration → shares with Claude
-2. Claude transcribes → cleans to standard Greek + English
-3. Generate story-specific master ref in Midjourney
-4. Generate 12–15 panels using `--cref [story ref] --cw 80`
-5. Generate audio with `tts-generator.html`
-6. Add comic reader in `index.html` (new `s3p-` IDs, `COMIC_PAGES[3]`, `storyText[3]`)
-7. Update hero stats bar (3 stories, new character count)
-8. Push to GitHub
-
-## Do Not Touch Unless Pantelis Asks
-- Story text, audio, panel images, character names
-- Folder structure
-- Background music (`music/The Pyre.mp3`)
-- Original PNG source files
+### 🔜 Next: Story 3 Panels + Comic Reader
+1. Generate story-specific master 
