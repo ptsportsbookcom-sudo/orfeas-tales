@@ -2126,9 +2126,20 @@ let isPlaying = false;
 // Audio file paths — add your mp3 files to the same folder
 const audioFiles = {
   1: { en: 'story1/story1_en.mp3', gr: 'story1/story1_gr.mp3' },
-  2: { en: 'story2/story2_en.mp3', gr: 'story2/story2_gr_128.mp3' },
+  2: { en: 'story2/story2_en.mp3', gr: 'story2/story2_gr.mp3' },
   3: { en: 'story3/story3_en.mp3', gr: 'story3/story3_gr.mp3' }
 };
+
+function setCardLang(storyId, lang, btn) {
+  currentLang[storyId] = lang;
+  const toggle = btn?.closest('.card-lang-toggle');
+  if (toggle) {
+    toggle.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const walBtn = document.getElementById('wal-btn-' + lang);
+  if (walStoryId === storyId && walBtn) walSetLang(lang, walBtn);
+}
 
 function setLang(storyId, lang, btn) {
   currentLang[storyId] = lang;
