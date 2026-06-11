@@ -149,4 +149,29 @@ Dogman comic book style, bold thick outlines, flat colours
 - Node.js on user's machine → works perfectly (no system proxy picked up by default)
 **Script**: `D:\Orfeas tales\generate_audio.js` — contains Story 2 EN and Story 3 EN text; run with `node generate_audio.js`
 **To add a new story**: add a new entry to the `STORIES` object in `generate_audio.js`
-**Alt
+**Alternatives considered**: tts-generator.html (CORS fails), Python requests (proxy blocks), bash curl (no DNS without proxy), web_fetch tool (returns binary as text — can't save)
+
+## Cache-Busting Audio URLs (2026-06-10)
+**Decision**: All audio file paths in `audioFiles` object use `?v=2` query parameter
+**Why**: When audio files are replaced on GitHub/Vercel, browsers with the site already open serve the cached old file. Adding `?v=2` forces a fresh fetch.
+**Rule**: When audio files are regenerated/replaced, increment the version number (`?v=3`, `?v=4` etc.) and redeploy `index.html`.
+
+## Illustrated Read Mode — Panel Injection (2026-06-11)
+**Decision**: Read mode (`_renderStoryReader`) now interleaves panel images between story paragraphs using a `storyImages` lookup object. Each panel has an `after` index (0-based paragraph position).
+**Why**: Read mode was text-only; Watch & Listen had images but confusing overlaid text. This gives Read mode a storybook feel (text + illustration) without any complexity.
+**Implementation**: `storyImages[storyId]` = array of `{ after: N, src: 'path' }`. `_renderStoryReader` loops paragraphs, appends `<img class="story-illustration">` after matching index.
+**Alternatives considered**: One image per page (less granular), separate image fields in storyText (more complex data model).
+
+## Watch & Listen — Hide Speech Bubbles (2026-06-11)
+**Decision**: `.comic-panel .speech-bubble, .comic-panel .panel-caption { display:none; }` — all text overlays hidden in the comic grid.
+**Why**: The HTML speech bubbles and captions didn't align with the audio narration, causing confusion. The audio already tells the full story — no text needed on screen.
+**Why it's safe**: The comic grid is ONLY shown in Watch & Listen mode. Read mode uses a completely separate `#story-reader` page. So hiding bubbles globally in `.comic-panel` has zero impact on Read mode.
+**Alternatives considered**: JS toggle (show in comic mode, hide in WAL) — unnecessary since there's no standalone "Read Comic" mode separate from WAL.
+
+## Audio ↔ Panel Auto-Sync (2026-06-07)
+**Decision**: Auto-advance comic pages synced to audio playback progress; manual nav pauses sync 15 sec
+**Why**: Story panels and audio were not aligned — user noticed the mismatch. Simple time-based sync (currentTime/duration * pages) works without needing per-panel timestamps.
+**How it works**: `timeupdate` listener fires → calculates targetPage → calls `goToComicPage()` if page changed
+**Toggle**: "🔄 Sync ON" button in WAL bar — user can disable if they want to read at their own pace
+**Manual nav pause**: pressing ◀ / ▶ sets `walSyncPausedUntil = Date.now() + 15000` so auto-sync doesn't fight the user
+**Alternatives considered**: Per-panel timestamps (too much manual work for each story), no sync (leaves panels misaligned)

@@ -1,6 +1,6 @@
 # Orfeas Tales — New Chat Start Here
 
-_Last updated: 2026-06-10 (session 9)_
+_Last updated: 2026-06-11 (session 10)_
 
 ## What Is This Project?
 
@@ -71,14 +71,32 @@ For files in subfolders (e.g. `_docs/`), navigate to the subfolder upload URL fi
 ### ✅ Fully Live and Working
 - Story 1 — "The Lost Friends" (12 panels, 3 pages, EN+GR audio, auto-sync)
 - Story 2 — "Rillas the Gorilla / Zoo Escape" (15 panels, 4 pages, EN+GR audio, auto-sync)
-- Story 3 — **text complete** (`story3_en.txt`, `story3_gr.txt`); panels + comic reader + audio **still needed**
+- Story 3 — "Rillas the Wrestler" (15+ panels, 4 pages, EN+GR audio, auto-sync) — **panels live, comic reader live**
 - All audio files return HTTP 200 with correct content (EN=English, GR=Greek) ✓
 - SEO/social metadata, robots.txt, sitemap.xml
 - All images compressed to WebP, lazy-loaded
 - Accessibility: accessible comic nav buttons, menu/modal labels, Escape key closes
-- Watch & Listen: mobile fullscreen, Exit button, Back exits fullscreen
+- Watch & Listen: mobile fullscreen, Exit button, Back exits fullscreen — **speech bubbles/captions hidden**
 - Browser Back/Forward navigation across all pages
 - `audioFiles` uses `?v=2` cache-buster on all MP3 URLs
+- **Read mode now illustrated** — panels injected between story paragraphs via `storyImages` object
 
-### 🔜 Next: Story 3 Panels + Comic Reader
-1. Generate story-specific master 
+### Read Mode Architecture (important)
+- `storyImages[storyId]` = array of `{ after: paragraphIndex, src: 'path/panel.webp' }` — defined just above `_renderStoryReader` in index.html
+- `_renderStoryReader` loops paragraphs, inserts `<img class="story-illustration">` after matching index
+- Panel → paragraph mapping is 0-based and approximate — adjust `after` value ±1-2 if a panel lands in wrong spot
+
+### Watch & Listen Architecture (important)
+- Comic grid panels are clean images (no baked-in text)
+- Speech bubbles and captions hidden via CSS: `.comic-panel .speech-bubble, .comic-panel .panel-caption { display:none; }`
+- Audio narrates the full story — no on-screen text needed
+
+### 🔜 Next Steps
+- Review live site and adjust any panel placements in Read mode that feel off
+- Story 4 when ready (same pipeline as 1–3)
+
+## Do Not Touch Unless Pantelis Asks
+- Story text, audio, panel images, character names
+- Folder structure
+- Background music (`music/The Pyre.mp3`)
+- Original PNG source files

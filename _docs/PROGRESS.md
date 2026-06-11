@@ -1,5 +1,5 @@
 # Orfeas Tales — Progress Tracker
-_Last updated: 2026-06-10 (session 9)_
+_Last updated: 2026-06-11 (session 10)_
 
 ## ✅ Done
 
@@ -105,4 +105,48 @@ Same pipeline as Stories 1 & 2:
 - `story2_en.mp3` and `story3_en.mp3` on GitHub/Vercel contained **Greek narration** (wrong AAC source files had been converted in a previous session — both the Greek and English filenames had been populated from the same Greek recording).
 
 #### What Was Done
-- [x] **`generate_audio.js` created** — Node.js script saved to `D:\Orfeas tales\generate_au
+- [x] **`generate_audio.js` created** — Node.js script saved to `D:\Orfeas tales\generate_audio.js`; fetches Google Translate TTS in chunks (no proxy, no browser CORS issues); generates both stories in one run
+- [x] **Story 2 EN text added to `tts-generator.html`** — `'2-en'` entry now exists in the STORIES object with the full English zoo-escape story text
+- [x] **Node.js script run via Cursor IDE** — Pantelis ran it from Cursor; generated `story2/story2_en.mp3` (2.3MB) and `story3/story3_en.mp3` (3.4MB) with correct English TTS narration
+- [x] **Both files uploaded to GitHub** via Chrome extension file_upload → `story2/story2_en.mp3` and `story3/story3_en.mp3` — committed and deployed (Vercel production deploy confirmed)
+- [x] **Cache-busting added** — `audioFiles` in `index.html` now uses `?v=2` on all MP3 URLs so existing open browser tabs get the fresh files instead of cached old ones
+- [x] **index.html pushed to GitHub** with cache-bust change
+
+#### Verification
+- `story2_en.mp3` live size: 2,343,168 bytes ✓ (was 3,227,949 — old wrong file)
+- `story3_en.mp3` live size: 3,498,240 bytes ✓ (was 3,130,221 — old wrong file)
+- Both return HTTP 200 ✓
+
+#### Tools / Lessons Learned
+- **Google Translate TTS is blocked from Vercel origin** (CORS) — cannot call it from the live site's JS
+- **CORS proxies (corsproxy.io, allorigins)** block TTS requests — 403/fail
+- **Bash sandbox proxy** blocks `translate.googleapis.com` — Python requests fails
+- **Chrome extension `navigate` blocks `file://` URLs** — can't open local HTML directly
+- **Working method**: Node.js script on user's machine (no system proxy by default) → direct HTTPS to Google TTS → saves MP3 locally → Chrome extension uploads to GitHub
+- **For future audio regeneration**: run `node generate_audio.js` from `D:\Orfeas tales\`
+
+### Session 10 — 2026-06-11 (Illustrated Read mode + clean Watch & Listen)
+
+#### What Was Done
+- [x] **Illustrated Read mode built** — `_renderStoryReader` now interleaves panel images between story paragraphs
+  - Added `const storyImages` object to `index.html` — maps each panel to the paragraph index it illustrates (0-based)
+  - Story 1: 12 panels mapped across 43 paragraphs
+  - Story 2: 15 panels mapped across ~56 paragraphs
+  - Story 3: 15 panels mapped across ~63 paragraphs
+  - CSS: `.story-illustration` — block, max-width 520px, centred, rounded corners, shadow
+- [x] **Speech bubbles and captions hidden in Watch & Listen** — two CSS rules added:
+  `.comic-panel .speech-bubble, .comic-panel .panel-caption { display:none; }`
+  Panels now show as clean illustrations — audio narrates, no conflicting on-screen text
+- [x] **Confirmed all panels are already clean images** — no baked-in text in any WebP files across stories 1, 2, 3. The "text" was always HTML overlays, not image content.
+- [x] **Both changes pushed to GitHub** — two separate commits, Vercel deployed both
+
+#### Key Facts for Next Session
+- `storyImages` is defined just above `_renderStoryReader` in `index.html` (~line 2671)
+- Panel → paragraph mapping is approximate (0-indexed). If any panel appears in the wrong place, adjust the `after` value by ±1-2
+- Watch & Listen: comic grid still exists and functions — audio sync, prev/next, language toggle all intact. Only bubbles/captions are hidden.
+- Read mode: same `story-reader` page as before, just now with panel images injected
+
+## ⚠️ Known Issues / Decisions to Revisit
+- Panel 05 shows both boys together rather than separately lost — may want to regenerate
+- Torch appears in some school/daytime scenes (Midjourney ignored the "no torch" instruction in a couple panels) — acceptable for now
+- `debug_row3_full.png`, `debug_row3_labels.png`, `crop_characters.html` still in root — cannot delete (Windows permissions from sandbox), user can delete manually
