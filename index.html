@@ -1117,6 +1117,11 @@
   font-size:3em; font-family:'Cinzel', serif; color:var(--gold);
   float:left; line-height:0.8; margin:4px 8px 0 0;
 }
+.story-illustration {
+  display:block; width:100%; max-width:520px;
+  margin:1.8rem auto; border-radius:12px;
+  box-shadow:0 4px 24px rgba(0,0,0,0.5);
+}
 
 /* ── Watch & Listen audio bar in comic ───────────────── */
 .wal-bar {
@@ -2663,15 +2668,74 @@ function setReaderLang(lang, btn) {
   _renderStoryReader(_readerStoryId, lang);
 }
 
+const storyImages = {
+  1: [
+    { after: 0,  src: 'story1/panels/panel_02.webp' }, // classroom, all kids
+    { after: 3,  src: 'story1/panels/panel_01.webp' }, // two boys angry at each other
+    { after: 5,  src: 'story1/panels/panel_03.webp' }, // class walking into forest
+    { after: 6,  src: 'story1/panels/panel_04.webp' }, // boys follow butterfly into trees
+    { after: 8,  src: 'story1/panels/panel_05.webp' }, // each boy alone and lost
+    { after: 11, src: 'story1/panels/panel_06.webp' }, // they meet in the dark forest
+    { after: 16, src: 'story1/panels/panel_07.webp' }, // bickering, torch comes out
+    { after: 17, src: 'story1/panels/panel_08.webp' }, // set off together with map
+    { after: 18, src: 'story1/panels/panel_09.webp' }, // they find the river
+    { after: 21, src: 'story1/panels/panel_10.webp' }, // sitting by river, eating
+    { after: 22, src: 'story1/panels/panel_11.webp' }, // Mr Nikolas finds them
+    { after: 29, src: 'story1/panels/panel_12.webp' }, // best friends, golden sunset
+  ],
+  2: [
+    { after: 1,  src: 'story2/panels/panel_01.webp' }, // Theotokis on the phone
+    { after: 5,  src: 'story2/panels/panel_02.webp' }, // quad bikes to the zoo
+    { after: 6,  src: 'story2/panels/panel_03.webp' }, // zoo — lions and animals
+    { after: 14, src: 'story2/panels/panel_04.webp' }, // meeting Rillas at the cage
+    { after: 19, src: 'story2/panels/panel_05.webp' }, // will you be my friends?
+    { after: 23, src: 'story2/panels/panel_06.webp' }, // Rillas explains the plan
+    { after: 26, src: 'story2/panels/panel_10.webp' }, // boys plan with map
+    { after: 27, src: 'story2/panels/panel_07.webp' }, // spotting the sleepy guard
+    { after: 28, src: 'story2/panels/panel_08.webp' }, // mapping camera blind spots
+    { after: 30, src: 'story2/panels/panel_09.webp' }, // Friday arrives, waiting
+    { after: 31, src: 'story2/panels/panel_11.webp' }, // guard fast asleep
+    { after: 36, src: 'story2/panels/panel_13.webp' }, // boys unlock the cage
+    { after: 40, src: 'story2/panels/panel_12.webp' }, // Rillas bursts out, escapes
+    { after: 43, src: 'story2/panels/panel_14.webp' }, // helicopter overhead
+    { after: 52, src: 'story2/panels/panel_15.webp' }, // three friends in tree, bananas
+  ],
+  3: [
+    { after: 0,  src: 'story3/panels/panel_01.webp' }, // ACW poster, boys react
+    { after: 3,  src: 'story3/panels/panel_02.webp' }, // Aristotelis convincing Theodokis
+    { after: 8,  src: 'story3/panels/panel_03.webp' }, // quad bikes through jungle
+    { after: 9,  src: 'story3/panels/panel_04.webp' }, // arrive at Rillas's house
+    { after: 15, src: 'story3/panels/panel_05.webp' }, // Rillas agrees, thumbs up
+    { after: 16, src: 'story3/panels/panel_06.webp' }, // boys put wrestler mask on Rillas
+    { after: 20, src: 'story3/panels/panel_07.webp' }, // arrive at ACW arena
+    { after: 26, src: 'story3/panels/panel_08.webp' }, // Rillas enters, boys watch
+    { after: 29, src: 'story3/panels/panel_09.webp' }, // boys nervous in the seats
+    { after: 33, src: 'story3/panels/panel_10.webp' }, // Rillas wins first match
+    { after: 35, src: 'story3/panels/panel_11.webp' }, // athletes one by one
+    { after: 39, src: 'story3/panels/panel_12.webp' }, // battle royale, Rillas dominates
+    { after: 41, src: 'story3/panels/panel_13.webp' }, // wrestlers flying in all directions
+    { after: 44, src: 'story3/panels/panel_14.webp' }, // last three knocked out
+    { after: 58, src: 'story3/panels/panel_15.webp' }, // home with 1001 bananas
+  ]
+};
+
 function _renderStoryReader(storyId, lang) {
   const body = document.getElementById('story-reader-body');
   if (!body) return;
   const data = storyText[storyId] && storyText[storyId][lang];
   if (!data) { body.innerHTML = '<p>Story not found.</p>'; return; }
-  const paragraphs = data.text.split('\n\n').map(p =>
-    '<p>' + p.replace(/\n/g, '<br>') + '</p>'
-  ).join('');
-  body.innerHTML = '<h2>' + data.title + '</h2>' + paragraphs;
+  const imgs = storyImages[storyId] || [];
+  const imgAt = {};
+  imgs.forEach(function(im) { imgAt[im.after] = im.src; });
+  const paragraphs = data.text.split('\n\n');
+  let html = '<h2>' + data.title + '</h2>';
+  paragraphs.forEach(function(p, i) {
+    html += '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+    if (imgAt[i] !== undefined) {
+      html += '<img class="story-illustration" src="' + imgAt[i] + '" alt="" loading="lazy" decoding="async">';
+    }
+  });
+  body.innerHTML = html;
 }
 
 
