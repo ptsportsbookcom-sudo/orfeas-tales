@@ -1,5 +1,5 @@
 # Orfeas Tales — Progress Tracker
-_Last updated: 2026-06-11 (session 10)_
+_Last updated: 2026-06-11 (session 11)_
 
 ## ✅ Done
 
@@ -42,8 +42,8 @@ Story 2 is fully live. 15 panels, 4 comic pages, EN+GR audio, bilingual bubbles,
 - [x] **`story3_gr.txt` rewritten** from real transcript — standard Modern Greek, correct characters and plot
 - [x] **`story3_en.txt` rewritten** from real transcript — correct English version
 - Story 3 title: **"Ο Ρίλλας ο Γορίλλας" / "Rillas the Gorilla"**
-- Key story facts: ACW wrestling comes to Nicosia; Aristotelis (book-lover Theodokis reluctantly agrees); they recruit Rillas; Rillas disguised as wrestler with mask; doorman lets him in when he hears the winner gets anything; Rillas wins everything including a 30-athlete battle royale; prize = 1,001 bananas; Theodokis: "never again, we were lucky we didn't go to jail"
-- Characters: Θεοδόκης (Theodokis), Αριστοτέλης (Aristotelis), Ρίλλας (Rillas) — quad bikes ("γουρούνες") as transport
+- Key story facts: ACW wrestling comes to Nicosia; Aristotelis (book-lover Theotokis reluctantly agrees); they recruit Rillas; Rillas disguised as wrestler with mask; doorman lets him in when he hears the winner gets anything; Rillas wins everything including a 30-athlete battle royale; prize = 1,001 bananas; Theotokis: "never again, we were lucky we didn't go to jail"
+- Characters: Θεοτόκης (Theotokis), Αριστοτέλης (Aristotelis), Ρίλλας (Rillas) — quad bikes ("γουρούνες") as transport
 - Opponent in first match: Πολυδεύκης ο Αλουπός (Polydefkis the Fox)
 
 ### 🔜 Story 3 — When Ready
@@ -124,6 +124,12 @@ Same pipeline as Stories 1 & 2:
 - **Chrome extension `navigate` blocks `file://` URLs** — can't open local HTML directly
 - **Working method**: Node.js script on user's machine (no system proxy by default) → direct HTTPS to Google TTS → saves MP3 locally → Chrome extension uploads to GitHub
 - **For future audio regeneration**: run `node generate_audio.js` from `D:\Orfeas tales\`
+
+### Session 11 — 2026-06-11 (Name spelling fix)
+
+- [x] **Fixed name spelling throughout `index.html`** — replaced all instances of `Theodokis` → `Theotokis` and `Θεοδόκης` → `Θεοτόκης` in Story 3 content (panel captions lines 1778, 1779, 1837, 1838 and full `storyText[3]` EN + GR text)
+- [x] **Image filenames unchanged** — `characters/7_Thetokis.webp` left as-is (loads correctly; only displayed text was fixed)
+- [x] **Pushed to GitHub** — commit "Fix name spelling: Theodokis → Theotokis, Θεοδόκης → Θεοτόκης in Story 3"; Vercel deployed
 
 ### Session 10 — 2026-06-11 (Illustrated Read mode + clean Watch & Listen)
 

@@ -1,6 +1,6 @@
 # Orfeas Tales — New Chat Start Here
 
-_Last updated: 2026-06-11 (session 10)_
+_Last updated: 2026-06-11 (session 11)_
 
 ## What Is This Project?
 
@@ -66,7 +66,7 @@ For files in subfolders (e.g. `_docs/`), navigate to the subfolder upload URL fi
 - Use `--cref [URL] --cw 80` directly in prompt text (not the UI button)
 - For each new story: generate a story-specific master ref first (see DECISIONS.md)
 
-## Current Status (as of 2026-06-10)
+## Current Status (as of 2026-06-11)
 
 ### ✅ Fully Live and Working
 - Story 1 — "The Lost Friends" (12 panels, 3 pages, EN+GR audio, auto-sync)
