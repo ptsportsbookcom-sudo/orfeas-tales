@@ -1,0 +1,39 @@
+background_music.wav
+00_collage_all.png
+crop_characters.html
+
+# Debug images
+debug_*.png
+
+# Git repair backup
+.git.bak/
+story3/panels_corrupt_backup_*/
+
+# Windows repair/push scripts
+*.bat
+*.ps1
+
+# Push and repair logs
+*_log.txt
+
+# Temporary test files
+test_write.txt
+
+# Raw audio source files (stay on disk, not in repo)
+*.aac
+**/WhatsApp Audio*
+
+# Story 4 PNG source masters (webp is canonical)
+story4/panels/*.png
+
+# Story 1 Midjourney raw exports
+story1/panels/u663*.png
+
+# Character Midjourney raw exports
+characters/u663*.png
+
+# Local preview tool
+story1/panels/preview.html
+
+# Alternate music file (not deployed)
+music/background_music.mp3
