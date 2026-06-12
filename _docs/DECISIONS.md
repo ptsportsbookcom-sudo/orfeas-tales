@@ -1,22 +1,29 @@
 # Orfeas Tales — Key Decisions & Reasoning
 
-## ⚠️ HOW TO PUSH FILES TO GITHUB (ALWAYS USE THIS METHOD)
+## ⚠️ HOW TO PUSH FILES TO GITHUB (UPDATED METHOD — 2026-06-12)
 
-**Method**: GitHub web upload via Claude's browser extension (`mcp__Claude_in_Chrome__file_upload`)
+**Primary method**: Write a `.bat` file, have Pantelis run it via Win+R or File Explorer.
 
-**Steps**:
-1. Navigate to `https://github.com/ptsportsbookcom-sudo/orfeas-tales/upload/main`
-2. Use `mcp__Claude_in_Chrome__find` with query "file input upload" → get the `ref`
-3. Call `mcp__Claude_in_Chrome__file_upload` with the ref and file paths from `D:\Orfeas tales\`
-4. Scroll down and click "Commit changes"
+```bat
+@echo off
+cd /d "D:\Orfeas tales"
+git add [files]
+git commit -m "Your message here"
+git push origin main
+pause
+```
 
-**DO NOT**:
-- Try git commands from the bash sandbox (proxy blocks GitHub)
-- Try to use GitHub's web editor with CodeMirror JS hacks
-- Ask Pantelis to do it manually
-- Try to find/extract a GitHub token
+**Run it**: Press Win+R → type `"D:\Orfeas tales\yourscript.bat"` → Enter (quotes required — folder name has a space).
 
-**Why it works**: The user is already logged in to GitHub in Chrome, so the upload UI accepts files directly using their session.
+**Fallback — if local git is broken**: Use `clone_and_push.bat` in the root. Clones fresh from GitHub, copies modified files in, commits, pushes, cleans up.
+
+**Emergency git repair**: Use `repair_git_v2.bat` in the root. Replaces entire `.git` with a fresh clone's via PowerShell `Move-Item`. Does NOT touch website files.
+
+**DO NOT** (from the bash sandbox):
+- Try `git fetch`, `git push`, or `git clone` to/from GitHub — sandbox proxy blocks all GitHub traffic (HTTP 403)
+- Try to delete/overwrite `.git/objects/pack/*` — NTFS permissions block this even with `rm -f` or Python
+
+**Old method (still works for binary files)**: GitHub web upload via Claude in Chrome extension (`mcp__Claude_in_Chrome__file_upload`). Use only for large binary files (images, audio) not suitable for git commits.
 
 ---
 
@@ -167,6 +174,27 @@ Dogman comic book style, bold thick outlines, flat colours
 **Why**: The HTML speech bubbles and captions didn't align with the audio narration, causing confusion. The audio already tells the full story — no text needed on screen.
 **Why it's safe**: The comic grid is ONLY shown in Watch & Listen mode. Read mode uses a completely separate `#story-reader` page. So hiding bubbles globally in `.comic-panel` has zero impact on Read mode.
 **Alternatives considered**: JS toggle (show in comic mode, hide in WAL) — unnecessary since there's no standalone "Read Comic" mode separate from WAL.
+
+## 4-File Architecture Split (2026-06-12)
+**Decision**: Split the single `index.html` (was ~137 KB) into four files: `index.html` (HTML shell), `styles.css`, `app.js`, `stories-data.js`.
+**Why**: The single file was 137 KB and growing with each story. Browsers couldn't cache CSS/JS separately. The file was too large to edit safely. The split enables immutable caching for CSS/JS (Vercel `Cache-Control: immutable`) while `index.html` stays `must-revalidate`.
+**Cache busting**: All three asset files use `?v=N` query params in index.html. Increment the version when a file changes.
+**stories-data.js**: Contains `storyText`, `storyImages`, `audioFiles`, `comicData`. Pure data — no DOM or event logic.
+**app.js**: All JavaScript functions. References global `storyData` from stories-data.js.
+**vercel.json**: Added to repo root — sets immutable caching for .css/.js/.webp/.mp3; must-revalidate for index.html.
+**Alternatives considered**: Keeping single file (rejected — too large, no caching); ES modules with import/export (rejected — adds complexity, no benefit for this project size).
+
+## beforePageChange() Pattern — Pure showPage() (2026-06-12)
+**Decision**: `showPage()` is now a pure navigation function. All audio/WAL cleanup moved to `beforePageChange(nextPage)`, called by event handlers before `showPage()`.
+**Why**: `showPage()` was being called from `popstate` (browser Back) and from UI actions. In some paths, WAL cleanup (stop audio, exit fullscreen, hide bar) was either missing or throwing uncaught errors that silently blocked navigation. Separating concerns makes navigation always safe.
+**Safety**: All cleanup in `beforePageChange` is wrapped in individual `try/catch` blocks — a failing `walStop()` can never block navigation.
+**Rule**: Any future code that navigates must call `beforePageChange(targetPage)` BEFORE `showPage(targetPage)`. The only exception is the initial page load.
+
+## Git Corruption — Root Cause (2026-06-12)
+**What happened**: The Linux sandbox mounts `D:\Orfeas tales` via NTFS. Git pack files are written as read-only on Windows. Over multiple sessions, write operations from the sandbox (via the Edit/Write tools) corrupted the `.git/objects/pack/*.pack` file (116 MB → all zeros). Multiple loose objects also became corrupt.
+**Why it's hard to fix from sandbox**: NTFS permissions block `rm`, `mv`, Python `os.unlink()`, and `open(..., 'wb')` on `.git` internals, even when the Linux sandbox user appears to be the owner.
+**Fix**: Run `repair_git_v2.bat` on Windows — uses PowerShell `Move-Item` which handles hidden/readonly NTFS items correctly.
+**Prevention**: Do not use sandbox bash to write directly inside `.git/`. Always use git commands via bat files on Windows for any git operations.
 
 ## Audio ↔ Panel Auto-Sync (2026-06-07)
 **Decision**: Auto-advance comic pages synced to audio playback progress; manual nav pauses sync 15 sec

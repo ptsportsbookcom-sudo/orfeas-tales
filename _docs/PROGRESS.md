@@ -1,5 +1,5 @@
 # Orfeas Tales — Progress Tracker
-_Last updated: 2026-06-11 (session 11)_
+_Last updated: 2026-06-12 (session 12)_
 
 ## ✅ Done
 
@@ -152,7 +152,47 @@ Same pipeline as Stories 1 & 2:
 - Watch & Listen: comic grid still exists and functions — audio sync, prev/next, language toggle all intact. Only bubbles/captions are hidden.
 - Read mode: same `story-reader` page as before, just now with panel images injected
 
+### Session 12 — 2026-06-12 (4-file refactor shipped + hardening + git repair)
+
+#### Architecture Refactor (completed, live)
+- [x] **Refactored single `index.html` into 4 files**: `index.html` (HTML only), `styles.css`, `app.js`, `stories-data.js`
+  - `styles.css` — all CSS extracted (~8 KB)
+  - `stories-data.js` — all story data (storyText, storyImages, audioFiles, comicData) extracted (~77 KB)
+  - `app.js` — all JavaScript logic extracted (~21 KB)
+  - `index.html` — pure HTML shell, loads the three above via `<link>` and `<script src>` tags
+- [x] **Static asset caching added** — `vercel.json` added: CSS/JS/WebP/MP3 assets get `Cache-Control: immutable` (1 year); `index.html` gets `must-revalidate`
+- [x] **All 4 files pushed to GitHub** — live and verified on orfeas-tales.vercel.app
+
+#### Hardening Pass (completed, live)
+- [x] **`beforePageChange(nextPage)` extracted** — cleanup (walStop, walExitFullscreen, hide wal-bar) moved OUT of `showPage()` into a separate safety function. All 5 call sites in app.js updated.
+- [x] **`showPage()` is now pure** — only validates page, switches DOM, updates nav classes, closes nav, scrolls to top, updates history. Zero audio/WAL side-effects.
+- [x] **Cache versions bumped to `?v=2`** for `styles.css`, `app.js`, `stories-data.js` in `index.html`. Audio/image `?v=` strings left unchanged.
+- [x] **All smoke checks passed**:
+  - `node -c app.js` → PASS
+  - `node -c stories-data.js` → PASS
+  - 0 `onclick` in index.html ✓
+  - 0 inline `<style>` in index.html ✓
+  - 0 inline `<script>` in index.html ✓
+  - No duplicate function declarations in app.js ✓
+  - 5 `beforePageChange` call sites confirmed ✓
+  - `?v=2` on all 3 assets confirmed ✓
+- [x] **Live verification**: `typeof beforePageChange === 'function'` ✓, `showPage()` contains no `walStop` ✓, deployed assets return HTTP 200 ✓
+
+#### Git Repair (completed)
+- [x] **Diagnosed corrupted `.git` object store** — pack file (`pack-3fa33dbe...pack`, 116 MB) was all zeros; multiple loose objects also corrupt with `inflate: data stream error`. Root cause: Linux sandbox NTFS mount mangled the git object store over multiple sessions.
+- [x] **Repaired via `repair_git_v2.bat`**: cloned fresh from GitHub to `D:\temp-git-fix`, backed up corrupt `.git` to `.git.bak` via PowerShell `Move-Item`, moved fresh `.git` in, cleaned up. `git fsck` now shows zero errors.
+- [x] **Hardening commit pushed via `clone_and_push.bat`** (before repair): fresh clone → copy modified files → commit → push → delete temp. Commit `75696a6` is live on GitHub main.
+
+#### Key Files Created This Session
+- `D:\Orfeas tales\styles.css` — extracted CSS
+- `D:\Orfeas tales\app.js` — extracted JS
+- `D:\Orfeas tales\stories-data.js` — extracted story data
+- `D:\Orfeas tales\vercel.json` — caching rules
+- `D:\Orfeas tales\repair_git_v2.bat` — git repair tool (keep for emergencies)
+- `D:\Orfeas tales\clone_and_push.bat` — push-without-local-git tool (keep for emergencies)
+
 ## ⚠️ Known Issues / Decisions to Revisit
 - Panel 05 shows both boys together rather than separately lost — may want to regenerate
 - Torch appears in some school/daytime scenes (Midjourney ignored the "no torch" instruction in a couple panels) — acceptable for now
 - `debug_row3_full.png`, `debug_row3_labels.png`, `crop_characters.html` still in root — cannot delete (Windows permissions from sandbox), user can delete manually
+- Several `.bat` files in root (`hardening_push.bat`, `fix_pack_and_push.bat`, `clone_and_push.bat`, `repair_git_v2.bat` etc.) — safe to delete manually once no longer needed
