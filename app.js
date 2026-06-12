@@ -22,14 +22,21 @@ function getUrlForPage(name) {
   return url.pathname + url.search + url.hash;
 }
 
-function showPage(name, options = {}) {
-  if (!VALID_PAGES.has(name)) name = 'home';
-  const previousPageName = currentPageName;
-  if (name !== 'comic') {
+// Call this before showPage() whenever audio/fullscreen cleanup is needed.
+// Wrapped in try/catch so failures never block navigation.
+function beforePageChange(nextPage) {
+  if (nextPage !== 'comic') {
     try { walExitFullscreen({ updateHistory: false }); } catch (e) {}
     try { const wb = document.getElementById('wal-bar'); if (wb) wb.classList.add('hidden'); } catch (e) {}
     try { walStop(); } catch (e) {}
   }
+}
+
+// Pure navigation: validate page, switch DOM, update history.
+// No audio/fullscreen side-effects here.
+function showPage(name, options = {}) {
+  if (!VALID_PAGES.has(name)) name = 'home';
+  const previousPageName = currentPageName;
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -55,7 +62,9 @@ window.addEventListener('popstate', e => {
   const fallbackPage = VALID_PAGES.has(new URLSearchParams(location.search).get('page'))
     ? new URLSearchParams(location.search).get('page')
     : 'home';
-  showPage(e.state?.orfeasPage || fallbackPage, { updateHistory: false });
+  const targetPage = e.state?.orfeasPage || fallbackPage;
+  beforePageChange(targetPage);
+  showPage(targetPage, { updateHistory: false });
 });
 
 function toggleNav() {
@@ -302,6 +311,7 @@ function showComicFromStory() {
     if (s4nav) s4nav.style.display = 'none';
   }
   goToComicPage(1);
+  beforePageChange('comic');
   showPage('comic');
 }
 
@@ -455,6 +465,7 @@ function showStoryText(storyId) {
   document.querySelectorAll('#reader-btn-en, #reader-btn-gr').forEach(b => b.classList.remove('active'));
   const ab = document.getElementById('reader-btn-' + lang);
   if (ab) ab.classList.add('active');
+  beforePageChange('story-reader');
   showPage('story-reader');
 }
 
@@ -495,7 +506,7 @@ document.addEventListener('click', function (e) {
   if (!el) return;
 
   switch (el.dataset.action) {
-    case 'show-page':          showPage(el.dataset.page); break;
+    case 'show-page':          beforePageChange(el.dataset.page); showPage(el.dataset.page); break;
     case 'toggle-nav':         toggleNav(); break;
     case 'close-nav':          closeNav(); break;
     case 'toggle-music':       toggleMusic(); break;
@@ -505,7 +516,6 @@ document.addEventListener('click', function (e) {
     case 'set-reader-lang':    setReaderLang(el.dataset.lang, el); break;
     case 'wal-toggle-play':    walTogglePlay(); break;
     case 'wal-seek':           walSeek(e); break;
-    case 'wal-toggle-sync':    walToggleSync(); break;
     case 'wal-enter-fullscreen': walEnterFullscreen(); break;
     case 'wal-exit-fullscreen':  walExitFullscreen(); break;
     case 'wal-set-lang':       walSetLang(el.dataset.lang, el); break;
