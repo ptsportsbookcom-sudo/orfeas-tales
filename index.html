@@ -1,1278 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Orfeas Tales</title>
-<meta name="description" content="Orfeas Tales is a bilingual children's storybook website with English and Greek comics, narration, and character adventures made for Orfeas.">
-<meta name="theme-color" content="#08081f">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Orfeas Tales">
-<meta property="og:description" content="Bilingual storybook comics in English and Greek, with narration, character adventures, and a growing world made for Orfeas.">
-<meta property="og:url" content="https://orfeas-tales.vercel.app/">
-<meta property="og:image" content="https://orfeas-tales.vercel.app/characters/og-image.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Orfeas Tales">
-<meta name="twitter:description" content="Bilingual storybook comics in English and Greek, with narration, character adventures, and a growing world made for Orfeas.">
-<meta name="twitter:image" content="https://orfeas-tales.vercel.app/characters/og-image.jpg">
-<link rel="canonical" href="https://orfeas-tales.vercel.app/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308081f'/%3E%3Cpath d='M32 8l5.8 17.2H56L41.3 35.8 46.9 53 32 42.4 17.1 53l5.6-17.2L8 25.2h18.2L32 8z' fill='%23ffd700'/%3E%3C/svg%3E">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #08081f;
-    --bg2: #0d0d2b;
-    --purple: #7b2fff;
-    --purple-light: #a855f7;
-    --gold: #ffd700;
-    --gold-dim: #b8970a;
-    --coral: #ff6b6b;
-    --text: #e8e8ff;
-    --text-dim: #8888aa;
-    --card-bg: rgba(255,255,255,0.04);
-    --card-border: rgba(255,255,255,0.08);
-    --locked-bg: rgba(10,10,30,0.85);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Nunito', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* ── STARS ── */
-  #stars-canvas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* ── HEADER ── */
-  header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 28px;
-    background: rgba(8,8,31,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(123,47,255,0.2);
-  }
-
-  .logo {
-    font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--gold);
-    letter-spacing: 4px;
-    text-transform: uppercase;
-  }
-  .logo span { color: var(--text-dim); font-size: 0.9em; }
-
-  .hamburger {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding: 4px;
-  }
-  .hamburger span {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: var(--text);
-    border-radius: 2px;
-    transition: all 0.3s;
-  }
-
-  .music-btn {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 20px;
-    padding: 0 12px;
-    height: 34px;
-    display: flex; align-items: center; gap: 6px;
-    cursor: pointer;
-    color: var(--text-dim);
-    font-size: 0.9rem;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 0.75rem;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-  .music-btn:hover { background: rgba(123,47,255,0.2); color: var(--text); border-color: rgba(123,47,255,0.4); }
-  .music-btn.playing { color: var(--gold); border-color: var(--gold-dim); background: rgba(255,215,0,0.08); }
-  .music-btn .music-label { font-size: 0.72rem; letter-spacing: 0.3px; }
-  @media (max-width: 540px) { .music-btn .music-label { display: none; } .music-btn { padding: 0 8px; } }
-
-
-  /* ── HEADER NAV LINKS (desktop) ── */
-  .header-nav {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-  }
-  .header-nav-btn {
-    background: none;
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 20px;
-    padding: 6px 16px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--text-dim);
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.3px;
-  }
-  .header-nav-btn:hover {
-    background: rgba(123,47,255,0.2);
-    color: var(--text);
-    border-color: rgba(123,47,255,0.5);
-  }
-  .header-nav-btn.comic-btn {
-    background: var(--purple);
-    color: white;
-    border-color: var(--purple);
-  }
-  .header-nav-btn.comic-btn:hover { opacity: 0.85; }
-
-  @media (max-width: 540px) {
-    .header-nav { display: none; }
-  }
-
-  /* ── SIDE NAV ── */
-  .nav-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    z-index: 200;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s;
-  }
-  .nav-overlay.open { opacity: 1; pointer-events: all; }
-
-  .side-nav {
-    position: fixed;
-    top: 0; left: 0;
-    width: 260px;
-    height: 100%;
-    background: #0f0f2e;
-    border-right: 1px solid rgba(123,47,255,0.3);
-    z-index: 300;
-    padding: 24px 20px;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .side-nav.open { transform: translateX(0); }
-
-  .side-nav .nav-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-  }
-  .side-nav .nav-header .logo { font-size: 0.85rem; }
-  .close-nav {
-    background: none; border: none; color: var(--text-dim);
-    font-size: 1.5rem; cursor: pointer;
-  }
-
-  .nav-section-label {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    color: var(--gold);
-    text-transform: uppercase;
-    padding: 8px 12px 4px;
-  }
-
-  .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
-    border-radius: 10px;
-    cursor: pointer;
-    color: var(--text-dim);
-    font-size: 0.95rem;
-    font-weight: 600;
-    transition: all 0.2s;
-    border: none;
-    background: none;
-    width: 100%;
-    text-align: left;
-  }
-  .nav-link:hover, .nav-link.active {
-    background: rgba(123,47,255,0.2);
-    color: var(--text);
-  }
-  .nav-link.active { color: var(--gold); }
-  .nav-link svg { width: 18px; height: 18px; flex-shrink: 0; }
-
-  .nav-footer {
-    margin-top: auto;
-    text-align: center;
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    padding: 12px 0;
-  }
-
-  /* ── PAGES ── */
-  .page { display: none; padding-top: 70px; min-height: 100vh; position: relative; z-index: 1; }
-  .page.active { display: block; }
-
-  /* ── HOME ── */
-  .hero {
-    min-height: calc(100vh - 70px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 40px 24px;
-    position: relative;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(123,47,255,0.2);
-    border: 1px solid rgba(123,47,255,0.4);
-    border-radius: 20px;
-    padding: 6px 16px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--purple-light);
-    margin-bottom: 32px;
-  }
-  .hero-badge::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--purple-light);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.3); }
-  }
-
-  .hero h1 {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(2.8rem, 8vw, 6rem);
-    font-weight: 900;
-    line-height: 1.05;
-    color: var(--text);
-    margin-bottom: 24px;
-    text-shadow: 0 0 60px rgba(123,47,255,0.4);
-  }
-
-  .hero-planet {
-    position: absolute;
-    width: clamp(300px, 60vw, 600px);
-    height: clamp(300px, 60vw, 600px);
-    border-radius: 50%;
-    background: radial-gradient(ellipse at 30% 30%, rgba(123,47,255,0.15), transparent 70%);
-    border: 1px solid rgba(123,47,255,0.1);
-    pointer-events: none;
-    z-index: -1;
-  }
-
-  .hero p {
-    font-size: clamp(0.95rem, 2vw, 1.1rem);
-    color: var(--text-dim);
-    max-width: 500px;
-    line-height: 1.7;
-    margin-bottom: 40px;
-  }
-
-  .hero-buttons {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 60px;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--purple);
-    color: white;
-    border: none;
-    padding: 14px 28px;
-    border-radius: 50px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'Nunito', sans-serif;
-  }
-  .btn-primary:hover { background: #6320dd; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(123,47,255,0.4); }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: transparent;
-    color: var(--gold);
-    border: 2px solid var(--gold);
-    padding: 14px 28px;
-    border-radius: 50px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'Nunito', sans-serif;
-  }
-  .btn-secondary:hover { background: rgba(255,215,0,0.1); transform: translateY(-2px); }
-
-  .stats-bar {
-    display: flex;
-    gap: 1px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 16px;
-    overflow: hidden;
-    width: min(600px, 90vw);
-  }
-
-  .stat {
-    flex: 1;
-    padding: 18px 12px;
-    text-align: center;
-    background: rgba(255,255,255,0.02);
-  }
-  .stat:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.06); }
-  .stat-value {
-    font-family: 'Cinzel', serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--gold);
-    display: block;
-  }
-  .stat-label {
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-top: 4px;
-    display: block;
-  }
-
-  /* ── STORIES ── */
-  .page-header {
-    text-align: center;
-    padding: 50px 24px 40px;
-  }
-  .page-header h2 {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 900;
-    color: var(--gold);
-    letter-spacing: 4px;
-    margin-bottom: 12px;
-  }
-  .page-header p { color: var(--text-dim); font-size: 0.95rem; }
-
-  .stories-list {
-    max-width: 780px;
-    margin: 0 auto;
-    padding: 0 24px 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .story-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 16px;
-    padding: 24px 28px;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .story-card.unlocked {
-    border-color: rgba(123,47,255,0.4);
-    background: rgba(123,47,255,0.07);
-  }
-  .story-card.unlocked::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--purple), var(--gold));
-  }
-  .story-card.unlocked:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(123,47,255,0.2); }
-
-  .story-card.locked { opacity: 0.5; }
-
-  .ep-num {
-    font-family: 'Cinzel', serif;
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: rgba(255,255,255,0.1);
-    min-width: 60px;
-    line-height: 1;
-  }
-  .story-card.unlocked .ep-num { color: rgba(123,47,255,0.4); }
-
-  .story-info { flex: 1; }
-  .story-ep-label {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--purple-light);
-    margin-bottom: 6px;
-  }
-  .story-title {
-    font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 8px;
-  }
-  .story-desc {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    line-height: 1.6;
-    margin-bottom: 10px;
-  }
-  .story-meta {
-    font-size: 0.75rem;
-    color: var(--purple-light);
-    font-weight: 700;
-  }
-
-  .story-action { flex-shrink: 0; }
-
-  .lock-icon {
-    width: 42px; height: 42px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--text-dim);
-  }
-
-  /* ── AUDIO PLAYER ── */
-  .audio-player {
-    background: rgba(0,0,0,0.3);
-    border: 1px solid rgba(123,47,255,0.3);
-    border-radius: 14px;
-    padding: 16px 18px;
-    margin-top: 16px;
-    display: none;
-  }
-  .audio-player.visible { display: block; }
-
-  .audio-top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-
-  .lang-toggle {
-    display: flex;
-    background: rgba(255,255,255,0.05);
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .lang-btn {
-    padding: 6px 14px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    background: none;
-    border: none;
-    color: var(--text-dim);
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'Nunito', sans-serif;
-  }
-  .lang-btn.active {
-    background: var(--purple);
-    color: white;
-  }
-
-  .play-btn {
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    background: var(--purple);
-    border: none;
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: all 0.2s;
-  }
-  .play-btn:hover { background: #6320dd; transform: scale(1.05); }
-
-  .audio-progress {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .progress-bar-wrap {
-    height: 4px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 2px;
-    cursor: pointer;
-    overflow: hidden;
-  }
-  .progress-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--purple), var(--gold));
-    border-radius: 2px;
-    width: 0%;
-    transition: width 0.1s;
-  }
-  .audio-time {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.7rem;
-    color: var(--text-dim);
-  }
-
-  .audio-note {
-    font-size: 0.72rem;
-    color: var(--text-dim);
-    text-align: center;
-    padding: 6px 0 0;
-    font-style: italic;
-  }
-
-  /* ── CHARACTERS ── */
-  .characters-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 16px;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 24px 80px;
-  }
-
-  @media (max-width: 900px) {
-    .characters-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-  @media (max-width: 600px) {
-    .characters-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  .char-card {
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1px solid var(--card-border);
-    background: var(--card-bg);
-    transition: all 0.25s;
-    cursor: pointer;
-    position: relative;
-  }
-
-  .char-card.unlocked {
-    border-color: rgba(123,47,255,0.5);
-    box-shadow: 0 0 0 0 rgba(123,47,255,0);
-    animation: glow-idle 3s ease-in-out infinite;
-  }
-  .char-card.unlocked:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 12px 40px rgba(123,47,255,0.35);
-    animation: none;
-  }
-
-  .char-card.villain {
-    border-color: rgba(168,85,247,0.6);
-  }
-
-  @keyframes glow-idle {
-    0%, 100% { box-shadow: 0 0 8px rgba(123,47,255,0.15); }
-    50% { box-shadow: 0 0 20px rgba(123,47,255,0.35); }
-  }
-
-  .char-img-wrap {
-    position: relative;
-    aspect-ratio: 1;
-    overflow: hidden;
-    background: #0a0a20;
-  }
-
-  .char-img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s;
-  }
-  .char-card.unlocked:hover .char-img-wrap img { transform: scale(1.06); }
-
-  .char-card.locked .char-img-wrap img {
-    filter: grayscale(100%) brightness(0.35);
-  }
-
-  .unlock-badge {
-    position: absolute;
-    top: 8px; right: 8px;
-    background: var(--purple);
-    color: white;
-    font-size: 0.55rem;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 20px;
-  }
-
-  .lock-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: rgba(5,5,20,0.5);
-  }
-  .lock-overlay svg { color: rgba(255,255,255,0.3); width: 28px; height: 28px; }
-  .lock-overlay span {
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-  }
-
-  .char-info {
-    padding: 10px 12px;
-    background: rgba(0,0,0,0.3);
-  }
-  .char-name {
-    font-family: 'Cinzel', serif;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .char-card.locked .char-name { color: var(--text-dim); }
-  .char-role {
-    font-size: 0.65rem;
-    color: var(--purple-light);
-    font-weight: 600;
-  }
-  .char-card.locked .char-role { color: rgba(255,255,255,0.2); }
-  .char-card.villain .char-role { color: #c084fc; }
-
-  /* ── CHARACTER MODAL ── */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.8);
-    z-index: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s;
-  }
-  .modal-overlay.open { opacity: 1; pointer-events: all; }
-
-  .modal {
-    background: #0f0f2e;
-    border: 1px solid rgba(123,47,255,0.4);
-    border-radius: 20px;
-    max-width: 420px;
-    width: 100%;
-    overflow: hidden;
-    transform: scale(0.92);
-    transition: transform 0.25s;
-  }
-  .modal-overlay.open .modal { transform: scale(1); }
-
-  .modal img {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-  }
-  .modal-body { padding: 20px 24px 24px; }
-  .modal-name {
-    font-family: 'Cinzel', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-  .modal-role { color: var(--purple-light); font-size: 0.85rem; font-weight: 700; margin-bottom: 14px; }
-  .modal-desc { color: var(--text-dim); font-size: 0.88rem; line-height: 1.7; margin-bottom: 16px; }
-  .modal-close {
-    position: absolute;
-    top: 14px; right: 14px;
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.1);
-    border: none;
-    color: white;
-    font-size: 1.1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .modal-close:hover { background: rgba(255,255,255,0.2); }
-
-  /* ── FLOATING PLANETS ── */
-  .planet {
-    position: fixed;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
-    animation: float linear infinite;
-  }
-  @keyframes float {
-    0% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(180deg); }
-    100% { transform: translateY(0) rotate(360deg); }
-  }
-
-  /* ── STORY COMIC PREVIEW ── */
-  .story-comic-preview {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3px;
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    margin: 10px 0 12px;
-    height: 160px;
-    border: 2px solid rgba(123,47,255,0.3);
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .story-comic-preview:hover { border-color: rgba(123,47,255,0.8); transform: scale(1.01); }
-  .story-comic-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-    display: block;
-  }
-  .preview-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-  .story-comic-preview:hover .preview-overlay,
-  .story-comic-preview:active .preview-overlay { opacity: 1; }
-  .preview-overlay span {
-    color: white;
-    font-weight: 800;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-  }
-
-  /* ══════════════════════════════════════════════
-     COMIC READER
-  ══════════════════════════════════════════════ */
-  #page-comic {
-    background: #f5f0e8;
-    min-height: 100vh;
-    padding-top: 72px;
-  }
-
-  .comic-reader {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 16px 12px 32px;
-  }
-
-  .comic-back-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: none;
-    border: 2px solid #1a0a00;
-    border-radius: 8px;
-    padding: 6px 14px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #1a0a00;
-    cursor: pointer;
-    margin-bottom: 14px;
-    transition: background 0.15s;
-  }
-  .comic-back-btn:hover { background: rgba(26,10,0,0.08); }
-
-  .comic-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-
-  .comic-title {
-    font-family: 'Cinzel', serif;
-    font-size: 0.95rem;
-    font-weight: 900;
-    color: #1a0a00;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-
-  .comic-lang-toggle { display: flex; gap: 6px; }
-
-  .comic-lang-btn {
-    background: white;
-    border: 2px solid #1a0a00;
-    border-radius: 6px;
-    padding: 4px 12px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    cursor: pointer;
-    color: #1a0a00;
-    transition: all 0.15s;
-  }
-  .comic-lang-btn.active { background: #1a0a00; color: white; }
-
-  .comic-page { display: none; }
-  .comic-page.active { display: block; }
-
-  .comic-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px;
-    background: #1a0a00;
-    border: 4px solid #1a0a00;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-
-  .comic-panel {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 1 / 1;
-    background: #222;
-  }
-
-  .comic-panel img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  /* Captions */
-  .panel-caption {
-    position: absolute;
-    left: 0; right: 0;
-    background: rgba(255,255,210,0.93);
-    color: #1a0a00;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.62rem;
-    font-weight: 700;
-    padding: 5px 8px;
-    text-align: center;
-    line-height: 1.4;
-    border-top: 2px solid #1a0a00;
-    border-bottom: 2px solid #1a0a00;
-    z-index: 5;
-  }
-  .caption-top { top: 0; border-top: none; }
-  .caption-bottom { bottom: 0; border-bottom: none; }
-
-  /* Speech bubbles */
-  .speech-bubble {
-    position: absolute;
-    background: white;
-    border: 2px solid #1a0a00;
-    border-radius: 10px;
-    padding: 4px 8px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.6rem;
-    font-weight: 800;
-    color: #1a0a00;
-    max-width: 52%;
-    line-height: 1.3;
-    z-index: 6;
-    box-shadow: 2px 2px 0 rgba(0,0,0,0.35);
-  }
-
-  /* Tail using ::after — diamond approach */
-  .speech-bubble::after {
-    content: '';
-    position: absolute;
-    width: 7px;
-    height: 7px;
-    background: white;
-  }
-
-  .left-bubble { top: 6%; left: 4%; }
-  .left-bubble::after {
-    bottom: -5px; left: 10px;
-    transform: rotate(45deg);
-    border-right: 2px solid #1a0a00;
-    border-bottom: 2px solid #1a0a00;
-  }
-
-  .right-bubble { top: 6%; right: 4%; text-align: right; }
-  .right-bubble::after {
-    bottom: -5px; right: 10px;
-    transform: rotate(45deg);
-    border-left: 2px solid #1a0a00;
-    border-bottom: 2px solid #1a0a00;
-  }
-
-  .left-bubble.b2 { top: auto; bottom: 22%; }
-  .left-bubble.b2::after {
-    bottom: auto; top: -5px;
-    border-right: none; border-bottom: none;
-    border-left: 2px solid #1a0a00;
-    border-top: 2px solid #1a0a00;
-  }
-
-  .right-bubble.b2 { top: auto; bottom: 22%; }
-  .right-bubble.b2::after {
-    bottom: auto; top: -5px;
-    border-left: none; border-bottom: none;
-    border-right: 2px solid #1a0a00;
-    border-top: 2px solid #1a0a00;
-  }
-
-  .center-bubble {
-    top: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    max-width: 70%;
-    font-size: 0.65rem;
-  }
-  .center-bubble::after {
-    bottom: -5px; left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    border-right: 2px solid #1a0a00;
-    border-bottom: 2px solid #1a0a00;
-  }
-
-  /* Comic navigation */
-  .comic-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 16px;
-    padding: 0 2px;
-  }
-
-  .comic-nav-btn {
-    background: #1a0a00;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 22px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: opacity 0.2s;
-  }
-  .comic-nav-btn:hover:not(:disabled) { opacity: 0.8; }
-  .comic-nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
-
-  .comic-dots { display: flex; gap: 8px; align-items: center; }
-
-  .comic-dot {
-    width: 11px; height: 11px;
-    border-radius: 50%;
-    background: #c0b090;
-    cursor: pointer;
-    border: 2px solid #1a0a00;
-    padding: 0;
-    transition: background 0.2s;
-  }
-  .comic-dot.active { background: #1a0a00; }
-  .comic-dot:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 3px;
-  }
-
-  .comic-page-label {
-    text-align: center;
-    font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    font-weight: 700;
-    color: #7a6040;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-top: 8px;
-  }
-
-  /* Read Comic button on story card */
-  .read-comic-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 12px;
-    background: var(--purple);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 16px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: opacity 0.2s;
-  }
-  .read-comic-btn:hover { opacity: 0.85; }
-
-  @media (max-width: 480px) {
-    .comic-panel { aspect-ratio: 1 / 1; }
-    .speech-bubble { font-size: 0.62rem; line-height: 1.25; padding: 4px 7px; }
-    .panel-caption { font-size: 0.62rem; line-height: 1.25; }
-    .comic-nav-btn { padding: 8px 14px; font-size: 0.75rem; }
-  }
-
-
-/* ── Story card actions ──────────────────────────────── */
-.card-lang-toggle { display:flex; gap:8px; margin:12px 0 10px; }
-.story-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; }
-.btn-story-read, .btn-story-watch {
-  padding:10px 20px; border-radius:24px; font-weight:700; font-size:0.85rem;
-  cursor:pointer; border:2px solid transparent; transition:all 0.2s; white-space:nowrap;
-}
-.btn-story-read {
-  background:transparent; border-color:var(--gold); color:var(--gold);
-}
-.btn-story-read:hover { background:var(--gold); color:#0a0a1a; }
-.btn-story-watch {
-  background:linear-gradient(135deg,#7c3aed,#4f46e5);
-  color:#fff; border-color:transparent;
-  box-shadow:0 4px 15px rgba(124,58,237,0.4);
-}
-.btn-story-watch:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(124,58,237,0.55); }
-
-/* ── Story reader page ────────────────────────────────── */
-.reader-topbar {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:16px 24px; background:rgba(255,255,255,0.04);
-  border-bottom:1px solid rgba(255,255,255,0.08); position:sticky; top:0; z-index:10;
-}
-.reader-back-btn {
-  display:flex; align-items:center; gap:6px; background:transparent;
-  border:1px solid rgba(255,255,255,0.2); color:#ccc; padding:8px 14px;
-  border-radius:20px; cursor:pointer; font-size:0.85rem; transition:all 0.2s;
-}
-.reader-back-btn:hover { border-color:var(--gold); color:var(--gold); }
-.reader-lang-toggle { display:flex; gap:8px; }
-.story-reader-body {
-  max-width:680px; margin:0 auto; padding:40px 24px 80px;
-  font-size:1.05rem; line-height:1.85; color:rgba(255,255,255,0.85);
-}
-.story-reader-body h2 {
-  font-family:'Cinzel', serif; color:var(--gold); font-size:1.6rem;
-  margin-bottom:32px; text-align:center; line-height:1.3;
-}
-.story-reader-body p { margin-bottom:1.2em; }
-.story-reader-body p:first-of-type::first-letter {
-  font-size:3em; font-family:'Cinzel', serif; color:var(--gold);
-  float:left; line-height:0.8; margin:4px 8px 0 0;
-}
-.story-illustration {
-  display:block; width:100%; max-width:520px;
-  margin:1.8rem auto; border-radius:12px;
-  box-shadow:0 4px 24px rgba(0,0,0,0.5);
-}
-.comic-panel .speech-bubble,
-.comic-panel .panel-caption { display:none; }
-
-/* ── Watch & Listen audio bar in comic ───────────────── */
-.wal-bar {
-  display:flex; align-items:center; gap:12px; justify-content:center;
-  background:rgba(124,58,237,0.18); border-bottom:1px solid rgba(124,58,237,0.3);
-  padding:10px 20px; flex-wrap:wrap;
-}
-.wal-bar.hidden { display:none; }
-.wal-play-btn {
-  background:linear-gradient(135deg,#7c3aed,#4f46e5); color:#fff;
-  border:none; border-radius:50%; width:36px; height:36px; cursor:pointer;
-  display:flex; align-items:center; justify-content:center; flex-shrink:0;
-}
-.wal-progress-wrap {
-  flex:1; min-width:120px; max-width:300px; height:20px;
-  background:transparent; cursor:pointer; position:relative;
-  display:flex; align-items:center;
-}
-.wal-progress-wrap::before {
-  content:''; position:absolute; left:0; right:0; top:50%; transform:translateY(-50%);
-  height:4px; background:rgba(255,255,255,0.15); border-radius:2px;
-}
-.wal-progress-fill { height:4px; background:#7c3aed; border-radius:2px; width:0; transition:width 0.5s linear; position:relative; z-index:1; }
-.wal-time { font-size:0.78rem; color:rgba(255,255,255,0.6); min-width:80px; text-align:center; }
-.wal-lang-toggle { display:flex; gap:6px; }
-.wal-fullscreen-btn {
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.18);
-  color:white;
-  border-radius:6px;
-  padding:4px 8px;
-  font-size:11px;
-  font-weight:700;
-  cursor:pointer;
-  white-space:nowrap;
-}
-.wal-fullscreen-btn:hover { background:rgba(255,255,255,0.14); }
-.wal-exit-btn { display:none; }
-
-body.comic-fullscreen {
-  overflow:hidden;
-  overscroll-behavior:none;
-}
-body.comic-fullscreen header,
-body.comic-fullscreen .planet {
-  display:none;
-}
-#page-comic.fullscreen-mode {
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  padding-top:0;
-  min-height:100dvh;
-  overflow:hidden;
-  background:#f5f0e8;
-}
-#page-comic.fullscreen-mode .wal-bar {
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  z-index:1002;
-  padding:8px max(12px, env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-right));
-  background:rgba(15,15,46,0.96);
-  border-top:1px solid rgba(124,58,237,0.45);
-  border-bottom:none;
-  box-shadow:0 -8px 28px rgba(0,0,0,0.28);
-}
-#page-comic.fullscreen-mode .wal-enter-btn { display:none; }
-#page-comic.fullscreen-mode .wal-exit-btn { display:inline-flex; align-items:center; }
-#page-comic.fullscreen-mode .comic-reader {
-  width:100%;
-  max-width:none;
-  height:100dvh;
-  margin:0;
-  padding:10px 8px calc(96px + env(safe-area-inset-bottom));
-  overflow:auto;
-}
-#page-comic.fullscreen-mode .comic-back-btn {
-  display:none;
-}
-#page-comic.fullscreen-mode .comic-header {
-  margin-bottom:8px;
-}
-#page-comic.fullscreen-mode .comic-title {
-  font-size:0.78rem;
-}
-#page-comic.fullscreen-mode .comic-grid {
-  gap:3px;
-}
-#page-comic.fullscreen-mode .comic-nav {
-  position:sticky;
-  bottom:0;
-  background:rgba(245,240,232,0.92);
-  padding:8px 0 4px;
-}
-@media (max-width: 560px) {
-  #page-comic.fullscreen-mode .wal-bar { gap:8px; justify-content:space-between; }
-  #page-comic.fullscreen-mode .wal-progress-wrap { order:2; flex-basis:100%; max-width:none; }
-  #page-comic.fullscreen-mode .wal-time { min-width:66px; font-size:0.7rem; }
-  #page-comic.fullscreen-mode .lang-btn { padding:5px 8px; font-size:0.68rem; }
-  #page-comic.fullscreen-mode .comic-reader { padding-inline:4px; }
-}
-</style>
-<script src="https://code.responsivevoice.org/responsivevoice.js?key=FREE"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orfeas Tales — Adventures for Kids</title>
+  <meta name="description" content="Bilingual comic adventures in English and Greek for children, featuring Aristotelis, Theotokis, and friends.">
+  <meta property="og:title" content="Orfeas Tales">
+  <meta property="og:description" content="Epic bilingual adventures for kids — English &amp; Greek">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=1">
 </head>
 <body>
 
 <canvas id="stars-canvas"></canvas>
 
-<!-- Floating planets -->
-<div class="planet" style="width:90px;height:90px;background:radial-gradient(circle at 35% 35%,#b8860b,#3d2800);top:18%;left:8%;opacity:0.5;animation-duration:18s;"></div>
-<div class="planet" style="width:60px;height:60px;background:radial-gradient(circle at 35% 35%,#4b0082,#1a0030);top:55%;right:6%;opacity:0.4;animation-duration:22s;animation-delay:-5s;"></div>
-<div class="planet" style="width:40px;height:40px;background:radial-gradient(circle at 35% 35%,#008080,#002020);top:75%;left:15%;opacity:0.35;animation-duration:15s;animation-delay:-8s;"></div>
-<div class="planet" style="width:70px;height:70px;background:radial-gradient(circle at 35% 35%,#8b008b,#2d002d);top:30%;right:18%;opacity:0.3;animation-duration:25s;animation-delay:-12s;"></div>
-
 <!-- HEADER -->
 <header>
-  <button class="hamburger" id="menuBtn" onclick="toggleNav()" aria-label="Menu" aria-expanded="false" aria-controls="sideNav">
+  <button class="hamburger" id="menuBtn" data-action="toggle-nav" aria-label="Menu" aria-expanded="false" aria-controls="sideNav">
     <span></span><span></span><span></span>
   </button>
-  <div class="logo" onclick="showPage('home')" style="cursor:pointer" title="Home"><span>★</span> ORFEAS TALES <span>★</span></div>
+  <div class="logo" data-action="show-page" data-page="home" style="cursor:pointer" title="Home"><span>★</span> ORFEAS TALES <span>★</span></div>
   <div class="header-nav">
-    <button class="header-nav-btn" onclick="showPage('stories')">Stories</button>
-    <button class="header-nav-btn" onclick="showPage('characters')">Characters</button>
+    <button class="header-nav-btn" data-action="show-page" data-page="stories">Stories</button>
+    <button class="header-nav-btn" data-action="show-page" data-page="characters">Characters</button>
   </div>
-  <button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="Toggle background music">🎵 <span class="music-label">Music</span></button>
+  <button class="music-btn" id="musicBtn" data-action="toggle-music" title="Toggle background music">🎵 <span class="music-label">Music</span></button>
 </header>
-<audio id="bg-music" src="music/The Pyre.mp3" loop preload="none"></audio>
+<audio id="bg-music" src="music/The Pyre.mp3?v=2" loop preload="none"></audio>
 
 <!-- SIDE NAV -->
-<div class="nav-overlay" id="navOverlay" onclick="closeNav()"></div>
+<div class="nav-overlay" id="navOverlay" data-action="close-nav"></div>
 <nav class="side-nav" id="sideNav" aria-hidden="true">
   <div class="nav-header">
     <div class="logo" style="font-size:0.8rem"><span>★</span> ORFEAS TALES <span>★</span></div>
-    <button class="close-nav" onclick="closeNav()" aria-label="Close menu">✕</button>
+    <button class="close-nav" data-action="close-nav" aria-label="Close menu">✕</button>
   </div>
   <div class="nav-section-label">Explore</div>
-  <button class="nav-link" onclick="showPage('stories')">
+  <button class="nav-link" data-action="show-page" data-page="stories">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
     Stories
   </button>
-  <button class="nav-link" onclick="showPage('characters')">
+  <button class="nav-link" data-action="show-page" data-page="characters">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
     Characters
   </button>
 
   <div class="nav-section-label" style="margin-top:12px">Navigation</div>
-  <button class="nav-link" onclick="showPage('home')">
+  <button class="nav-link" data-action="show-page" data-page="home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     Home
   </button>
@@ -1285,26 +62,26 @@ body.comic-fullscreen .planet {
 <div class="page active" id="page-home">
   <section class="hero">
     <div class="hero-planet"></div>
-    <div class="hero-badge">3 Episodes Now Live</div>
+    <div class="hero-badge">4 Episodes Now Live</div>
     <h1>Stories Made<br>For Orfeas</h1>
     <p>Follow Aristotelis, Theotokis, and their friends through bilingual comic adventures in English and Greek, with narration, character surprises, and a world that grows one story at a time.</p>
     <div class="hero-buttons">
-      <button class="btn-primary" onclick="showPage('stories')">
+      <button class="btn-primary" data-action="show-page" data-page="stories">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
         Explore Stories
       </button>
-      <button class="btn-secondary" onclick="showPage('characters')">
+      <button class="btn-secondary" data-action="show-page" data-page="characters">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
         Meet the Characters
       </button>
     </div>
     <div class="stats-bar">
       <div class="stat">
-        <span class="stat-value" id="stat-unlocked">3</span>
+        <span class="stat-value" id="stat-unlocked">4</span>
         <span class="stat-label">Characters Unlocked</span>
       </div>
       <div class="stat">
-        <span class="stat-value">3</span>
+        <span class="stat-value">4</span>
         <span class="stat-label">Stories Available</span>
       </div>
       <div class="stat">
@@ -1334,14 +111,14 @@ body.comic-fullscreen .planet {
         <div class="story-desc">Young Theotokis and Aristotelis cross paths for the very first time — and discover that the greatest adventures begin with a single friendship.</div>
         <div class="story-meta">5 min read · 12 panels</div>
         <div class="card-lang-toggle">
-          <button class="lang-btn active" id="card1-en" onclick="setCardLang(1,'en',this)">🇬🇧 EN</button>
-          <button class="lang-btn" id="card1-gr" onclick="setCardLang(1,'gr',this)">🇬🇷 GR</button>
+          <button class="lang-btn active" id="card1-en" data-action="set-card-lang" data-story="1" data-lang="en">🇬🇧 EN</button>
+          <button class="lang-btn" id="card1-gr" data-action="set-card-lang" data-story="1" data-lang="gr">🇬🇷 GR</button>
         </div>
         <div class="story-actions">
-          <button class="btn-story-read" onclick="showStoryText(1)">
+          <button class="btn-story-read" data-action="show-story-text" data-story="1">
             📖 Read
           </button>
-          <button class="btn-story-watch" onclick="showWatchAndListen(1)">
+          <button class="btn-story-watch" data-action="show-wal" data-story="1">
             🎬 Watch &amp; Listen
           </button>
         </div>
@@ -1357,21 +134,19 @@ body.comic-fullscreen .planet {
         <div class="story-desc">When Theotokis and Aristotelis visit the zoo, a very unusual gorilla whispers to them through the bars — and asks for their help with the most daring escape plan they've ever heard.</div>
         <div class="story-meta">7 min read · 15 panels</div>
         <div class="card-lang-toggle">
-          <button class="lang-btn active" id="card2-en" onclick="setCardLang(2,'en',this)">🇬🇧 EN</button>
-          <button class="lang-btn" id="card2-gr" onclick="setCardLang(2,'gr',this)">🇬🇷 GR</button>
+          <button class="lang-btn active" id="card2-en" data-action="set-card-lang" data-story="2" data-lang="en">🇬🇧 EN</button>
+          <button class="lang-btn" id="card2-gr" data-action="set-card-lang" data-story="2" data-lang="gr">🇬🇷 GR</button>
         </div>
         <div class="story-actions">
-          <button class="btn-story-read" onclick="showStoryText(2)">
+          <button class="btn-story-read" data-action="show-story-text" data-story="2">
             📖 Read
           </button>
-          <button class="btn-story-watch" onclick="showWatchAndListen(2)">
+          <button class="btn-story-watch" data-action="show-wal" data-story="2">
             🎬 Watch &amp; Listen
           </button>
         </div>
       </div>
     </div>
-
-    <!-- Stories 3–7 — Story 3 UNLOCKED -->
 
     <!-- Story 3 — UNLOCKED -->
     <div class="story-card unlocked">
@@ -1382,27 +157,41 @@ body.comic-fullscreen .planet {
         <div class="story-desc">Rillas dresses up as a luchador and enters the ACW wrestling arena — and nobody can stop him. Not the doorman, not thirty athletes, not even a pile-on of ten!</div>
         <div class="story-meta">8 min read · 15 panels</div>
         <div class="card-lang-toggle">
-          <button class="lang-btn active" id="card3-en" onclick="setCardLang(3,'en',this)">🇬🇧 EN</button>
-          <button class="lang-btn" id="card3-gr" onclick="setCardLang(3,'gr',this)">🇬🇷 GR</button>
+          <button class="lang-btn active" id="card3-en" data-action="set-card-lang" data-story="3" data-lang="en">🇬🇧 EN</button>
+          <button class="lang-btn" id="card3-gr" data-action="set-card-lang" data-story="3" data-lang="gr">🇬🇷 GR</button>
         </div>
         <div class="story-actions">
-          <button class="btn-story-read" onclick="showStoryText(3)">
+          <button class="btn-story-read" data-action="show-story-text" data-story="3">
             📖 Read
           </button>
-          <button class="btn-story-watch" onclick="showWatchAndListen(3)">
+          <button class="btn-story-watch" data-action="show-wal" data-story="3">
             🎬 Watch &amp; Listen
           </button>
         </div>
       </div>
     </div>
 
-    <div class="story-card locked">
+    <!-- Story 4 — UNLOCKED -->
+    <div class="story-card unlocked">
       <div class="ep-num">04</div>
       <div class="story-info">
         <div class="story-ep-label">Episode IV</div>
-        <div class="story-title">Rilas Finds Love</div>
+        <div class="story-title">Rillas and King Kong</div>
+        <div class="story-desc">The boys follow a jungle trail and stumble into King Kong's treehouse — then get captured! Can Aristotelis's legendary funny face save the day?</div>
+        <div class="story-meta">8 min read · 16 panels</div>
+        <div class="card-lang-toggle">
+          <button class="lang-btn active" id="card4-en" data-action="set-card-lang" data-story="4" data-lang="en">🇬🇧 EN</button>
+          <button class="lang-btn" id="card4-gr" data-action="set-card-lang" data-story="4" data-lang="gr">🇬🇷 GR</button>
+        </div>
+        <div class="story-actions">
+          <button class="btn-story-read" data-action="show-story-text" data-story="4">
+            📖 Read
+          </button>
+          <button class="btn-story-watch" data-action="show-wal" data-story="4">
+            🎬 Watch &amp; Listen
+          </button>
+        </div>
       </div>
-      <div class="story-action"><div class="lock-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div></div>
     </div>
 
     <div class="story-card locked">
@@ -1451,13 +240,13 @@ body.comic-fullscreen .planet {
 ══════════════════════════════ -->
 <div class="page" id="page-story-reader">
   <div class="reader-topbar">
-    <button class="reader-back-btn" onclick="showPage('stories')">
+    <button class="reader-back-btn" data-action="show-page" data-page="stories">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
       Stories
     </button>
     <div class="reader-lang-toggle">
-      <button class="lang-btn active" id="reader-btn-en" onclick="setReaderLang('en',this)">🇬🇧 EN</button>
-      <button class="lang-btn" id="reader-btn-gr" onclick="setReaderLang('gr',this)">🇬🇷 GR</button>
+      <button class="lang-btn active" id="reader-btn-en" data-action="set-reader-lang" data-lang="en">🇬🇧 EN</button>
+      <button class="lang-btn" id="reader-btn-gr" data-action="set-reader-lang" data-lang="gr">🇬🇷 GR</button>
     </div>
   </div>
   <div class="story-reader-body" id="story-reader-body"></div>
@@ -1469,32 +258,32 @@ body.comic-fullscreen .planet {
 <div class="page" id="page-comic">
   <!-- Watch & Listen audio bar -->
   <div class="wal-bar hidden" id="wal-bar">
-    <button class="wal-play-btn" id="wal-play-btn" onclick="walTogglePlay()">
+    <button class="wal-play-btn" id="wal-play-btn" data-action="wal-toggle-play">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
     </button>
-    <div class="wal-progress-wrap" onclick="walSeek(event)">
+    <div class="wal-progress-wrap" data-action="wal-seek">
       <div class="wal-progress-fill" id="wal-progress-fill"></div>
     </div>
     <span class="wal-time" id="wal-time">0:00 / 0:00</span>
-    <button id="wal-sync-btn" onclick="walToggleSync()" title="Auto-advance panels with audio"
+    <button id="wal-sync-btn" data-action="wal-toggle-sync" title="Auto-advance panels with audio"
       style="background:rgba(123,47,255,0.3);border:1px solid rgba(123,47,255,0.6);color:white;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;white-space:nowrap;">🔄 Sync ON</button>
-    <button class="wal-fullscreen-btn wal-enter-btn" id="wal-fullscreen-btn" onclick="walEnterFullscreen()" title="Open fullscreen story mode">⛶ Fullscreen</button>
-    <button class="wal-fullscreen-btn wal-exit-btn" id="wal-exit-fullscreen-btn" onclick="walExitFullscreen()" title="Exit fullscreen story mode">Exit</button>
+    <button class="wal-fullscreen-btn wal-enter-btn" id="wal-fullscreen-btn" data-action="wal-enter-fullscreen" title="Open fullscreen story mode">⛶ Fullscreen</button>
+    <button class="wal-fullscreen-btn wal-exit-btn" id="wal-exit-fullscreen-btn" data-action="wal-exit-fullscreen" title="Exit fullscreen story mode" style="display:none">Exit</button>
     <div class="wal-lang-toggle">
-      <button class="lang-btn active" id="wal-btn-en" onclick="walSetLang('en',this)">🇬🇧 EN</button>
-      <button class="lang-btn" id="wal-btn-gr" onclick="walSetLang('gr',this)">🇬🇷 GR</button>
+      <button class="lang-btn active" id="wal-btn-en" data-action="wal-set-lang" data-lang="en">🇬🇧 EN</button>
+      <button class="lang-btn" id="wal-btn-gr" data-action="wal-set-lang" data-lang="gr">🇬🇷 GR</button>
     </div>
   </div>
 
   <div class="comic-reader">
 
-    <button class="comic-back-btn" onclick="showPage('stories')">← Back to Stories</button>
+    <button class="comic-back-btn" data-action="show-page" data-page="stories">← Back to Stories</button>
 
     <div class="comic-header">
       <div class="comic-title" id="comic-title">Episode I — The Day Two Friends Met</div>
       <div class="comic-lang-toggle">
-        <button class="comic-lang-btn active" onclick="setComicLang('en',this)">🇬🇧 EN</button>
-        <button class="comic-lang-btn" onclick="setComicLang('gr',this)">🇬🇷 GR</button>
+        <button class="comic-lang-btn active" data-action="set-comic-lang" data-lang="en">🇬🇧 EN</button>
+        <button class="comic-lang-btn" data-action="set-comic-lang" data-lang="gr">🇬🇷 GR</button>
       </div>
     </div>
 
@@ -1621,7 +410,7 @@ body.comic-fullscreen .planet {
       <div class="comic-page-label" data-en="Page 3 of 3" data-gr="Σελίδα 3 από 3">Page 3 of 3</div>
     </div>
 
-    <!-- ══ STORY 2 PAGES (hidden until activated) ══ -->
+    <!-- ══ STORY 2 PAGES ══ -->
 
     <!-- S2 PAGE 1: Panels 1–4 -->
     <div class="comic-page" id="s2p-1">
@@ -1766,7 +555,7 @@ body.comic-fullscreen .planet {
       <div class="comic-page-label" data-en="Page 4 of 4" data-gr="Σελίδα 4 από 4">Page 4 of 4</div>
     </div>
 
-    <!-- ══ STORY 3 PAGES (hidden until activated) ══ -->
+    <!-- ══ STORY 3 PAGES ══ -->
 
     <!-- S3 PAGE 1: Panels 1–4 -->
     <div class="comic-page" id="s3p-1">
@@ -1852,7 +641,7 @@ body.comic-fullscreen .planet {
       <div class="comic-page-label" data-en="Page 2 of 4" data-gr="Σελίδα 2 από 4">Page 2 of 4</div>
     </div>
 
-    <!-- S3 PAGE 3: Panels 9–12 -->
+    <!-- S3 PAGE 3: Panels 9–12b -->
     <div class="comic-page" id="s3p-3">
       <div class="comic-grid">
 
@@ -1934,34 +723,190 @@ body.comic-fullscreen .planet {
 
     <!-- Navigation -->
     <div class="comic-nav">
-      <button class="comic-nav-btn" id="comic-prev" onclick="comicPrev()" disabled>◀ Prev</button>
+      <button class="comic-nav-btn" id="comic-prev" data-action="comic-prev" disabled>◀ Prev</button>
       <div id="comic-s1-nav" class="comic-dots">
-        <button type="button" class="comic-dot active" onclick="goToComicPage(1)" aria-label="Go to comic page 1" aria-current="page"></button>
-        <button type="button" class="comic-dot" onclick="goToComicPage(2)" aria-label="Go to comic page 2"></button>
-        <button type="button" class="comic-dot" onclick="goToComicPage(3)" aria-label="Go to comic page 3"></button>
+        <button type="button" class="comic-dot active" data-action="comic-go" data-page="1" aria-label="Go to comic page 1" aria-current="page"></button>
+        <button type="button" class="comic-dot" data-action="comic-go" data-page="2" aria-label="Go to comic page 2"></button>
+        <button type="button" class="comic-dot" data-action="comic-go" data-page="3" aria-label="Go to comic page 3"></button>
       </div>
       <div id="comic-s2-nav" class="comic-dots" style="display:none">
-        <button type="button" class="comic-dot" onclick="goToComicPage(1)" aria-label="Go to comic page 1"></button>
-        <button type="button" class="comic-dot" onclick="goToComicPage(2)" aria-label="Go to comic page 2"></button>
-        <button type="button" class="comic-dot" onclick="goToComicPage(3)" aria-label="Go to comic page 3"></button>
-        <button type="button" class="comic-dot" onclick="goToComicPage(4)" aria-label="Go to comic page 4"></button>
+        <button type="button" class="comic-dot" data-action="comic-go" data-page="1" aria-label="Go to comic page 1"></button>
+        <button type="button" class="comic-dot" data-action="comic-go" data-page="2" aria-label="Go to comic page 2"></button>
+        <button type="button" class="comic-dot" data-action="comic-go" data-page="3" aria-label="Go to comic page 3"></button>
+        <button type="button" class="comic-dot" data-action="comic-go" data-page="4" aria-label="Go to comic page 4"></button>
       </div>
       <div id="comic-s3-nav" class="comic-dots" style="display:none">
-        <button type="button" class="comic-dot" onclick="goToComicPage(1)" aria-label="Go to comic page 1"></button>
-        <button type="button" class="comic-dot" onclick="goToComicPage(2)" aria-label="Go to comic page 2"></button>
-        <button type="button" class="comic-dot" onclick="goToComicPage(3)" aria-label="Go to comic page 3"></button>
-        <button type="button" class="comic-dot" onclick="goToComicPage(4)" aria-label="Go to comic page 4"></button>
+        <button type="button" class="comic-dot" data-action="comic-go" data-page="1" aria-label="Go to comic page 1"></button>
+        <button type="button" class="comic-dot" data-action="comic-go" data-page="2" aria-label="Go to comic page 2"></button>
+        <button type="button" class="comic-dot" data-action="comic-go" data-page="3" aria-label="Go to comic page 3"></button>
+        <button type="button" class="comic-dot" data-action="comic-go" data-page="4" aria-label="Go to comic page 4"></button>
       </div>
-      <button class="comic-nav-btn" id="comic-next" onclick="comicNext()">Next ▶</button>
+      <div id="comic-s4-nav" class="comic-dots" style="display:none">
+        <button type="button" class="comic-dot" data-action="comic-go" data-page="1" aria-label="Go to comic page 1"></button>
+        <button type="button" class="comic-dot" data-action="comic-go" data-page="2" aria-label="Go to comic page 2"></button>
+        <button type="button" class="comic-dot" data-action="comic-go" data-page="3" aria-label="Go to comic page 3"></button>
+        <button type="button" class="comic-dot" data-action="comic-go" data-page="4" aria-label="Go to comic page 4"></button>
+      </div>
+      <button class="comic-nav-btn" id="comic-next" data-action="comic-next">Next ▶</button>
+    </div>
+
+    <!-- ══ STORY 4 PAGES ══ -->
+
+    <!-- S4 PAGE 1: Panels 01–04 -->
+    <div class="comic-page" id="s4p-1">
+      <div class="comic-grid">
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel01_boys_ride_into_jungle.webp?v=1" alt="Panel 1" loading="lazy" decoding="async">
+          <div class="panel-caption caption-top"
+               data-en="VROOM VROOM VROOM! Aristotelis and Theotokis rode deep into the jungle!"
+               data-gr="ΒΡΟΥΜ ΒΡΟΥΜ ΒΡΟΥΜ! Ο Αριστοτέλης κι ο Θεοτόκης μπήκαν στη ζούγκλα!">VROOM VROOM VROOM! Into the jungle!</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel02_boys_lost_arguing.webp?v=1" alt="Panel 2" loading="lazy" decoding="async">
+          <div class="speech-bubble left-bubble"
+               data-en='"Theotokis... are we lost?!"'
+               data-gr='"Θεοτόκη... χαθήκαμε;!"'>"Theotokis... are we lost?!"</div>
+          <div class="speech-bubble right-bubble b2"
+               data-en='"The map was upside down."'
+               data-gr='"Ο χάρτης ήταν ανάποδα."'>"The map was upside down."</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel03_boys_discover_treehouse.webp?v=1" alt="Panel 3" loading="lazy" decoding="async">
+          <div class="speech-bubble left-bubble"
+               data-en='"Look! That must be Rillas&apos;s treehouse!"'
+               data-gr='"Κοίτα! Αυτό πρέπει να είναι το δεντρόσπιτο του Ρίλλα!"'>"Look! Rillas's treehouse!"</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel04_boys_shout_surprise.webp?v=1" alt="Panel 4" loading="lazy" decoding="async">
+          <div class="speech-bubble center-bubble"
+               data-en='"RILLAS! SURPRISE!!!"'
+               data-gr='"ΡΙΛΛΑ! ΕΚΠΛΗΞΗ!!!"'>"RILLAS! SURPRISE!!!"</div>
+        </div>
+
+      </div>
+      <div class="comic-page-label" data-en="Page 1 of 4" data-gr="Σελίδα 1 από 4">Page 1 of 4</div>
+    </div>
+
+    <!-- S4 PAGE 2: Panels 05–08 -->
+    <div class="comic-page" id="s4p-2">
+      <div class="comic-grid">
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel05_boys_run_from_king_kong.webp?v=1" alt="Panel 5" loading="lazy" decoding="async">
+          <div class="speech-bubble center-bubble"
+               data-en='"That is NOT Rillas! RUN!!!"'
+               data-gr='"Αυτό ΔΕΝ είναι ο Ρίλλας! ΦΕΥΓΟΥΜΕ!!!"'>"That is NOT Rillas! RUN!!!"</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel06_king_kong_holds_boys_captive.webp?v=1" alt="Panel 6" loading="lazy" decoding="async">
+          <div class="speech-bubble center-bubble"
+               data-en='"RILLAS! RILLAS, HELP US!!!"'
+               data-gr='"ΡΙΛΛΑ! ΡΙΛΛΑ, ΒΟΗΘΕΙΑ!!!"'>"RILLAS! RILLAS, HELP US!!!"</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel07_rillas_hears_the_calls.webp?v=1" alt="Panel 7" loading="lazy" decoding="async">
+          <div class="speech-bubble right-bubble"
+               data-en='"That&apos;s my friends... they need help!"'
+               data-gr='"Είναι οι φίλοι μου... θέλουν βοήθεια!"'>"That's my friends... they need help!"</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel08_rillas_leaps_to_rescue.webp?v=1" alt="Panel 8" loading="lazy" decoding="async">
+          <div class="panel-caption caption-top"
+               data-en="Rillas grabbed two bananas for strength — and leapt into action!"
+               data-gr="Ο Ρίλλας πήρε δύο μπανάνες για δύναμη — και ξεκίνησε!">Rillas grabbed two bananas — and leapt!</div>
+        </div>
+
+      </div>
+      <div class="comic-page-label" data-en="Page 2 of 4" data-gr="Σελίδα 2 από 4">Page 2 of 4</div>
+    </div>
+
+    <!-- S4 PAGE 3: Panels 09–12a -->
+    <div class="comic-page" id="s4p-3">
+      <div class="comic-grid">
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel09_rillas_vs_king_kong_standoff.webp?v=1" alt="Panel 9" loading="lazy" decoding="async">
+          <div class="panel-caption caption-bottom"
+               data-en="Rillas stood tall. King Kong stared back. Neither one moved."
+               data-gr="Ο Ρίλλας στάθηκε όρθιος. Ο Βασιλιάς Κονγκ τον κοίταξε. Κανένας δεν κουνήθηκε.">Neither one moved.</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel10_rillas_shields_the_boys.webp?v=1" alt="Panel 10" loading="lazy" decoding="async">
+          <div class="speech-bubble right-bubble"
+               data-en='"Stay behind me!"'
+               data-gr='"Μείνετε πίσω μου!"'>"Stay behind me!"</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel11_theotokis_funny_face.webp?v=1" alt="Panel 11" loading="lazy" decoding="async">
+          <div class="panel-caption caption-bottom"
+               data-en="Theotokis stuck out his tongue and crossed his eyes. King Kong stared. Nothing."
+               data-gr="Ο Θεοτόκης έβγαλε τη γλώσσα του. Ο Βασιλιάς Κονγκ κοίταξε. Τίποτα.">Theotokis tried first... nothing.</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel12a_aristotelis_closeup_v1.webp?v=1" alt="Panel 12a" loading="lazy" decoding="async">
+          <div class="speech-bubble left-bubble"
+               data-en='"Let ME try!"'
+               data-gr='"Άσε ΕΜΕ ΝΑ ΔΟΚΙΜΑΣΩ!"'>"Let ME try!"</div>
+        </div>
+
+      </div>
+      <div class="comic-page-label" data-en="Page 3 of 4" data-gr="Σελίδα 3 από 4">Page 3 of 4</div>
+    </div>
+
+    <!-- S4 PAGE 4: Panels 12b–14 -->
+    <div class="comic-page" id="s4p-4">
+      <div class="comic-grid">
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel12b_aristotelis_closeup_v2.webp?v=1" alt="Panel 12b" loading="lazy" decoding="async">
+          <div class="panel-caption caption-bottom"
+               data-en="Fish lips. Crossed eyes. Puffed cheeks. The most ridiculous face in jungle history."
+               data-gr="Χείλη σαν ψάρι. Στριμμένα μάτια. Φουσκωμένα μάγουλα. Η πιο αστεία φάτσα στη ζούγκλα.">The most ridiculous face in jungle history.</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel12c_aristotelis_angry_fists.webp?v=1" alt="Panel 12c" loading="lazy" decoding="async">
+          <div class="panel-caption caption-bottom"
+               data-en="And another one. Even worse. With extra fist-shaking."
+               data-gr="Και άλλη μία. Ακόμα χειρότερη. Με επιπλέον κουνιστές γροθιές.">And another one. Even worse.</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel13_king_kong_bursts_laughing.webp?v=1" alt="Panel 13" loading="lazy" decoding="async">
+          <div class="speech-bubble center-bubble"
+               data-en='"AHA-HA-HA-HA-HA!!!"'
+               data-gr='"ΑΧΑ-ΧΑ-ΧΑ-ΧΑ-ΧΑ!!!"'>"AHA-HA-HA-HA-HA!!!"</div>
+        </div>
+
+        <div class="comic-panel">
+          <img src="story4/panels/panel14_happy_ending_celebration.webp?v=1" alt="Panel 14" loading="lazy" decoding="async">
+          <div class="panel-caption caption-bottom"
+               data-en="Tomorrow. Five hundred bananas. Now go. — Deal!"
+               data-gr="Αύριο. Πεντακόσιες μπανάνες. Πηγαίνετε. — Εντάξει!">Tomorrow. Five hundred bananas. Deal!</div>
+        </div>
+
+      </div>
+      <div class="comic-page-label" data-en="Page 4 of 4" data-gr="Σελίδα 4 από 4">Page 4 of 4</div>
     </div>
 
   </div>
 </div>
 
+
 <!-- CHARACTER MODAL -->
-<div class="modal-overlay" id="charModal" onclick="closeModal(event)">
+<div class="modal-overlay" id="charModal">
   <div class="modal" style="position:relative" role="dialog" aria-modal="true" aria-labelledby="modal-name">
-    <button class="modal-close" onclick="closeModalDirect()" aria-label="Close character details">✕</button>
+    <button class="modal-close" data-action="close-modal" aria-label="Close character details">✕</button>
     <img id="modal-img" src="" alt="" loading="lazy" decoding="async">
     <div class="modal-body">
       <div class="modal-name" id="modal-name"></div>
@@ -1973,773 +918,8 @@ body.comic-fullscreen .planet {
 
 <audio id="audio-el" preload="none"></audio>
 
-<script>
-// ── CHARACTER DATA ──────────────────────────────────────────
-const characters = [
-  { id:1,  name:"Aristotelis", role:"Human Adventurer",    file:"characters/6_Aristotelis.webp",  unlocked:true,
-    desc:"A brave and curious human boy who loves exploring. He is Theotokis's best friend and the heart of the group — always the first to leap into adventure." },
-  { id:2,  name:"Theotokis",   role:"Child Prodigy",       file:"characters/7_Thetokis.webp",     unlocked:true,
-    desc:"The smartest kid around — Theotokis thinks faster, solves problems quicker, and always knows what to do. He is Aristotelis's best friend and the brains behind every adventure." },
-  { id:3,  name:"Rilas",       role:"Gorilla — The Escape Artist",file:"characters/rillas.webp",   unlocked:true,
-    desc:"Rillas is the friendliest gorilla you'll ever meet. Trapped in a zoo for years, he secretly taught himself to speak by listening to humans — and the first thing he did with that skill was make two best friends. He loves bananas, tall trees, and a very clever plan." },
-  { id:4,  name:"Rilena",      role:"Gorilla — The Mother",file:"characters/9_Rilena.webp",        unlocked:false, desc:"" },
-  { id:5,  name:"Rilaki",      role:"Gorilla Son",         file:"characters/10_Rilaki.webp",       unlocked:false, desc:"" },
-  { id:6,  name:"Maimudakis",  role:"Monkey — The Father", file:"characters/11_Maimudakis.webp",   unlocked:false, desc:"" },
-  { id:7,  name:"Maimudakena", role:"Monkey — The Mother", file:"characters/12_Maimudakena.webp",  unlocked:false, desc:"" },
-  { id:8,  name:"Dakis",       role:"First Son — Older",   file:"characters/13_Dakis.webp",        unlocked:false, desc:"" },
-  { id:9,  name:"Akis",        role:"Second Son — Younger",file:"characters/14_Akis.webp",         unlocked:false, desc:"" },
-  { id:10, name:"Arxigeas",    role:"Alien — The Father",  file:"characters/1_Arxigeas.webp",      unlocked:false, desc:"" },
-  { id:11, name:"Arxigeena",   role:"Alien — The Mother",  file:"characters/2_Arxigeena.webp",     unlocked:false, desc:"" },
-  { id:12, name:"Geas",        role:"Twin Son — Older",    file:"characters/3_Geas.webp",          unlocked:false, desc:"" },
-  { id:13, name:"Eas",         role:"Twin Son — Younger",  file:"characters/4_Eas.webp",           unlocked:false, desc:"" },
-  { id:14, name:"Geena",       role:"The Daughter",        file:"characters/5_Geena.webp",         unlocked:false, desc:"" },
-  { id:15, name:"Kakeas",      role:"The Villain",         file:"characters/15_Kakeas.webp",       unlocked:false, villain:true,
-    desc:"" },
-];
-
-// ── RENDER CHARACTERS ───────────────────────────────────────
-function buildCharacters() {
-  const grid = document.getElementById('chars-grid');
-  grid.innerHTML = '';
-  characters.forEach(c => {
-    const card = document.createElement('div');
-    card.className = 'char-card' + (c.unlocked ? ' unlocked' : ' locked') + (c.villain ? ' villain' : '');
-    if (c.unlocked) card.onclick = () => openModal(c);
-    card.innerHTML = `
-      <div class="char-img-wrap">
-        <img src="${c.file}" alt="${c.name}" loading="lazy" decoding="async">
-        ${c.unlocked ? '<div class="unlock-badge">+ Unlocked</div>' : `
-        <div class="lock-overlay">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-          </svg>
-          <span>Coming Soon</span>
-        </div>`}
-      </div>
-      <div class="char-info">
-        <div class="char-name">${c.name}</div>
-        <div class="char-role">${c.role}</div>
-      </div>`;
-    grid.appendChild(card);
-  });
-}
-buildCharacters();
-
-let walStoryId = 1;
-let walLang = 'en';
-let walPlaying = false;
-let walSyncOn = true;
-let walSyncPausedUntil = 0;
-let walFullscreenOn = false;
-let walSpeechUtterance = null;
-
-// ── NAVIGATION ───────────────────────────────────────────────
-const VALID_PAGES = new Set(['home', 'stories', 'characters', 'story-reader', 'comic']);
-let currentPageName = 'home';
-
-function getUrlForPage(name) {
-  const url = new URL(location.href);
-  if (name === 'home') url.searchParams.delete('page');
-  else url.searchParams.set('page', name);
-  return url.pathname + url.search + url.hash;
-}
-
-function showPage(name, options = {}) {
-  if (!VALID_PAGES.has(name)) name = 'home';
-  const previousPageName = currentPageName;
-  // hide Watch & Listen bar when leaving comic
-  if (name !== 'comic') {
-    walExitFullscreen({ updateHistory: false });
-    const wb = document.getElementById('wal-bar');
-    if (wb) wb.classList.add('hidden');
-    walStop();
-  }
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-  closeNav();
-  window.scrollTo(0,0);
-  currentPageName = name;
-  if (options.updateHistory !== false && previousPageName !== name) {
-    history.pushState({ orfeasPage: name }, '', getUrlForPage(name));
-  }
-}
-
-const initialPage = VALID_PAGES.has(new URLSearchParams(location.search).get('page'))
-  ? new URLSearchParams(location.search).get('page')
-  : 'home';
-history.replaceState({ orfeasPage: initialPage }, '', getUrlForPage(initialPage));
-if (initialPage !== 'home') showPage(initialPage, { updateHistory: false });
-
-window.addEventListener('popstate', e => {
-  if (walFullscreenOn) {
-    walExitFullscreen({ updateHistory: false });
-    return;
-  }
-  const fallbackPage = VALID_PAGES.has(new URLSearchParams(location.search).get('page'))
-    ? new URLSearchParams(location.search).get('page')
-    : 'home';
-  showPage(e.state?.orfeasPage || fallbackPage, { updateHistory: false });
-});
-
-function toggleNav() {
-  const sideNav = document.getElementById('sideNav');
-  const navOverlay = document.getElementById('navOverlay');
-  const menuBtn = document.getElementById('menuBtn');
-  sideNav.classList.toggle('open');
-  navOverlay.classList.toggle('open');
-  const isOpen = sideNav.classList.contains('open');
-  sideNav.setAttribute('aria-hidden', String(!isOpen));
-  if (menuBtn) menuBtn.setAttribute('aria-expanded', String(isOpen));
-}
-function closeNav() {
-  const sideNav = document.getElementById('sideNav');
-  const navOverlay = document.getElementById('navOverlay');
-  const menuBtn = document.getElementById('menuBtn');
-  sideNav.classList.remove('open');
-  navOverlay.classList.remove('open');
-  sideNav.setAttribute('aria-hidden', 'true');
-  if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
-}
-
-// ── MODAL ────────────────────────────────────────────────────
-function openModal(c) {
-  document.getElementById('modal-img').src = c.file;
-  document.getElementById('modal-name').textContent = c.name;
-  document.getElementById('modal-role').textContent = c.role;
-  document.getElementById('modal-desc').textContent = c.desc || 'More details coming soon...';
-  document.getElementById('charModal').classList.add('open');
-}
-function closeModal(e) {
-  if (e.target === document.getElementById('charModal')) closeModalDirect();
-}
-function closeModalDirect() {
-  document.getElementById('charModal').classList.remove('open');
-}
-
-document.addEventListener('keydown', e => {
-  if (e.key !== 'Escape') return;
-  if (walFullscreenOn) walExitFullscreen();
-  closeNav();
-  closeModalDirect();
-});
-
-// ── AUDIO PLAYER ─────────────────────────────────────────────
-const audioEl = document.getElementById('audio-el');
-let currentStory = null;
-let currentLang = { 1: 'en', 2: 'en', 3: 'en' };
-let isPlaying = false;
-
-// Audio file paths — add your mp3 files to the same folder
-const audioFiles = {
-  1: { en: 'story1/story1_en.mp3?v=2', gr: 'story1/story1_gr.mp3?v=2' },
-  2: { en: 'story2/story2_en.mp3?v=2', gr: 'story2/story2_gr.mp3?v=2' },
-  3: { en: 'story3/story3_en.mp3?v=2', gr: 'story3/story3_gr.mp3?v=2' }
-};
-
-function setCardLang(storyId, lang, btn) {
-  currentLang[storyId] = lang;
-  const toggle = btn?.closest('.card-lang-toggle');
-  if (toggle) {
-    toggle.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-  const walBtn = document.getElementById('wal-btn-' + lang);
-  if (walStoryId === storyId && walBtn) walSetLang(lang, walBtn);
-}
-
-function setLang(storyId, lang, btn) {
-  currentLang[storyId] = lang;
-  btn.closest('.lang-toggle').querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  if (isPlaying && currentStory === storyId) {
-    const t = audioEl.currentTime;
-    loadAudio(storyId);
-    audioEl.currentTime = t;
-    audioEl.play().catch(() => {});
-  }
-}
-
-function loadAudio(storyId) {
-  const lang = currentLang[storyId] || 'en';
-  const file = audioFiles[storyId]?.[lang];
-  if (file) {
-    audioEl.src = file;
-    document.getElementById('audio-note-' + storyId).style.display = 'none';
-  } else {
-    document.getElementById('audio-note-' + storyId).style.display = 'block';
-  }
-}
-
-function togglePlay(storyId) {
-  const btn = document.getElementById('play-btn-' + storyId);
-  if (currentStory !== storyId) {
-    if (isPlaying) { audioEl.pause(); updatePlayBtn(currentStory, false); }
-    currentStory = storyId;
-    loadAudio(storyId);
-  }
-  if (audioEl.paused) {
-    audioEl.play().then(() => {
-      isPlaying = true;
-      updatePlayBtn(storyId, true);
-    }).catch(() => {
-      document.getElementById('audio-note-' + storyId).textContent = '⚠️ Audio file not found. Add story1/story1_en.mp3 / story1/story1_gr.mp3 to this folder.';
-      document.getElementById('audio-note-' + storyId).style.display = 'block';
-    });
-  } else {
-    audioEl.pause();
-    isPlaying = false;
-    updatePlayBtn(storyId, false);
-  }
-}
-
-function updatePlayBtn(storyId, playing) {
-  if (!storyId) return;
-  const btn = document.getElementById('play-btn-' + storyId);
-  if (!btn) return;
-  btn.innerHTML = playing
-    ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`
-    : `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
-}
-
-audioEl.addEventListener('timeupdate', () => {
-  if (!currentStory) return;
-  const pct = audioEl.duration ? (audioEl.currentTime / audioEl.duration) * 100 : 0;
-  const el = document.getElementById('progress-' + currentStory);
-  if (el) el.style.width = pct + '%';
-  document.getElementById('time-cur-' + currentStory).textContent = fmtTime(audioEl.currentTime);
-  document.getElementById('time-dur-' + currentStory).textContent = fmtTime(audioEl.duration);
-});
-
-audioEl.addEventListener('ended', () => {
-  isPlaying = false;
-  updatePlayBtn(currentStory, false);
-  const el = document.getElementById('progress-' + currentStory);
-  if (el) el.style.width = '0%';
-});
-
-function seekAudio(storyId, e) {
-  if (currentStory !== storyId || !audioEl.duration) return;
-  const rect = e.currentTarget.getBoundingClientRect();
-  const pct = (e.clientX - rect.left) / rect.width;
-  audioEl.currentTime = pct * audioEl.duration;
-}
-
-function fmtTime(s) {
-  if (!s || isNaN(s)) return '0:00';
-  const m = Math.floor(s / 60);
-  const sec = Math.floor(s % 60).toString().padStart(2,'0');
-  return `${m}:${sec}`;
-}
-
-// ── BACKGROUND MUSIC ─────────────────────────────────────────
-function showWatchAndListen(storyId) {
-  walStoryId = storyId;
-  walLang = currentLang[storyId] || 'en';
-  showComicFromStory();
-  const bar = document.getElementById('wal-bar');
-  if (bar) bar.classList.remove('hidden');
-  walSetLang(walLang, document.getElementById('wal-btn-' + walLang), { autoplay: false });
-}
-
-function walSetLang(lang, btn, options = {}) {
-  walLang = lang;
-  currentLang[walStoryId] = lang;
-  document.querySelectorAll('#wal-bar .lang-btn').forEach(b => b.classList.remove('active'));
-  const activeBtn = btn || document.getElementById('wal-btn-' + lang);
-  if (activeBtn) activeBtn.classList.add('active');
-  setComicLang(lang);
-  walLoadAudio();
-  if (options.autoplay !== false && walPlaying) walPlay();
-}
-
-function walLoadAudio() {
-  walStopSpeech();
-  audioEl.pause();
-  audioEl.src = audioFiles[walStoryId]?.[walLang] || '';
-  walUpdateProgress();
-  audioEl.onerror = () => {
-    if (walPlaying) walStartSpeech();
-  };
-}
-
-function walTogglePlay() {
-  if (walPlaying) walStop();
-  else walPlay();
-}
-
-function walPlay() {
-  walPlaying = true;
-  walUpdatePlayButton();
-  if (!audioEl.src) {
-    walStartSpeech();
-    return;
-  }
-  audioEl.play().catch(() => walStartSpeech());
-}
-
-function walStop() {
-  walPlaying = false;
-  walStopSpeech();
-  audioEl.pause();
-  walUpdatePlayButton();
-}
-
-function walStartSpeech() {
-  if (!('speechSynthesis' in window)) {
-    walStop();
-    return;
-  }
-  walStopSpeech();
-  const data = storyText[walStoryId]?.[walLang];
-  if (!data) return;
-  walSpeechUtterance = new SpeechSynthesisUtterance(data.text);
-  walSpeechUtterance.lang = walLang === 'gr' ? 'el-GR' : 'en-GB';
-  walSpeechUtterance.onend = () => {
-    walPlaying = false;
-    walUpdatePlayButton();
-  };
-  window.speechSynthesis.speak(walSpeechUtterance);
-}
-
-function walStopSpeech() {
-  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-  walSpeechUtterance = null;
-}
-
-function walSeek(e) {
-  if (!audioEl.duration) return;
-  const rect = e.currentTarget.getBoundingClientRect();
-  audioEl.currentTime = ((e.clientX - rect.left) / rect.width) * audioEl.duration;
-  walSyncPausedUntil = Date.now() + 15000;
-}
-
-function walToggleSync() {
-  walSyncOn = !walSyncOn;
-  const btn = document.getElementById('wal-sync-btn');
-  if (btn) {
-    btn.classList.toggle('active', walSyncOn);
-    btn.setAttribute('aria-pressed', String(walSyncOn));
-  }
-}
-
-function walUpdatePlayButton() {
-  const btn = document.getElementById('wal-play-btn');
-  if (btn) btn.textContent = walPlaying ? 'Pause' : 'Play';
-}
-
-function walUpdateProgress() {
-  const fill = document.getElementById('wal-progress-fill');
-  const time = document.getElementById('wal-time');
-  const duration = audioEl.duration || 0;
-  const current = audioEl.currentTime || 0;
-  if (fill) fill.style.width = duration ? `${(current / duration) * 100}%` : '0%';
-  if (time) time.textContent = `${fmtTime(current)} / ${fmtTime(duration)}`;
-  if (walSyncOn && duration && Date.now() > walSyncPausedUntil) {
-    const page = Math.min(COMIC_PAGES, Math.max(1, Math.floor((current / duration) * COMIC_PAGES) + 1));
-    if (page !== comicPage) goToComicPage(page);
-  }
-}
-
-function walEnterFullscreen() {
-  const page = document.getElementById('page-comic');
-  if (!page || walFullscreenOn) return;
-  walFullscreenOn = true;
-  page.classList.add('fullscreen-mode');
-  if (page.requestFullscreen) page.requestFullscreen().catch(() => {});
-  history.pushState({ orfeasPage: 'comic', walFullscreen: true }, '', getUrlForPage('comic'));
-}
-
-function walExitFullscreen(options = {}) {
-  const page = document.getElementById('page-comic');
-  if (page) page.classList.remove('fullscreen-mode');
-  walFullscreenOn = false;
-  if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
-  if (options.updateHistory !== false && history.state?.walFullscreen) {
-    history.replaceState({ orfeasPage: 'comic' }, '', getUrlForPage('comic'));
-  }
-}
-
-audioEl.addEventListener('timeupdate', walUpdateProgress);
-audioEl.addEventListener('ended', () => {
-  walPlaying = false;
-  walUpdatePlayButton();
-  walUpdateProgress();
-});
-
-const bgMusic = document.getElementById('bg-music');
-bgMusic.volume = 0.35;
-let musicPlaying = false;
-
-function toggleMusic() {
-  const btn = document.getElementById('musicBtn');
-  if (musicPlaying) {
-    bgMusic.pause();
-    musicPlaying = false;
-    btn.classList.remove('playing');
-    btn.innerHTML = '🎵 <span class="music-label">Music</span>';
-    btn.title = 'Play background music';
-  } else {
-    bgMusic.play().then(() => {
-      musicPlaying = true;
-      btn.classList.add('playing');
-      btn.innerHTML = '🔊 <span class="music-label">On</span>';
-      btn.title = 'Stop background music';
-    }).catch(() => walStartSpeech());
-  }
-}
-
-// ── STARS CANVAS ─────────────────────────────────────────────
-(function() {
-  const canvas = document.getElementById('stars-canvas');
-  const ctx = canvas.getContext('2d');
-  let stars = [];
-
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    initStars();
-  }
-
-  function initStars() {
-    stars = [];
-    const count = Math.floor((canvas.width * canvas.height) / 4000);
-    for (let i = 0; i < count; i++) {
-      stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 1.4 + 0.2,
-        alpha: Math.random() * 0.8 + 0.2,
-        speed: Math.random() * 0.3 + 0.05,
-        phase: Math.random() * Math.PI * 2
-      });
-    }
-  }
-
-  function draw(t) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    stars.forEach(s => {
-      const a = s.alpha * (0.5 + 0.5 * Math.sin(t * 0.001 * s.speed + s.phase));
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${a})`;
-      ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-
-  window.addEventListener('resize', resize);
-  resize();
-  requestAnimationFrame(draw);
-})();
-
-// ── COMIC READER ─────────────────────────────────────────────
-let comicPage = 1;
-let COMIC_PAGES = 3;
-let comicLang = 'en';
-let comicPageIdFn = n => 'cpage-' + n;  // story-specific page ID builder
-let comicNavId = 'comic-s1-nav';
-
-function setComicLang(lang, btn) {
-  comicLang = lang;
-  document.querySelectorAll('.comic-lang-btn').forEach(b => b.classList.remove('active'));
-  const activeBtn = btn || document.querySelector(`.comic-lang-btn[onclick*="'${lang}'"]`);
-  if (activeBtn) activeBtn.classList.add('active');
-  document.querySelectorAll('[data-en]').forEach(el => {
-    el.textContent = (lang === 'gr') ? el.dataset.gr : el.dataset.en;
-  });
-}
-
-function goToComicPage(n) {
-  document.querySelectorAll('.comic-page').forEach(p => p.classList.remove('active'));
-  const target = document.getElementById(comicPageIdFn(n));
-  if (target) {
-    target.classList.add('active');
-    // Force images to load (fix for SPA display:none → block transition)
-    target.querySelectorAll('img').forEach(img => {
-      if (!img.complete || img.naturalWidth === 0) {
-        const src = img.src; img.src = ''; img.src = src;
-      }
-    });
-  }
-  comicPage = n;
-  const activeNav = document.getElementById(comicNavId);
-  if (activeNav) activeNav.querySelectorAll('.comic-dot').forEach((d, i) => {
-    const isActive = i + 1 === n;
-    d.classList.toggle('active', isActive);
-    if (isActive) d.setAttribute('aria-current', 'page');
-    else d.removeAttribute('aria-current');
-  });
-  const prev = document.getElementById('comic-prev');
-  const next = document.getElementById('comic-next');
-  if (prev) prev.disabled = (n === 1);
-  if (next) next.disabled = (n === COMIC_PAGES);
-  const reader = document.querySelector('#page-comic .comic-reader');
-  if (reader) reader.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function comicPrev() { if (comicPage > 1) { walSyncPausedUntil = Date.now() + 15000; goToComicPage(comicPage - 1); } }
-function comicNext() { if (comicPage < COMIC_PAGES) { walSyncPausedUntil = Date.now() + 15000; goToComicPage(comicPage + 1); } }
-
-function showComicFromStory() {
-  const s1nav = document.getElementById('comic-s1-nav');
-  const s2nav = document.getElementById('comic-s2-nav');
-  const s3nav = document.getElementById('comic-s3-nav');
-  const title = document.getElementById('comic-title');
-  if (walStoryId === 3) {
-    COMIC_PAGES = 4;
-    comicPageIdFn = n => 's3p-' + n;
-    comicNavId = 'comic-s3-nav';
-    if (title) title.textContent = 'Episode III — Rillas the Wrestler';
-    if (s1nav) s1nav.style.display = 'none';
-    if (s2nav) s2nav.style.display = 'none';
-    if (s3nav) s3nav.style.display = 'flex';
-  } else if (walStoryId === 2) {
-    COMIC_PAGES = 4;
-    comicPageIdFn = n => 's2p-' + n;
-    comicNavId = 'comic-s2-nav';
-    if (title) title.textContent = 'Episode II — Rillas the Gorilla';
-    if (s1nav) s1nav.style.display = 'none';
-    if (s2nav) s2nav.style.display = 'flex';
-    if (s3nav) s3nav.style.display = 'none';
-  } else {
-    COMIC_PAGES = 3;
-    comicPageIdFn = n => 'cpage-' + n;
-    comicNavId = 'comic-s1-nav';
-    if (title) title.textContent = 'Episode I — The Day Two Friends Met';
-    if (s1nav) s1nav.style.display = 'flex';
-    if (s2nav) s2nav.style.display = 'none';
-    if (s3nav) s3nav.style.display = 'none';
-  }
-  goToComicPage(1);
-  showPage('comic');
-}
-
-
-
-// ── Watch & Listen (WAL) ──────────────────────────────────────────────────────
-
-function showWatchAndListen(storyId) {
-  walStoryId = storyId;
-  walLang = (currentLang && currentLang[storyId]) || 'en';
-  showComicFromStory();
-  const wb = document.getElementById('wal-bar');
-  if (wb) wb.classList.remove('hidden');
-  const file = audioFiles[storyId]?.[walLang];
-  if (file) { audioEl.src = file; audioEl.currentTime = 0; }
-  audioEl.onerror = () => {
-    if (isPlaying || walPlaying) walStartSpeech();
-  };
-  document.querySelectorAll('#wal-btn-en, #wal-btn-gr').forEach(b => b.classList.remove('active'));
-  const lb = document.getElementById('wal-btn-' + walLang);
-  if (lb) lb.classList.add('active');
-  setComicLang(walLang);
-}
-
-function walStop() {
-  walPlaying = false;
-  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-  audioEl.pause();
-  audioEl.currentTime = 0;
-  isPlaying = false;
-  const btn = document.getElementById('wal-play-btn');
-  if (btn) btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
-}
-
-function walTogglePlay() {
-  if (audioEl.paused) {
-    walPlaying = true;
-    audioEl.play().then(() => {
-      isPlaying = true;
-      const btn = document.getElementById('wal-play-btn');
-      if (btn) btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-    }).catch(() => {});
-  } else {
-    walPlaying = false;
-    audioEl.pause();
-    isPlaying = false;
-    const btn = document.getElementById('wal-play-btn');
-    if (btn) btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
-  }
-}
-
-function walSeek(e) {
-  if (!audioEl.duration) return;
-  const rect = e.currentTarget.getBoundingClientRect();
-  audioEl.currentTime = ((e.clientX - rect.left) / rect.width) * audioEl.duration;
-}
-
-function walToggleSync() {
-  walSyncOn = !walSyncOn;
-  const btn = document.getElementById('wal-sync-btn');
-  if (!btn) return;
-  btn.textContent = walSyncOn ? '\u{1F504} Sync ON' : '\u{1F504} Sync OFF';
-  btn.setAttribute('aria-pressed', String(walSyncOn));
-  btn.style.background = walSyncOn ? 'rgba(123,47,255,0.3)' : 'rgba(255,255,255,0.1)';
-  btn.style.borderColor = walSyncOn ? 'rgba(123,47,255,0.6)' : 'rgba(255,255,255,0.3)';
-}
-
-function walSetLang(lang, btn) {
-  walLang = lang;
-  if (walStoryId && currentLang) currentLang[walStoryId] = lang;
-  const wasPlaying = !audioEl.paused;
-  const file = audioFiles[walStoryId]?.[lang];
-  if (file) { audioEl.src = file; audioEl.currentTime = 0; if (wasPlaying) audioEl.play().catch(() => walStartSpeech()); }
-  document.querySelectorAll('#wal-btn-en, #wal-btn-gr').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  setComicLang(lang);
-}
-
-function walEnterFullscreen() {
-  const pc = document.getElementById('page-comic');
-  if (pc) pc.classList.add('fullscreen-mode');
-  walFullscreenOn = true;
-  if (pc && pc.requestFullscreen) pc.requestFullscreen().catch(() => {});
-  history.pushState({ orfeasPage: 'comic', walFullscreen: true }, '', getUrlForPage('comic'));
-  const eb = document.getElementById('wal-fullscreen-btn');
-  const xb = document.getElementById('wal-exit-fullscreen-btn');
-  if (eb) eb.style.display = 'none';
-  if (xb) xb.style.display = '';
-}
-
-function walExitFullscreen(opts) {
-  const pc = document.getElementById('page-comic');
-  if (pc) pc.classList.remove('fullscreen-mode');
-  walFullscreenOn = false;
-  if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
-  if (opts?.updateHistory !== false && history.state?.walFullscreen) {
-    history.replaceState({ orfeasPage: 'comic' }, '', getUrlForPage('comic'));
-  }
-  const eb = document.getElementById('wal-fullscreen-btn');
-  const xb = document.getElementById('wal-exit-fullscreen-btn');
-  if (eb) eb.style.display = '';
-  if (xb) xb.style.display = 'none';
-}
-
-audioEl.addEventListener('timeupdate', () => {
-  if (!walStoryId) return;
-  const pct = audioEl.duration ? (audioEl.currentTime / audioEl.duration) * 100 : 0;
-  const fill = document.getElementById('wal-progress-fill');
-  if (fill) fill.style.width = pct + '%';
-  const timeEl = document.getElementById('wal-time');
-  if (timeEl) timeEl.textContent = fmtTime(audioEl.currentTime) + ' / ' + fmtTime(audioEl.duration);
-  const syncBtn = document.getElementById('wal-sync-btn');
-  if (syncBtn && syncBtn.textContent.includes('ON') && audioEl.duration && Date.now() > walSyncPausedUntil) {
-    const frac = audioEl.currentTime / audioEl.duration;
-    const target = Math.min(COMIC_PAGES, Math.max(1, Math.ceil(frac * COMIC_PAGES + 0.01)));
-    if (target !== comicPage) goToComicPage(target);
-  }
-});
-
-// ── Story data ───────────────────────────────────────────────────────────────
-const storyText = {
-  1: {
-    en: { title: "The Day Two Friends Met", text: "The Day Two Friends Met\n\nAristotelis and Theotokis went to the same school, somewhere between the mountains and the sea. But even though they walked the same hallways every day, they might as well have lived on different planets.\n\nAristotelis was the kind of boy who ran before he walked, jumped before he looked, and laughed the loudest in any room. He had wild curly hair that never sat still and bright eyes always searching for the next adventure. His teachers called him enthusiastic. His classmates called him a lot. He didn't mind either way.\n\nTheotokis was different. Quiet and careful, the kind of boy who thought three times before he spoke once. He had round glasses he was always pushing up his nose, and a habit of stopping mid-walk to stare at things no one else noticed \u2014 the pattern of a crack in the wall, the way shadows fell, the perfect geometry of a spider's web.\n\nWhat they did mind was each other. Aristotelis thought Theotokis was too serious, too smug, too clever for his own good. Theotokis thought Aristotelis was reckless, noisy, and exhausting. So they kept their distance \u2014 opposite sides of the classroom, different lunch tables, polite but nothing more.\n\nUntil the day of the forest field trip.\n\nIt was a perfect autumn morning, the air full of pine and cool earth. The class walked a winding trail, teachers pointing out beetles and mushrooms and the shapes of leaves. Aristotelis tried to pay attention. But then a butterfly landed on a branch just off the trail \u2014 golden and black, wings opening and closing like a slow heartbeat \u2014 and before he could stop himself, he was following it into the trees.\n\nJust a few more steps, he told himself. Just to see where it goes.\n\nAt the back of the group, Theotokis had also stopped. He was staring up at the forest canopy, the way the branches interlocked like the arches of a cathedral, the way light fell in long dusty columns. He pulled out his notebook and began to sketch \u2014 so absorbed he didn't notice the voices of his classmates fading, until there was nothing left but the sound of the wind.\n\nBy the time the teachers noticed, the sky had turned the deep blue of early evening.\n\nDeep in the forest, Aristotelis sat on a mossy rock. The butterfly was long gone. The trail was nowhere to be seen. The trees looked the same in every direction.\n\nA twig snapped. He spun around.\n\nTheotokis stepped out from behind a wide oak tree, notebook still in hand, glasses slightly crooked.\n\n\"Oh,\" said Aristotelis. \"It's you.\"\n\n\"Oh,\" said Theotokis. \"The reckless one.\"\n\n\"Excuse me? You're lost too.\"\n\n\"I am temporarily disoriented. There is a difference.\"\n\nAristotelis opened his mouth \u2014 then closed it again. This was not the moment.\n\n\"Fine,\" he said. \"For now, let's help each other. Then we go our separate ways and pretend this never happened. Deal?\"\n\nTheotokis pushed his glasses up. \"Agreed. What do you suggest?\"\n\n\"We find a river and follow it downhill. Water always leads to the city.\"\n\n\"That is actually a good idea,\" said Theotokis, sounding slightly surprised.\n\n\"Don't sound so shocked.\" Aristotelis reached into his backpack and pulled out a torch. He clicked it on and a warm beam cut through the dark.\n\nTheotokis stared at it. \"You brought a torch on a forest field trip?\"\n\n\"I bring a torch everywhere. You never know.\"\n\nFor the first time either of them could remember, Theotokis smiled at something Aristotelis had said.\n\nThey set off together \u2014 Aristotelis lighting the way, Theotokis navigating from the map he'd memorised on the bus. The forest at night was full of sounds, and neither of them said they were scared. But they walked a little closer together with every step.\n\nAfter a while they found the river, exactly where Theotokis had predicted. They sat on the bank to rest.\n\n\"I'm hungry,\" Aristotelis admitted.\n\nTheotokis opened his bag and produced two cereal bars, an apple, and a packet of dried figs. He held half out without a word.\n\nAristotelis looked at him. \"You packed extra food?\"\n\n\"I always pack extra. Just in case.\"\n\nAristotelis laughed \u2014 a real, warm laugh. \"We're actually the same, you know. You think ahead, I act fast. Same thing, really. Just different directions.\"\n\nTheotokis considered this. \"I suppose,\" he said quietly.\n\nThey sat by the river and ate, and for the first time they really talked \u2014 about the stars above them, about whether butterflies remembered being caterpillars, about why rivers always curved the way they did.\n\nThey were still talking when Mr. Nikolas found them, torchlight swinging through the trees, voice hoarse from calling their names.\n\nThere were hugs and tears and, yes, some grounding. But Aristotelis and Theotokis didn't really mind.\n\nBecause something had changed in that forest.\n\nAfter that night, they started sitting at the same lunch table. Then walking home together. Aristotelis pulled Theotokis into adventures he'd never have tried alone. And Theotokis quietly made sure those adventures didn't end in disaster.\n\nTheotokis became the serious one \u2014 always one step ahead, always ready with a plan, a solution, and a snack.\n\nAristotelis became the spark that got Theotokis out of his own head and into the world \u2014 louder, braver, more alive than he'd ever been alone.\n\nThey were completely different. That was the whole point.\n\nAnd from that night in the forest onwards, they were the very best of friends.\n\nThe end." },
-    gr: { title: "Η Μέρα που Δύο Φίλοι Γνωρίστηκαν", text: "\u0397 \u039c\u03ad\u03c1\u03b1 \u03c0\u03bf\u03c5 \u0394\u03cd\u03bf \u03a6\u03af\u03bb\u03bf\u03b9 \u0393\u03bd\u03c9\u03c1\u03af\u03c3\u03c4\u03b7\u03ba\u03b1\u03bd\n\n\u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ba\u03b1\u03b9 \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03c0\u03ae\u03b3\u03b1\u03b9\u03bd\u03b1\u03bd \u03c3\u03c4\u03bf \u03af\u03b4\u03b9\u03bf \u03c3\u03c7\u03bf\u03bb\u03b5\u03af\u03bf, \u03ba\u03ac\u03c0\u03bf\u03c5 \u03b1\u03bd\u03ac\u03bc\u03b5\u03c3\u03b1 \u03c3\u03c4\u03b1 \u03b2\u03bf\u03c5\u03bd\u03ac \u03ba\u03b1\u03b9 \u03c4\u03b7 \u03b8\u03ac\u03bb\u03b1\u03c3\u03c3\u03b1. \u039a\u03b9 \u03b1\u03c2 \u03c0\u03b5\u03c1\u03c0\u03b1\u03c4\u03bf\u03cd\u03c3\u03b1\u03bd \u03c3\u03c4\u03bf\u03c5\u03c2 \u03af\u03b4\u03b9\u03bf\u03c5\u03c2 \u03b4\u03b9\u03b1\u03b4\u03c1\u03cc\u03bc\u03bf\u03c5\u03c2 \u03ba\u03ac\u03b8\u03b5 \u03bc\u03ad\u03c1\u03b1, \u03b8\u03b1 \u03bc\u03c0\u03bf\u03c1\u03bf\u03cd\u03c3\u03b5 \u03ba\u03b1\u03bd\u03b5\u03af\u03c2 \u03bd\u03b1 \u03c0\u03b5\u03b9 \u03c0\u03c9\u03c2 \u03b6\u03bf\u03cd\u03c3\u03b1\u03bd \u03c3\u03b5 \u03b4\u03b9\u03b1\u03c6\u03bf\u03c1\u03b5\u03c4\u03b9\u03ba\u03bf\u03cd\u03c2 \u03c0\u03bb\u03b1\u03bd\u03ae\u03c4\u03b5\u03c2.\n\n\u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ae\u03c4\u03b1\u03bd \u03c4\u03bf \u03b5\u03af\u03b4\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03b1\u03b3\u03bf\u03c1\u03b9\u03bf\u03cd \u03c0\u03bf\u03c5 \u03ad\u03c4\u03c1\u03b5\u03c7\u03b5 \u03c0\u03c1\u03b9\u03bd \u03c0\u03b5\u03c1\u03c0\u03b1\u03c4\u03ae\u03c3\u03b5\u03b9, \u03c0\u03bf\u03c5 \u03c0\u03b7\u03b4\u03bf\u03cd\u03c3\u03b5 \u03c0\u03c1\u03b9\u03bd \u03ba\u03bf\u03b9\u03c4\u03ac\u03be\u03b5\u03b9, \u03ba\u03b1\u03b9 \u03c0\u03bf\u03c5 \u03b3\u03b5\u03bb\u03bf\u03cd\u03c3\u03b5 \u03c0\u03b9\u03bf \u03b4\u03c5\u03bd\u03b1\u03c4\u03ac \u03b1\u03c0\u03cc \u03cc\u03bb\u03bf\u03c5\u03c2. \u0395\u03af\u03c7\u03b5 \u03b1\u03b3\u03c1\u03b9\u03ac \u03c3\u03b3\u03bf\u03c5\u03c1\u03ac \u03bc\u03b1\u03bb\u03bb\u03b9\u03ac \u03c0\u03bf\u03c5 \u03c0\u03bf\u03c4\u03ad \u03b4\u03b5\u03bd \u03ba\u03ac\u03b8\u03bf\u03bd\u03c4\u03b1\u03bd \u03ae\u03c3\u03c5\u03c7\u03b1, \u03ba\u03b1\u03b9 \u03c6\u03c9\u03c4\u03b5\u03b9\u03bd\u03ac \u03bc\u03ac\u03c4\u03b9\u03b1 \u03c0\u03bf\u03c5 \u03c0\u03ac\u03bd\u03c4\u03b1 \u03ad\u03c8\u03b1\u03c7\u03bd\u03b1\u03bd \u03c4\u03b7\u03bd \u03b5\u03c0\u03cc\u03bc\u03b5\u03bd\u03b7 \u03c0\u03b5\u03c1\u03b9\u03c0\u03ad\u03c4\u03b5\u03b9\u03b1. \u039f\u03b9 \u03b4\u03ac\u03c3\u03ba\u03b1\u03bb\u03bf\u03af \u03c4\u03bf\u03c5 \u03c4\u03bf\u03bd \u03ad\u03bb\u03b5\u03b3\u03b1\u03bd \u03b5\u03bd\u03b8\u03bf\u03c5\u03c3\u03b9\u03ce\u03b4\u03b7. \u039f\u03b9 \u03c3\u03c5\u03bc\u03bc\u03b1\u03b8\u03b7\u03c4\u03ad\u03c2 \u03c4\u03bf\u03c5 \u03c4\u03bf\u03bd \u03ad\u03bb\u03b5\u03b3\u03b1\u03bd \"\u03c0\u03bf\u03bb\u03cd\". \u0395\u03ba\u03b5\u03af\u03bd\u03bf\u03c2 \u03b4\u03b5\u03bd \u03ad\u03bd\u03bf\u03b9\u03b1\u03b6\u03b5 \u03ba\u03b1\u03b9 \u03c0\u03bf\u03bb\u03cd.\n\n\u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03ae\u03c4\u03b1\u03bd \u03b4\u03b9\u03b1\u03c6\u03bf\u03c1\u03b5\u03c4\u03b9\u03ba\u03cc\u03c2. \u0389\u03c3\u03c5\u03c7\u03bf\u03c2 \u03ba\u03b1\u03b9 \u03c0\u03c1\u03bf\u03c3\u03b5\u03ba\u03c4\u03b9\u03ba\u03cc\u03c2, \u03c4\u03bf \u03b5\u03af\u03b4\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03b1\u03b3\u03bf\u03c1\u03b9\u03bf\u03cd \u03c0\u03bf\u03c5 \u03c3\u03ba\u03b5\u03c6\u03c4\u03cc\u03c4\u03b1\u03bd \u03c4\u03c1\u03b5\u03b9\u03c2 \u03c6\u03bf\u03c1\u03ad\u03c2 \u03c0\u03c1\u03b9\u03bd \u03bc\u03b9\u03bb\u03ae\u03c3\u03b5\u03b9 \u03bc\u03af\u03b1. \u03a6\u03bf\u03c1\u03bf\u03cd\u03c3\u03b5 \u03c3\u03c4\u03c1\u03bf\u03b3\u03b3\u03c5\u03bb\u03ac \u03b3\u03c5\u03b1\u03bb\u03b9\u03ac \u03c0\u03bf\u03c5 \u03c4\u03b1 \u03b1\u03bd\u03ad\u03b2\u03b1\u03b6\u03b5 \u03c3\u03c5\u03bd\u03b5\u03c7\u03ce\u03c2 \u03c3\u03c4\u03b7 \u03bc\u03cd\u03c4\u03b7 \u03c4\u03bf\u03c5, \u03ba\u03b1\u03b9 \u03b5\u03af\u03c7\u03b5 \u03c4\u03b7 \u03c3\u03c5\u03bd\u03ae\u03b8\u03b5\u03b9\u03b1 \u03bd\u03b1 \u03c3\u03c4\u03b1\u03bc\u03b1\u03c4\u03ac \u03c3\u03c4\u03b7 \u03bc\u03ad\u03c3\u03b7 \u03c4\u03bf\u03c5 \u03b4\u03c1\u03cc\u03bc\u03bf\u03c5 \u03b3\u03b9\u03b1 \u03bd\u03b1 \u03ba\u03bf\u03b9\u03c4\u03ac\u03be\u03b5\u03b9 \u03c0\u03c1\u03ac\u03b3\u03bc\u03b1\u03c4\u03b1 \u03c0\u03bf\u03c5 \u03ba\u03b1\u03bd\u03b5\u03af\u03c2 \u03ac\u03bb\u03bb\u03bf\u03c2 \u03b4\u03b5\u03bd \u03c0\u03c1\u03cc\u03c3\u03b5\u03c7\u03b5 \u2014 \u03c4\u03bf \u03c3\u03c7\u03ad\u03b4\u03b9\u03bf \u03bc\u03b9\u03b1\u03c2 \u03c1\u03c9\u03b3\u03bc\u03ae\u03c2 \u03c3\u03c4\u03bf\u03bd \u03c4\u03bf\u03af\u03c7\u03bf, \u03c4\u03bf\u03bd \u03c4\u03c1\u03cc\u03c0\u03bf \u03c0\u03bf\u03c5 \u03ad\u03c0\u03b5\u03c6\u03c4\u03b5 \u03b7 \u03c3\u03ba\u03b9\u03ac, \u03c4\u03b7\u03bd \u03c4\u03ad\u03bb\u03b5\u03b9\u03b1 \u03b3\u03b5\u03c9\u03bc\u03b5\u03c4\u03c1\u03af\u03b1 \u03b5\u03bd\u03cc\u03c2 \u03b9\u03c3\u03c4\u03bf\u03cd \u03b1\u03c1\u03ac\u03c7\u03bd\u03b7\u03c2.\n\n\u0391\u03c5\u03c4\u03cc \u03c0\u03bf\u03c5 \u03c4\u03bf\u03c5\u03c2 \u03b5\u03bd\u03bf\u03c7\u03bb\u03bf\u03cd\u03c3\u03b5 \u03ae\u03c4\u03b1\u03bd \u03bf \u03ad\u03bd\u03b1\u03c2 \u03c4\u03bf\u03bd \u03ac\u03bb\u03bb\u03bf\u03bd. \u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ad\u03b2\u03bb\u03b5\u03c0\u03b5 \u03c4\u03bf\u03bd \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7 \u03c5\u03c0\u03b5\u03c1\u03b2\u03bf\u03bb\u03b9\u03ba\u03ac \u03c3\u03bf\u03b2\u03b1\u03c1\u03cc, \u03c5\u03c0\u03b5\u03c1\u03b2\u03bf\u03bb\u03b9\u03ba\u03ac \u03b1\u03bb\u03b1\u03b6\u03cc\u03bd\u03b1, \u03c5\u03c0\u03b5\u03c1\u03b2\u03bf\u03bb\u03b9\u03ba\u03ac \u03ad\u03be\u03c5\u03c0\u03bd\u03bf \u03b3\u03b9\u03b1 \u03c4\u03bf \u03ba\u03b1\u03bb\u03cc \u03c4\u03bf\u03c5. \u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03ad\u03b2\u03bb\u03b5\u03c0\u03b5 \u03c4\u03bf\u03bd \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7 \u03b1\u03c0\u03b5\u03c1\u03af\u03c3\u03ba\u03b5\u03c0\u03c4\u03bf, \u03b8\u03bf\u03c1\u03c5\u03b2\u03ce\u03b4\u03b7 \u03ba\u03b1\u03b9 \u03ba\u03bf\u03c5\u03c1\u03b1\u03c3\u03c4\u03b9\u03ba\u03cc. \u0388\u03c4\u03c3\u03b9 \u03ba\u03c1\u03b1\u03c4\u03bf\u03cd\u03c3\u03b1\u03bd \u03b1\u03c0\u03bf\u03c3\u03c4\u03ac\u03c3\u03b5\u03b9\u03c2 \u2014 \u03b1\u03bd\u03c4\u03af\u03b8\u03b5\u03c4\u03b5\u03c2 \u03c0\u03bb\u03b5\u03c5\u03c1\u03ad\u03c2 \u03c3\u03c4\u03b7\u03bd \u03c4\u03ac\u03be\u03b7, \u03b4\u03b9\u03b1\u03c6\u03bf\u03c1\u03b5\u03c4\u03b9\u03ba\u03ac \u03c4\u03c1\u03b1\u03c0\u03ad\u03b6\u03b9\u03b1 \u03c3\u03c4\u03bf \u03b3\u03b5\u03cd\u03bc\u03b1, \u03b5\u03c5\u03b3\u03b5\u03bd\u03b9\u03ba\u03bf\u03af \u03bc\u03b5\u03bd, \u03b1\u03bb\u03bb\u03ac \u03c4\u03af\u03c0\u03bf\u03c4\u03b1 \u03c0\u03b1\u03c1\u03b1\u03c0\u03ac\u03bd\u03c9.\n\n\u039c\u03ad\u03c7\u03c1\u03b9 \u03c4\u03b7\u03bd \u03b7\u03bc\u03ad\u03c1\u03b1 \u03c4\u03b7\u03c2 \u03b5\u03ba\u03b4\u03c1\u03bf\u03bc\u03ae\u03c2 \u03c3\u03c4\u03bf \u03b4\u03ac\u03c3\u03bf\u03c2.\n\n\u0389\u03c4\u03b1\u03bd \u03ad\u03bd\u03b1 \u03c4\u03ad\u03bb\u03b5\u03b9\u03bf \u03c6\u03b8\u03b9\u03bd\u03bf\u03c0\u03c9\u03c1\u03b9\u03bd\u03cc \u03c0\u03c1\u03c9\u03af, \u03bf \u03b1\u03ad\u03c1\u03b1\u03c2 \u03b3\u03b5\u03bc\u03ac\u03c4\u03bf\u03c2 \u03bc\u03c5\u03c1\u03c9\u03b4\u03b9\u03ac \u03c0\u03b5\u03cd\u03ba\u03bf\u03c5 \u03ba\u03b1\u03b9 \u03b4\u03c1\u03bf\u03c3\u03b5\u03c1\u03ae\u03c2 \u03b3\u03b7\u03c2. \u0397 \u03c4\u03ac\u03be\u03b7 \u03c0\u03b5\u03c1\u03c0\u03b1\u03c4\u03bf\u03cd\u03c3\u03b5 \u03ad\u03bd\u03b1 \u03b5\u03bb\u03b9\u03ba\u03bf\u03b5\u03b9\u03b4\u03ad\u03c2 \u03bc\u03bf\u03bd\u03bf\u03c0\u03ac\u03c4\u03b9, \u03b5\u03bd\u03ce \u03bf\u03b9 \u03b4\u03ac\u03c3\u03ba\u03b1\u03bb\u03bf\u03b9 \u03ad\u03b4\u03b5\u03b9\u03c7\u03bd\u03b1\u03bd \u03ba\u03b1\u03c4\u03c3\u03b1\u03c1\u03af\u03b4\u03b5\u03c2, \u03bc\u03b1\u03bd\u03b9\u03c4\u03ac\u03c1\u03b9\u03b1 \u03ba\u03b1\u03b9 \u03c4\u03b1 \u03c3\u03c7\u03ae\u03bc\u03b1\u03c4\u03b1 \u03c4\u03c9\u03bd \u03c6\u03cd\u03bb\u03bb\u03c9\u03bd. \u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03c0\u03c1\u03bf\u03c3\u03c0\u03b1\u03b8\u03bf\u03cd\u03c3\u03b5 \u03bd\u03b1 \u03c0\u03c1\u03bf\u03c3\u03ad\u03c7\u03b5\u03b9. \u039c\u03b1 \u03c4\u03cc\u03c4\u03b5 \u03bc\u03b9\u03b1 \u03c0\u03b5\u03c4\u03b1\u03bb\u03bf\u03cd\u03b4\u03b1 \u03c0\u03c1\u03bf\u03c3\u03b3\u03b5\u03b9\u03ce\u03b8\u03b7\u03ba\u03b5 \u03c3\u03b5 \u03ad\u03bd\u03b1 \u03ba\u03bb\u03b1\u03b4\u03af \u03b1\u03ba\u03c1\u03b9\u03b2\u03ce\u03c2 \u03b4\u03af\u03c0\u03bb\u03b1 \u03c3\u03c4\u03bf \u03bc\u03bf\u03bd\u03bf\u03c0\u03ac\u03c4\u03b9 \u2014 \u03c7\u03c1\u03c5\u03c3\u03ae \u03ba\u03b1\u03b9 \u03bc\u03b1\u03cd\u03c1\u03b7, \u03bc\u03b5 \u03c6\u03c4\u03b5\u03c1\u03ac \u03c0\u03bf\u03c5 \u03ac\u03bd\u03bf\u03b9\u03b3\u03b1\u03bd \u03ba\u03b1\u03b9 \u03ad\u03ba\u03bb\u03b5\u03b9\u03bd\u03b1\u03bd \u03c3\u03b1\u03bd \u03b1\u03c1\u03b3\u03cc\u03c2 \u03c7\u03c4\u03cd\u03c0\u03bf\u03c2 \u03ba\u03b1\u03c1\u03b4\u03b9\u03ac\u03c2 \u2014 \u03ba\u03b1\u03b9 \u03c0\u03c1\u03b9\u03bd \u03c0\u03c1\u03bf\u03bb\u03ac\u03b2\u03b5\u03b9 \u03bd\u03b1 \u03c3\u03c4\u03b1\u03bc\u03b1\u03c4\u03ae\u03c3\u03b5\u03b9 \u03c4\u03bf\u03bd \u03b5\u03b1\u03c5\u03c4\u03cc \u03c4\u03bf\u03c5, \u03c4\u03b7\u03bd \u03b1\u03ba\u03bf\u03bb\u03bf\u03c5\u03b8\u03bf\u03cd\u03c3\u03b5 \u03bc\u03ad\u03c3\u03b1 \u03c3\u03c4\u03b1 \u03b4\u03ad\u03bd\u03c4\u03c1\u03b1.\n\n\u039c\u03cc\u03bd\u03bf \u03bb\u03af\u03b3\u03b1 \u03b2\u03ae\u03bc\u03b1\u03c4\u03b1 \u03b1\u03ba\u03cc\u03bc\u03b1, \u03b5\u03af\u03c0\u03b5 \u03c3\u03c4\u03bf\u03bd \u03b5\u03b1\u03c5\u03c4\u03cc \u03c4\u03bf\u03c5. \u039c\u03cc\u03bd\u03bf \u03bd\u03b1 \u03b4\u03c9 \u03c0\u03bf\u03cd \u03c0\u03b7\u03b3\u03b1\u03af\u03bd\u03b5\u03b9.\n\n\u03a3\u03c4\u03bf \u03c0\u03af\u03c3\u03c9 \u03bc\u03ad\u03c1\u03bf\u03c2 \u03c4\u03b7\u03c2 \u03bf\u03bc\u03ac\u03b4\u03b1\u03c2, \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03b5\u03af\u03c7\u03b5 \u03b5\u03c0\u03af\u03c3\u03b7\u03c2 \u03c3\u03c4\u03b1\u03bc\u03b1\u03c4\u03ae\u03c3\u03b5\u03b9. \u039a\u03bf\u03b9\u03c4\u03bf\u03cd\u03c3\u03b5 \u03c4\u03b7 \u03c3\u03c4\u03ad\u03b3\u03b7 \u03c4\u03bf\u03c5 \u03b4\u03ac\u03c3\u03bf\u03c5\u03c2, \u03c4\u03bf\u03bd \u03c4\u03c1\u03cc\u03c0\u03bf \u03c0\u03bf\u03c5 \u03c4\u03b1 \u03ba\u03bb\u03b1\u03b4\u03b9\u03ac \u03c0\u03bb\u03ad\u03ba\u03bf\u03bd\u03c4\u03b1\u03bd \u03c3\u03b1\u03bd \u03c4\u03cc\u03be\u03b1 \u03ba\u03b1\u03b8\u03b5\u03b4\u03c1\u03b9\u03ba\u03bf\u03cd \u03bd\u03b1\u03bf\u03cd, \u03c4\u03bf\u03bd \u03c4\u03c1\u03cc\u03c0\u03bf \u03c0\u03bf\u03c5 \u03c4\u03bf \u03c6\u03c9\u03c2 \u03ad\u03c0\u03b5\u03c6\u03c4\u03b5 \u03c3\u03b5 \u03bc\u03b1\u03ba\u03c1\u03b9\u03ad\u03c2 \u03c3\u03ba\u03bf\u03bd\u03b9\u03c3\u03bc\u03ad\u03bd\u03b5\u03c2 \u03b4\u03ad\u03c3\u03bc\u03b5\u03c2. \u0388\u03b2\u03b3\u03b1\u03bb\u03b5 \u03c4\u03bf \u03c3\u03b7\u03bc\u03b5\u03b9\u03c9\u03bc\u03b1\u03c4\u03ac\u03c1\u03b9\u03cc \u03c4\u03bf\u03c5 \u03ba\u03b1\u03b9 \u03ac\u03c1\u03c7\u03b9\u03c3\u03b5 \u03bd\u03b1 \u03c3\u03c7\u03b5\u03b4\u03b9\u03ac\u03b6\u03b5\u03b9 \u2014 \u03c4\u03cc\u03c3\u03bf \u03b1\u03c0\u03bf\u03c1\u03c1\u03bf\u03c6\u03b7\u03bc\u03ad\u03bd\u03bf\u03c2 \u03c0\u03bf\u03c5 \u03b4\u03b5\u03bd \u03c0\u03c1\u03cc\u03c3\u03b5\u03be\u03b5 \u03c4\u03b9\u03c2 \u03c6\u03c9\u03bd\u03ad\u03c2 \u03c4\u03c9\u03bd \u03c3\u03c5\u03bc\u03bc\u03b1\u03b8\u03b7\u03c4\u03ce\u03bd \u03c4\u03bf\u03c5 \u03bd\u03b1 \u03be\u03b5\u03b8\u03c9\u03c1\u03b9\u03ac\u03b6\u03bf\u03c5\u03bd, \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c0\u03bf\u03c5 \u03b4\u03b5\u03bd \u03ad\u03bc\u03b5\u03b9\u03bd\u03b5 \u03c4\u03af\u03c0\u03bf\u03c4\u03b1 \u03ac\u03bb\u03bb\u03bf \u03c0\u03b1\u03c1\u03ac \u03bf \u03ac\u03bd\u03b5\u03bc\u03bf\u03c2.\n\n\u038c\u03c4\u03b1\u03bd \u03bf\u03b9 \u03b4\u03ac\u03c3\u03ba\u03b1\u03bb\u03bf\u03b9 \u03c4\u03bf \u03ba\u03b1\u03c4\u03ac\u03bb\u03b1\u03b2\u03b1\u03bd, \u03bf \u03bf\u03c5\u03c1\u03b1\u03bd\u03cc\u03c2 \u03b5\u03af\u03c7\u03b5 \u03b3\u03af\u03bd\u03b5\u03b9 \u03b2\u03b1\u03b8\u03cd \u03bc\u03c0\u03bb\u03b5 \u03c4\u03bf\u03c5 \u03c3\u03bf\u03cd\u03c1\u03bf\u03c5\u03c0\u03bf\u03c5.\n\n\u0392\u03b1\u03b8\u03b9\u03ac \u03bc\u03ad\u03c3\u03b1 \u03c3\u03c4\u03bf \u03b4\u03ac\u03c3\u03bf\u03c2, \u03bf \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ba\u03b1\u03b8\u03cc\u03c4\u03b1\u03bd \u03c3\u03b5 \u03bc\u03b9\u03b1 \u03b2\u03c1\u03cd\u03b1 \u03c0\u03ad\u03c4\u03c1\u03b1. \u0397 \u03c0\u03b5\u03c4\u03b1\u03bb\u03bf\u03cd\u03b4\u03b1 \u03b5\u03af\u03c7\u03b5 \u03c7\u03b1\u03b8\u03b5\u03af. \u03a4\u03bf \u03bc\u03bf\u03bd\u03bf\u03c0\u03ac\u03c4\u03b9 \u03b4\u03b5\u03bd \u03c6\u03b1\u03b9\u03bd\u03cc\u03c4\u03b1\u03bd \u03c0\u03bf\u03c5\u03b8\u03b5\u03bd\u03ac. \u03a4\u03b1 \u03b4\u03ad\u03bd\u03c4\u03c1\u03b1 \u03ad\u03bc\u03bf\u03b9\u03b1\u03b6\u03b1\u03bd \u03af\u03b4\u03b9\u03b1 \u03b1\u03c0\u03cc \u03ba\u03ac\u03b8\u03b5 \u03ba\u03b1\u03c4\u03b5\u03cd\u03b8\u03c5\u03bd\u03c3\u03b7.\n\n\u0388\u03bd\u03b1 \u03ba\u03bb\u03b1\u03b4\u03af \u03ad\u03c3\u03c0\u03b1\u03c3\u03b5. \u0393\u03cd\u03c1\u03b9\u03c3\u03b5 \u03b1\u03c0\u03cc\u03c4\u03bf\u03bc\u03b1.\n\n\u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03be\u03b5\u03c0\u03c1\u03cc\u03b2\u03b1\u03bb\u03b5 \u03c0\u03af\u03c3\u03c9 \u03b1\u03c0\u03cc \u03bc\u03b9\u03b1 \u03c6\u03b1\u03c1\u03b4\u03b9\u03ac \u03b2\u03b5\u03bb\u03b1\u03bd\u03b9\u03b4\u03b9\u03ac, \u03bc\u03b5 \u03c4\u03bf \u03c3\u03b7\u03bc\u03b5\u03b9\u03c9\u03bc\u03b1\u03c4\u03ac\u03c1\u03b9\u03bf \u03b1\u03ba\u03cc\u03bc\u03b1 \u03c3\u03c4\u03bf \u03c7\u03ad\u03c1\u03b9 \u03ba\u03b1\u03b9 \u03c4\u03b1 \u03b3\u03c5\u03b1\u03bb\u03b9\u03ac \u03bb\u03af\u03b3\u03bf \u03c3\u03c4\u03c1\u03b1\u03b2\u03ac.\n\n\u00ab\u03a9\u00bb, \u03b5\u03af\u03c0\u03b5 \u03bf \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2. \u00ab\u0395\u03c3\u03cd \u03b5\u03af\u03c3\u03b1\u03b9.\u00bb\n\n\u00ab\u03a9\u00bb, \u03b5\u03af\u03c0\u03b5 \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2. \u00ab\u039f \u03b1\u03c0\u03b5\u03c1\u03af\u03c3\u03ba\u03b5\u03c0\u03c4\u03bf\u03c2.\u00bb\n\n\u00ab\u039c\u03b5 \u03c3\u03c5\u03b3\u03c7\u03c9\u03c1\u03b5\u03af\u03c2; \u03a7\u03ac\u03b8\u03b7\u03ba\u03b5\u03c2 \u03ba\u03b9 \u03b5\u03c3\u03cd.\u00bb\n\n\u00ab\u0388\u03c7\u03c9 \u03c0\u03c1\u03bf\u03c3\u03c9\u03c1\u03b9\u03bd\u03ac \u03b1\u03c0\u03bf\u03c0\u03c1\u03bf\u03c3\u03b1\u03bd\u03b1\u03c4\u03bf\u03bb\u03b9\u03c3\u03c4\u03b5\u03af. \u03a5\u03c0\u03ac\u03c1\u03c7\u03b5\u03b9 \u03b4\u03b9\u03b1\u03c6\u03bf\u03c1\u03ac.\u00bb\n\n\u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ac\u03bd\u03bf\u03b9\u03be\u03b5 \u03c4\u03bf \u03c3\u03c4\u03cc\u03bc\u03b1 \u03c4\u03bf\u03c5 \u2014 \u03ba\u03b1\u03b9 \u03bc\u03b5\u03c4\u03ac \u03c4\u03bf \u03ad\u03ba\u03bb\u03b5\u03b9\u03c3\u03b5 \u03c0\u03ac\u03bb\u03b9. \u0394\u03b5\u03bd \u03ae\u03c4\u03b1\u03bd \u03b7 \u03c3\u03c4\u03b9\u03b3\u03bc\u03ae.\n\n\u00ab\u0395\u03bd\u03c4\u03ac\u03be\u03b5\u03b9\u00bb, \u03b5\u03af\u03c0\u03b5. \u00ab\u03a0\u03c1\u03bf\u03c2 \u03c4\u03bf \u03c0\u03b1\u03c1\u03cc\u03bd, \u03b1\u03c2 \u03b2\u03bf\u03b7\u03b8\u03ae\u03c3\u03bf\u03c5\u03bc\u03b5 \u03bf \u03ad\u03bd\u03b1\u03c2 \u03c4\u03bf\u03bd \u03ac\u03bb\u03bb\u03bf\u03bd. \u039c\u03b5\u03c4\u03ac \u03c7\u03c9\u03c1\u03af\u03b6\u03bf\u03c5\u03bc\u03b5 \u03b4\u03c1\u03cc\u03bc\u03bf\u03c5\u03c2 \u03ba\u03b1\u03b9 \u03ba\u03ac\u03bd\u03bf\u03c5\u03bc\u03b5 \u03cc\u03c4\u03b9 \u03b1\u03c5\u03c4\u03cc \u03b4\u03b5\u03bd \u03c3\u03c5\u03bd\u03ad\u03b2\u03b7 \u03c0\u03bf\u03c4\u03ad. \u03a3\u03c5\u03bc\u03c6\u03c9\u03bd\u03af\u03b1;\u00bb\n\n\u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03b1\u03bd\u03ad\u03b2\u03b1\u03c3\u03b5 \u03c4\u03b1 \u03b3\u03c5\u03b1\u03bb\u03b9\u03ac \u03c4\u03bf\u03c5. \u00ab\u03a3\u03c5\u03bc\u03c6\u03c9\u03bd\u03af\u03b1. \u03a4\u03b9 \u03c0\u03c1\u03bf\u03c4\u03b5\u03af\u03bd\u03b5\u03b9\u03c2;\u00bb\n\n\u00ab\u0392\u03c1\u03af\u03c3\u03ba\u03bf\u03c5\u03bc\u03b5 \u03ad\u03bd\u03b1 \u03c0\u03bf\u03c4\u03ac\u03bc\u03b9 \u03ba\u03b1\u03b9 \u03c4\u03bf \u03b1\u03ba\u03bf\u03bb\u03bf\u03c5\u03b8\u03bf\u03cd\u03bc\u03b5 \u03ba\u03b1\u03c4\u03b7\u03c6\u03bf\u03c1\u03b9\u03ba\u03ac. \u03a4\u03bf \u03bd\u03b5\u03c1\u03cc \u03c0\u03ac\u03bd\u03c4\u03b1 \u03bf\u03b4\u03b7\u03b3\u03b5\u03af \u03c3\u03c4\u03b7\u03bd \u03c0\u03cc\u03bb\u03b7.\u00bb\n\n\u00ab\u0391\u03c5\u03c4\u03cc \u03b5\u03af\u03bd\u03b1\u03b9... \u03c3\u03c4\u03b7\u03bd \u03c0\u03c1\u03b1\u03b3\u03bc\u03b1\u03c4\u03b9\u03ba\u03cc\u03c4\u03b7\u03c4\u03b1 \u03bc\u03b9\u03b1 \u03ba\u03b1\u03bb\u03ae \u03b9\u03b4\u03ad\u03b1\u00bb, \u03b5\u03af\u03c0\u03b5 \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2, \u03bb\u03af\u03b3\u03bf \u03ad\u03ba\u03c0\u03bb\u03b7\u03ba\u03c4\u03bf\u03c2.\n\n\u00ab\u039c\u03b7\u03bd \u03b1\u03ba\u03bf\u03cd\u03c2 \u03c4\u03cc\u03c3\u03bf \u03c3\u03bf\u03ba\u03b1\u03c1\u03b9\u03c3\u03bc\u03ad\u03bd\u03bf\u03c2.\u00bb \u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ad\u03b2\u03b3\u03b1\u03bb\u03b5 \u03b1\u03c0\u03cc \u03c4\u03bf \u03c3\u03b1\u03ba\u03af\u03b4\u03b9\u03cc \u03c4\u03bf\u03c5 \u03ad\u03bd\u03b1\u03bd \u03c6\u03b1\u03ba\u03cc. \u03a4\u03bf\u03bd \u03ac\u03bd\u03b1\u03c8\u03b5 \u03ba\u03b1\u03b9 \u03bc\u03b9\u03b1 \u03b6\u03b5\u03c3\u03c4\u03ae \u03b4\u03ad\u03c3\u03bc\u03b7 \u03c6\u03c9\u03c4\u03cc\u03c2 \u03ad\u03ba\u03bf\u03c8\u03b5 \u03c4\u03bf \u03c3\u03ba\u03bf\u03c4\u03ac\u03b4\u03b9.\n\n\u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03c4\u03bf\u03bd \u03ba\u03bf\u03af\u03c4\u03b1\u03be\u03b5. \u00ab\u0388\u03c6\u03b5\u03c1\u03b5\u03c2 \u03c6\u03b1\u03ba\u03cc \u03c3\u03b5 \u03b5\u03ba\u03b4\u03c1\u03bf\u03bc\u03ae \u03c3\u03c4\u03bf \u03b4\u03ac\u03c3\u03bf\u03c2;\u00bb\n\n\u00ab\u03a0\u03b1\u03bd\u03c4\u03bf\u03cd \u03c0\u03b1\u03af\u03c1\u03bd\u03c9 \u03c6\u03b1\u03ba\u03cc. \u03a0\u03bf\u03c4\u03ad \u03b4\u03b5\u03bd \u03be\u03ad\u03c1\u03b5\u03b9\u03c2.\u00bb\n\n\u0393\u03b9\u03b1 \u03c0\u03c1\u03ce\u03c4\u03b7 \u03c6\u03bf\u03c1\u03ac \u03c0\u03bf\u03c5 \u03b8\u03c5\u03bc\u03cc\u03c4\u03b1\u03bd \u03ba\u03b1\u03bd\u03b5\u03af\u03c2 \u03c4\u03bf\u03c5\u03c2, \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03c7\u03b1\u03bc\u03bf\u03b3\u03ad\u03bb\u03b1\u03c3\u03b5 \u03c3\u03b5 \u03ba\u03ac\u03c4\u03b9 \u03c0\u03bf\u03c5 \u03b5\u03af\u03c0\u03b5 \u03bf \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2.\n\n\u039e\u03b5\u03ba\u03af\u03bd\u03b7\u03c3\u03b1\u03bd \u03bc\u03b1\u03b6\u03af \u2014 \u03bf \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ac\u03bd\u03bf\u03b9\u03b3\u03b5 \u03c4\u03bf\u03bd \u03b4\u03c1\u03cc\u03bc\u03bf \u03bc\u03b5 \u03c4\u03bf\u03bd \u03c6\u03b1\u03ba\u03cc, \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03c0\u03bb\u03bf\u03b7\u03b3\u03bf\u03cd\u03c3\u03b5 \u03b1\u03c0\u03cc \u03c4\u03bf\u03bd \u03c7\u03ac\u03c1\u03c4\u03b7 \u03c0\u03bf\u03c5 \u03b5\u03af\u03c7\u03b5 \u03b1\u03c0\u03bf\u03bc\u03bd\u03b7\u03bc\u03bf\u03bd\u03b5\u03cd\u03c3\u03b5\u03b9 \u03c3\u03c4\u03bf \u03bb\u03b5\u03c9\u03c6\u03bf\u03c1\u03b5\u03af\u03bf. \u03a4\u03bf \u03b4\u03ac\u03c3\u03bf\u03c2 \u03c4\u03b7 \u03bd\u03cd\u03c7\u03c4\u03b1 \u03ae\u03c4\u03b1\u03bd \u03b3\u03b5\u03bc\u03ac\u03c4\u03bf \u03ae\u03c7\u03bf\u03c5\u03c2, \u03ba\u03b1\u03b9 \u03ba\u03b1\u03bd\u03b5\u03af\u03c2 \u03b4\u03b5\u03bd \u03b5\u03af\u03c0\u03b5 \u03c0\u03c9\u03c2 \u03c6\u03bf\u03b2\u03cc\u03c4\u03b1\u03bd. \u0391\u03bb\u03bb\u03ac \u03bc\u03b5 \u03ba\u03ac\u03b8\u03b5 \u03b2\u03ae\u03bc\u03b1 \u03c0\u03b5\u03c1\u03c0\u03b1\u03c4\u03bf\u03cd\u03c3\u03b1\u03bd \u03bb\u03af\u03b3\u03bf \u03c0\u03b9\u03bf \u03ba\u03bf\u03bd\u03c4\u03ac \u03bf \u03ad\u03bd\u03b1\u03c2 \u03c3\u03c4\u03bf\u03bd \u03ac\u03bb\u03bb\u03bf\u03bd.\n\n\u039b\u03af\u03b3\u03b7 \u03ce\u03c1\u03b1 \u03b1\u03c1\u03b3\u03cc\u03c4\u03b5\u03c1\u03b1 \u03b2\u03c1\u03ae\u03ba\u03b1\u03bd \u03c4\u03bf \u03c0\u03bf\u03c4\u03ac\u03bc\u03b9, \u03b1\u03ba\u03c1\u03b9\u03b2\u03ce\u03c2 \u03b5\u03ba\u03b5\u03af \u03c0\u03bf\u03c5 \u03c4\u03bf \u03b5\u03af\u03c7\u03b5 \u03c0\u03c1\u03bf\u03b2\u03bb\u03ad\u03c8\u03b5\u03b9 \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2. \u039a\u03ac\u03b8\u03b9\u03c3\u03b1\u03bd \u03c3\u03c4\u03b7\u03bd \u03cc\u03c7\u03b8\u03b7 \u03bd\u03b1 \u03be\u03b5\u03ba\u03bf\u03c5\u03c1\u03b1\u03c3\u03c4\u03bf\u03cd\u03bd.\n\n\u00ab\u03a0\u03b5\u03b9\u03bd\u03ac\u03c9\u00bb, \u03c0\u03b1\u03c1\u03b1\u03b4\u03ad\u03c7\u03c4\u03b7\u03ba\u03b5 \u03bf \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2.\n\n\u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03ac\u03bd\u03bf\u03b9\u03be\u03b5 \u03c4\u03b7\u03bd \u03c4\u03c3\u03ac\u03bd\u03c4\u03b1 \u03c4\u03bf\u03c5 \u03ba\u03b1\u03b9 \u03ad\u03b2\u03b3\u03b1\u03bb\u03b5 \u03b4\u03cd\u03bf \u03bc\u03c0\u03ac\u03c1\u03b5\u03c2 \u03b4\u03b7\u03bc\u03b7\u03c4\u03c1\u03b9\u03b1\u03ba\u03ce\u03bd, \u03ad\u03bd\u03b1 \u03bc\u03ae\u03bb\u03bf \u03ba\u03b1\u03b9 \u03ad\u03bd\u03b1 \u03c3\u03b1\u03ba\u03bf\u03c5\u03bb\u03ac\u03ba\u03b9 \u03b1\u03c0\u03bf\u03be\u03b7\u03c1\u03b1\u03bc\u03ad\u03bd\u03b1 \u03c3\u03cd\u03ba\u03b1. \u0386\u03c0\u03bb\u03c9\u03c3\u03b5 \u03c4\u03b7 \u03bc\u03b9\u03c3\u03ae \u03bc\u03b5\u03c1\u03af\u03b4\u03b1 \u03c7\u03c9\u03c1\u03af\u03c2 \u03bd\u03b1 \u03c0\u03b5\u03b9 \u03bb\u03ad\u03be\u03b7.\n\n\u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03c4\u03bf\u03bd \u03ba\u03bf\u03af\u03c4\u03b1\u03be\u03b5. \u00ab\u0388\u03c6\u03b5\u03c1\u03b5\u03c2 \u03b5\u03c0\u03b9\u03c0\u03bb\u03ad\u03bf\u03bd \u03c6\u03b1\u03b3\u03b7\u03c4\u03cc;\u00bb\n\n\u00ab\u03a0\u03ac\u03bd\u03c4\u03b1 \u03c0\u03b1\u03af\u03c1\u03bd\u03c9 \u03b5\u03c0\u03b9\u03c0\u03bb\u03ad\u03bf\u03bd. \u0393\u03b9\u03b1 \u03ba\u03ac\u03b8\u03b5 \u03b5\u03bd\u03b4\u03b5\u03c7\u03cc\u03bc\u03b5\u03bd\u03bf.\u00bb\n\n\u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03b3\u03ad\u03bb\u03b1\u03c3\u03b5 \u2014 \u03ad\u03bd\u03b1 \u03b1\u03bb\u03b7\u03b8\u03b9\u03bd\u03cc, \u03b6\u03b5\u03c3\u03c4\u03cc \u03b3\u03ad\u03bb\u03b9\u03bf. \u00ab\u0395\u03af\u03bc\u03b1\u03c3\u03c4\u03b5 \u03af\u03b4\u03b9\u03bf\u03b9, \u03be\u03ad\u03c1\u03b5\u03b9\u03c2. \u0395\u03c3\u03cd \u03c3\u03ba\u03ad\u03c6\u03c4\u03b5\u03c3\u03b1\u03b9 \u03bc\u03c0\u03c1\u03bf\u03c3\u03c4\u03ac, \u03b5\u03b3\u03ce \u03b4\u03c1\u03c9 \u03b3\u03c1\u03ae\u03b3\u03bf\u03c1\u03b1. \u03a4\u03bf \u03af\u03b4\u03b9\u03bf \u03c0\u03c1\u03ac\u03b3\u03bc\u03b1, \u03c3\u03c4\u03b7\u03bd \u03bf\u03c5\u03c3\u03af\u03b1. \u0391\u03c0\u03bb\u03ce\u03c2 \u03c3\u03b5 \u03b4\u03b9\u03b1\u03c6\u03bf\u03c1\u03b5\u03c4\u03b9\u03ba\u03ad\u03c2 \u03ba\u03b1\u03c4\u03b5\u03c5\u03b8\u03cd\u03bd\u03c3\u03b5\u03b9\u03c2.\u00bb\n\n\u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03c4\u03bf \u03c3\u03ba\u03ad\u03c6\u03c4\u03b7\u03ba\u03b5. \u00ab\u03a5\u03c0\u03bf\u03b8\u03ad\u03c4\u03c9\u00bb, \u03b5\u03af\u03c0\u03b5 \u03ae\u03c3\u03c5\u03c7\u03b1.\n\n\u039a\u03ac\u03b8\u03b9\u03c3\u03b1\u03bd \u03b4\u03af\u03c0\u03bb\u03b1 \u03c3\u03c4\u03bf \u03c0\u03bf\u03c4\u03ac\u03bc\u03b9 \u03ba\u03b1\u03b9 \u03ad\u03c6\u03b1\u03b3\u03b1\u03bd, \u03ba\u03b1\u03b9 \u03b3\u03b9\u03b1 \u03c0\u03c1\u03ce\u03c4\u03b7 \u03c6\u03bf\u03c1\u03ac \u03bc\u03af\u03bb\u03b7\u03c3\u03b1\u03bd \u03b1\u03bb\u03b7\u03b8\u03b9\u03bd\u03ac \u2014 \u03b3\u03b9\u03b1 \u03c4\u03b1 \u03ac\u03c3\u03c4\u03c1\u03b1 \u03c0\u03ac\u03bd\u03c9 \u03c4\u03bf\u03c5\u03c2, \u03b3\u03b9\u03b1 \u03c4\u03bf \u03b1\u03bd \u03bf\u03b9 \u03c0\u03b5\u03c4\u03b1\u03bb\u03bf\u03cd\u03b4\u03b5\u03c2 \u03b8\u03c5\u03bc\u03bf\u03cd\u03bd\u03c4\u03b1\u03b9 \u03c4\u03b7 \u03b6\u03c9\u03ae \u03c4\u03bf\u03c5\u03c2 \u03c9\u03c2 \u03ba\u03ac\u03bc\u03c0\u03b9\u03b5\u03c2, \u03b3\u03b9\u03b1 \u03c4\u03bf \u03b3\u03b9\u03b1\u03c4\u03af \u03c4\u03b1 \u03c0\u03bf\u03c4\u03ac\u03bc\u03b9\u03b1 \u03ba\u03c5\u03c1\u03c4\u03ce\u03bd\u03bf\u03c5\u03bd \u03c0\u03ac\u03bd\u03c4\u03b1 \u03bc\u03b5 \u03c4\u03bf\u03bd \u03c4\u03c1\u03cc\u03c0\u03bf \u03c0\u03bf\u03c5 \u03ba\u03c5\u03c1\u03c4\u03ce\u03bd\u03bf\u03c5\u03bd.\n\n\u039c\u03b9\u03bb\u03bf\u03cd\u03c3\u03b1\u03bd \u03b1\u03ba\u03cc\u03bc\u03b1 \u03cc\u03c4\u03b1\u03bd \u03bf \u03ba\u03cd\u03c1\u03b9\u03bf\u03c2 \u039d\u03b9\u03ba\u03cc\u03bb\u03b1\u03c2 \u03c4\u03bf\u03c5\u03c2 \u03b2\u03c1\u03ae\u03ba\u03b5, \u03bc\u03b5 \u03c4\u03bf\u03bd \u03c6\u03b1\u03ba\u03cc \u03c4\u03bf\u03c5 \u03bd\u03b1 \u03b1\u03b9\u03c9\u03c1\u03b5\u03af\u03c4\u03b1\u03b9 \u03bc\u03ad\u03c3\u03b1 \u03c3\u03c4\u03b1 \u03b4\u03ad\u03bd\u03c4\u03c1\u03b1 \u03ba\u03b1\u03b9 \u03c4\u03b7 \u03c6\u03c9\u03bd\u03ae \u03c4\u03bf\u03c5 \u03b2\u03c1\u03b1\u03c7\u03bd\u03ae \u03b1\u03c0\u03cc \u03c4\u03bf \u03bd\u03b1 \u03c6\u03c9\u03bd\u03ac\u03b6\u03b5\u03b9 \u03c4\u03b1 \u03bf\u03bd\u03cc\u03bc\u03b1\u03c4\u03ac \u03c4\u03bf\u03c5\u03c2.\n\n\u0391\u03ba\u03bf\u03bb\u03bf\u03cd\u03b8\u03b7\u03c3\u03b1\u03bd \u03b1\u03b3\u03ba\u03b1\u03bb\u03b9\u03ad\u03c2 \u03ba\u03b1\u03b9 \u03b4\u03ac\u03ba\u03c1\u03c5\u03b1 \u03ba\u03b1\u03b9, \u03bd\u03b1\u03b9, \u03ba\u03ac\u03c0\u03bf\u03b9\u03bf\u03c2 \u03b3\u03bf\u03bd\u03b9\u03ba\u03cc\u03c2 \u03b1\u03c0\u03bf\u03ba\u03bb\u03b5\u03b9\u03c3\u03bc\u03cc\u03c2. \u0391\u03bb\u03bb\u03ac \u03bf \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ba\u03b1\u03b9 \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03b4\u03b5\u03bd \u03ad\u03bd\u03bf\u03b9\u03b1\u03b6\u03b5 \u03ba\u03b1\u03b9 \u03c0\u03bf\u03bb\u03cd.\n\n\u0393\u03b9\u03b1\u03c4\u03af \u03ba\u03ac\u03c4\u03b9 \u03b5\u03af\u03c7\u03b5 \u03b1\u03bb\u03bb\u03ac\u03be\u03b5\u03b9 \u03b5\u03ba\u03b5\u03af\u03bd\u03b7 \u03c4\u03b7 \u03bd\u03cd\u03c7\u03c4\u03b1 \u03c3\u03c4\u03bf \u03b4\u03ac\u03c3\u03bf\u03c2.\n\n\u039c\u03b5\u03c4\u03ac \u03b1\u03c0\u03cc \u03b5\u03ba\u03b5\u03af\u03bd\u03b7 \u03c4\u03b7 \u03bd\u03cd\u03c7\u03c4\u03b1, \u03ac\u03c1\u03c7\u03b9\u03c3\u03b1\u03bd \u03bd\u03b1 \u03ba\u03ac\u03b8\u03bf\u03bd\u03c4\u03b1\u03b9 \u03c3\u03c4\u03bf \u03af\u03b4\u03b9\u03bf \u03c4\u03c1\u03b1\u03c0\u03ad\u03b6\u03b9 \u03c3\u03c4\u03bf \u03b3\u03b5\u03cd\u03bc\u03b1. \u039c\u03b5\u03c4\u03ac \u03bd\u03b1 \u03b3\u03c5\u03c1\u03af\u03b6\u03bf\u03c5\u03bd \u03c3\u03c0\u03af\u03c4\u03b9 \u03bc\u03b1\u03b6\u03af. \u039f \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03c4\u03c1\u03b1\u03b2\u03bf\u03cd\u03c3\u03b5 \u03c4\u03bf\u03bd \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7 \u03c3\u03b5 \u03c0\u03b5\u03c1\u03b9\u03c0\u03ad\u03c4\u03b5\u03b9\u03b5\u03c2 \u03c0\u03bf\u03c5 \u03b4\u03b5\u03bd \u03b8\u03b1 \u03c4\u03bf\u03bb\u03bc\u03bf\u03cd\u03c3\u03b5 \u03c0\u03bf\u03c4\u03ad \u03bc\u03cc\u03bd\u03bf\u03c2 \u03c4\u03bf\u03c5. \u039a\u03b1\u03b9 \u03bf \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03c6\u03c1\u03cc\u03bd\u03c4\u03b9\u03b6\u03b5 \u03ae\u03c3\u03c5\u03c7\u03b1 \u03bd\u03b1 \u03bc\u03b7\u03bd \u03ba\u03b1\u03c4\u03b1\u03bb\u03ae\u03b3\u03bf\u03c5\u03bd \u03c3\u03b5 \u03ba\u03b1\u03c4\u03b1\u03c3\u03c4\u03c1\u03bf\u03c6\u03ae \u03b5\u03ba\u03b5\u03af\u03bd\u03b5\u03c2 \u03bf\u03b9 \u03c0\u03b5\u03c1\u03b9\u03c0\u03ad\u03c4\u03b5\u03b9\u03b5\u03c2.\n\n\u039f \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7\u03c2 \u03ad\u03b3\u03b9\u03bd\u03b5 \u03bf \u03c3\u03bf\u03b2\u03b1\u03c1\u03cc\u03c2 \u2014 \u03c0\u03ac\u03bd\u03c4\u03b1 \u03ad\u03bd\u03b1 \u03b2\u03ae\u03bc\u03b1 \u03bc\u03c0\u03c1\u03bf\u03c3\u03c4\u03ac, \u03c0\u03ac\u03bd\u03c4\u03b1 \u03ad\u03c4\u03bf\u03b9\u03bc\u03bf\u03c2 \u03bc\u03b5 \u03ad\u03bd\u03b1 \u03c3\u03c7\u03ad\u03b4\u03b9\u03bf, \u03bc\u03b9\u03b1 \u03bb\u03cd\u03c3\u03b7, \u03ba\u03b1\u03b9 \u03ad\u03bd\u03b1 \u03c3\u03bd\u03b1\u03ba.\n\n\u039a\u03b1\u03b9 \u03bf \u0391\u03c1\u03b9\u03c3\u03c4\u03bf\u03c4\u03ad\u03bb\u03b7\u03c2 \u03ad\u03b3\u03b9\u03bd\u03b5 \u03b7 \u03c3\u03c0\u03af\u03b8\u03b1 \u03c0\u03bf\u03c5 \u03ad\u03b2\u03b3\u03b1\u03b6\u03b5 \u03c4\u03bf\u03bd \u0398\u03b5\u03bf\u03c4\u03cc\u03ba\u03b7 \u03b1\u03c0\u03cc \u03c4\u03bf \u03ba\u03b5\u03c6\u03ac\u03bb\u03b9 \u03c4\u03bf\u03c5 \u03ba\u03b1\u03b9 \u03c4\u03bf\u03bd \u03ad\u03c6\u03b5\u03c1\u03bd\u03b5 \u03c3\u03c4\u03bf\u03bd \u03ba\u03cc\u03c3\u03bc\u03bf \u2014 \u03c0\u03b9\u03bf \u03b4\u03c5\u03bd\u03b1\u03c4\u03cc, \u03c0\u03b9\u03bf \u03c4\u03bf\u03bb\u03bc\u03b7\u03c1\u03cc, \u03c0\u03b9\u03bf \u03b6\u03c9\u03bd\u03c4\u03b1\u03bd\u03cc \u03b1\u03c0\u03cc \u03cc,\u03c4\u03b9 \u03ae\u03c4\u03b1\u03bd \u03bc\u03cc\u03bd\u03bf\u03c2 \u03c4\u03bf\u03c5 \u03c0\u03bf\u03c4\u03ad.\n\n\u0389\u03c4\u03b1\u03bd \u03c4\u03b5\u03bb\u03b5\u03af\u03c9\u03c2 \u03b4\u03b9\u03b1\u03c6\u03bf\u03c1\u03b5\u03c4\u03b9\u03ba\u03bf\u03af. \u0391\u03c5\u03c4\u03ae \u03ae\u03c4\u03b1\u03bd \u03b7 \u03bf\u03c5\u03c3\u03af\u03b1.\n\n\u039a\u03b1\u03b9 \u03b1\u03c0\u03cc \u03b5\u03ba\u03b5\u03af\u03bd\u03b7 \u03c4\u03b7 \u03bd\u03cd\u03c7\u03c4\u03b1 \u03c3\u03c4\u03bf \u03b4\u03ac\u03c3\u03bf\u03c2, \u03ad\u03b3\u03b9\u03bd\u03b1\u03bd \u03bf\u03b9 \u03ba\u03b1\u03bb\u03cd\u03c4\u03b5\u03c1\u03bf\u03b9 \u03c6\u03af\u03bb\u03bf\u03b9 \u03c3\u03c4\u03bf\u03bd \u03ba\u03cc\u03c3\u03bc\u03bf.\n\n\u03a4\u03ad\u03bb\u03bf\u03c2." }
-  },
-  2: {
-    en: { title: "Rillas the Gorilla", text: "Rillas the Gorilla\n\nOnce upon a time, there were Theotokis and Aristotelis.\n\nTheotokis called Aristotelis on the phone and said: \"Hey, do you want to go to the zoo?\"\n\n\"What would I do at the zoo?\"\n\n\"Come on! There are animals there — it'll be great!\"\n\n\"Alright, alright.\"\n\nThey jumped on their four-wheel dirt bikes — VROOM VROOM VROOM! — and zoomed off to the zoo.\n\nThey looked at the lions, the turtles, the snakes. They walked around and saw everything.\n\nThen, they passed a cage with a single gorilla sitting alone. All by himself.\n\nAs they walked past, they heard: \"Psssst! Hey! Over here!\"\n\n\"Did you hear something?\"\n\n\"I heard... something. I don't know...\"\n\n\"Hey — turn around!\"\n\nThey turned around and stared at the gorilla. The gorilla was staring right back at them.\n\n\"Wait — are YOU talking to us?!\"\n\n\"Yes, I'm talking to you! Did you not know I can talk? I've been listening to humans for years — I learned. My name is Rillas the Gorilla!\"\n\nThe two boys stood there with their mouths wide open.\n\n\"I'm Theotokis, and this is my best friend Aristotelis. How can we help you, Rillas?\"\n\n\"Boys, I've been trapped in here for so long. I'm not happy. I want to go to the jungle. Can you help me?\"\n\n\"We don't know... do you have a plan?\"\n\n\"I chose you two because you seem like good kids. Will you be my friends?\"\n\nTheotokis and Aristotelis stepped aside and whispered to each other.\n\n\"We should help him! Let's help him!\"\n\nThey turned back. \"Okay Rillas — do you have a plan?\"\n\n\"Yes! Listen carefully. Every Friday night, there's a guard who is very bad at his job — he falls asleep all night long! If you can sneak over and grab the keys, you can open my cage. But the cameras — I'll cause a panic with the other gorillas as a distraction, and while everyone is running around, you grab the keys and let me out.\"\n\n\"Yes, yes! But not this Friday — next week. We'll come back first to watch the zoo and map everything out, then we'll tell you we're ready.\"\n\n\"Perfect.\"\n\nSo Theotokis and Aristotelis made their plan. They had to find the sleepy guard, and find a path where the cameras couldn't see them.\n\nThe following Friday they spotted the guard — just sitting there, looking left, looking right, barely staying awake.\n\nOn Saturday they found all the camera blind spots and mapped a route no camera could catch.\n\n\"Alright — and we wear our caps to hide our faces!\"\n\nThe week passed. Friday arrived. Just before the zoo closed, they saw the guard was already nodding off. They had one hour to pull this off. Caps on, they slipped inside.\n\nThe guard was slumped on his bench, fast asleep.\n\nThey crept silently along their mapped route and grabbed the keys from the guard's belt.\n\n\"Okay Rillas — NOW! Cause the panic!\"\n\n\"Got it!\"\n\nRillas ran over to the other gorillas and said something to them — and it started. CHAOS! Gorillas everywhere! The guards were running around, throwing bananas trying to calm the gorillas down.\n\nTheotokis and Aristotelis sprinted to Rillas's cage and unlocked it.\n\n\"Quick, quick! RUN! Get out before they catch you!\"\n\n\"But where do I go?!\"\n\n\"OUT of the zoo — climb a tree!\"\n\nRillas burst out of the cage and scrambled up a tree just outside the zoo walls. The boys ran out after him — and that's when they realised something was very wrong.\n\nThe whole street was blocked. Police cars everywhere.\n\nSomeone had already noticed a gorilla was missing.\n\nThen they heard it — a helicopter overhead.\n\n\"Oh no,\" whispered Theotokis. \"Are we going to jail?!\"\n\n\"Relax — we wait until the police leave.\"\n\nThey crept under Rillas's tree and whispered up at him.\n\n\"Rillas! Stay up there — stay still! We'll come back for you when it's safe!\"\n\n\"Okay, okay.\"\n\nThey waited. And waited. The whole night passed.\n\nFinally, as dawn broke, the police packed up and left. They said they'd come back in the morning.\n\nNow was their chance.\n\nThey took Rillas to his new home — a tall tree deep in a quiet, hidden spot where no car could ever reach. It was perfect.\n\nThey sat together and ate bananas.\n\nAnd from that day on, the three of them became the best of friends. They went on many adventures together — and every one of them is another story.\n\nThe End." },
-    gr: { title: "Ρίλλας ο Γορίλλας (Β)", text: "Ρίλλας ο Γορίλλας\n\nΜια φορά κι έναν καιρό, ήταν ο Θεοτόκης κι ο Αριστοτέλης.\n\nΠαίρνει ο Θεοτόκης τον Αριστοτέλη τηλέφωνο και του λέει: «Ρε, θέλεις να πας στο ζωολογικό κήπο;»\n\n«Μα τι θα κάνω εγώ στο ζωολογικό κήπο, ρε;»\n\n«Άσε τα! Ρε φίλε, είναι ζώα εκεί — θα περάσουμε τέλεια!»\n\n«Εντάξει, εντάξει.»\n\nΒγήκαν, ανέβηκαν στις τετράτροχες μηχανές τους — ΒΡΟΥΜ ΒΡΟΥΜ ΒΡΟΥΜ! — και πήγαν στο ζωολογικό κήπο. Περνούσαν από εδώ, περνούσαν από εκεί. Είδαν τα λιοντάρια, είδαν τις χελώνες, είδαν τα φίδια.\n\nΚάποια στιγμή, είδαν έναν γορίλλα που ήταν μόνος του. Ναι — ήταν εντελώς μόνος στο κλουβί. Και καθώς περνούσαν, άκουσαν:\n\n«Ψτ! Ψτ! Ρε!»\n\n«Ακούς κάτι;»\n\n«Ακούω κάτι... δεν ξέρω...»\n\n«Ρε, γυρίστε πίσω!»\n\nΓύρισαν πίσω. Βλέπουν τον γορίλλα να τους μιλά. Απίστευτο! Έπαθαν πλάκα.\n\n«Μα εσύ μας μιλάς;»\n\n«Εγώ σας μιλάω! Δεν το ξέρατε ότι μπορώ να μιλάω; Έχω χρόνια που ακούω τους ανθρώπους — έμαθα. Το όνομά μου είναι Ρίλλας ο Γορίλλας!»\n\n«Χαίρομαι! Εγώ είμαι ο Θεοτόκης, και ο καλύτερός μου φίλος ο Αριστοτέλης. Πώς μπορούμε να σε βοηθήσουμε, Ρίλλα;»\n\n«Ρε παιδιά, είμαι εγκλωβισμένος εδώ μέσα εδώ και τόσον καιρό. Δεν είμαι ευτυχισμένος. Θέλω να πάω στη ζούγκλα. Μπορείτε να με βοηθήσετε;»\n\n«Δεν ξέρουμε... Έχεις κάποιο σχέδιο;»\n\n«Γιατί εσάς διάλεξα; Επειδή φαίνεστε πολύ καλά παιδιά και σκέφτηκα ότι μπορείτε να με βοηθήσετε. Θέλετε να γίνουμε φίλοι;»\n\nΈνα λεπτό — ξεκίνησαν να συζητούν μεταξύ τους ο Θεοτόκης κι ο Αριστοτέλης.\n\n«Να τον βοηθήσουμε, να τον βοηθήσουμε! Πάμε πίσω!»\n\n«Έλα, Ρίλλα — έχεις κάποιο σχέδιο;»\n\n«Ναι! Ακούστε με. Κάθε Παρασκευή βράδυ, υπάρχει ένας φρουρός που δεν είναι καλός στη δουλειά του — κοιμάται όλη τη νύχτα! Αν μπορείτε να πάτε να πάρετε τα κλειδιά, μπορείτε να ανοίξετε το κλουβί μου. Αλλά οι κάμερες; Θα κάνω εγώ πανικό με τους άλλους γορίλλες για αντιπερισπασμό, κι εσείς πάρτε τα κλειδιά και ελευθερώστε με.»\n\n«Ναι, ναι! Εντάξει — αλλά όχι αυτή την Παρασκευή. Την επόμενη, θα έρθουμε πρώτα να παρακολουθήσουμε και μετά σου λέμε.»\n\n«Εντάξει.»\n\nΈτσι, κατέστρωσαν το σχέδιο ο Θεοτόκης κι ο Αριστοτέλης. Έπρεπε να εντοπίσουν τον φρουρό που κοιμάται. Και να βρουν μια διαδρομή που οι κάμερες δεν μπορούσαν να τους πιάσουν.\n\nΤην Παρασκευή βρήκαν τον φρουρό — εκεί κάθεται, κοιτά εδώ, κοιτά εκεί, νυστάζει. Δεν ήταν καθόλου καλός στη δουλειά του.\n\nΤο Σάββατο βρήκαν όλες τις κάμερες και χάραξαν μια διαδρομή που καμία κάμερα δεν μπορούσε να τους δει.\n\n«Εντάξει — και να βάλουμε τα καπέλα μας για να κρύψουμε τα πρόσωπά μας!»\n\nΠέρασε η εβδομάδα. Ήρθε η Παρασκευή. Λίγο πριν κλείσει ο ζωολογικός κήπος, είδαν ότι ο φρουρός ήδη νύσταζε. Είχαν μία ώρα για να τα καταφέρουν. Έβαλαν τα καπέλα τους και μπήκαν μέσα.\n\nΟ φρουρός κοιμόταν βαθιά στον πάγκο του.\n\nΠροχώρησαν αθόρυβα στη διαδρομή που είχαν χαρτογραφήσει και πήραν τα κλειδιά από τη ζώνη του φρουρού.\n\n«Άντε, Ρίλλα! Τώρα κάνε τον πανικό!»\n\n«Εντάξει!»\n\nΠήγε, πλησίασε τους άλλους γορίλλες, τους ψιθύρισε κάτι — και ξεκίνησε! Χάος! Γορίλλες παντού! Οι φρουροί έτρεχαν πανικόβλητοι πετώντας μπανάνες για να ηρεμήσουν τα ζώα.\n\nΈτρεξαν ο Θεοτόκης κι ο Αριστοτέλης, άνοιξαν το κλουβί.\n\n«Γρήγορα, γρήγορα! Φύγε! Τρέξε πριν σε πιάσουν!»\n\n«Μα πού να πάω;»\n\n«Έξω από τον ζωολογικό κήπο — σκαρφάλωσε σε ένα δέντρο!»\n\nΦεύγει ο Ρίλλας έξω και σκαρφαλώνει σε ένα δέντρο. Φεύγουν κι αυτοί — ο Θεοτόκης κι ο Αριστοτέλης έξω — και τότε βλέπουν ότι κάτι πάει πολύ στραβά!\n\nΟλόκληρος ο δρόμος είχε κλείσει. Αστυνομικά αυτοκίνητα παντού.\n\nΚάποιος είχε ήδη πάρει χαμπάρι ότι λείπει ένας γορίλλας. Και πάνω από τα κεφάλια τους — ελικόπτερο!\n\n«Θεέ μου!» λέει ο Θεοτόκης. «Τώρα τι κάνουμε; Θα πάμε φυλακή;»\n\n«Ηρέμησε — περιμένουμε να φύγει η αστυνομία.»\n\nΠήγαν κάτω από το δέντρο και φώναξαν χαμηλόφωνα:\n\n«Ρίλλα! Ρίλλα!»\n\n«Μείνε εκεί που είσαι! Θα έρθουμε να σε πάρουμε όταν φύγει η αστυνομία!»\n\n«Εντάξει.»\n\nΠερίμεναν. Και περίμεναν. Πέρασε όλη η νύχτα. Τελικά, καθώς ξημέρωνε, η αστυνομία μάζεψε τα πράγματά της κι έφυγε — είπαν ότι θα επέστρεφαν το πρωί.\n\nΉρθε η ώρα τους.\n\nΠήγαν τον Ρίλλα στο νέο του σπίτι — ένα ψηλό δέντρο βαθιά σε ένα ήσυχο, κρυφό μέρος όπου κανένα αυτοκίνητο δεν μπορούσε να φτάσει. Ήταν τέλειο.\n\nΚάθισαν μαζί και έφαγαν μπανάνες.\n\nΚι από εκείνη τη μέρα, οι τρεις τους έγιναν οι καλύτεροι φίλοι. Πήγαιναν μαζί σε πολλές περιπέτειες — και η κάθε μια είναι μια άλλη ιστορία.\n\nΤέλος." }
-  }
-  ,
-  3: {
-    en: { title: "Rillas the Wrestler", text: "Rillas the Wrestler\n\nTheotokis and Aristotelis found out that ACW wrestling was coming to Nicosia!\n\n\"I want to go!\" said Aristotelis.\n\n\"No way,\" said Theotokis. \"I like books. Let's do something else.\"\n\n\"Come on, you're going to love it! They don't actually hit each other — it's a show! A great show! Please, do me the favour.\"\n\nFine, he was convinced.\n\n\"Should we bring Rillas too?\" said Aristotelis.\n\n\"Man, how are we going to bring Rillas? He's a gorilla! How are we going to get him into a wrestling match?\"\n\n\"Leave it to me, buddy. Let's go ask him.\"\n\nThey hopped on their quad bikes and rode all the way through the jungle. They arrived at Rillas's house and shouted up: \"Rillas! Rillas, come downstairs!\"\n\nRillas was half asleep. \"What's going on? What do you want?\"\n\n\"Do you want to go to wrestling on Sunday?\"\n\n\"But... will there be people there?\"\n\n\"Yes!\"\n\n\"And... can I come too?\"\n\n\"Come on, buddy, don't worry. We'll sort it out. We'll come pick you up next Sunday, alright?\"\n\nWhen Sunday arrived, Aristotelis said: \"Come on, Rillas, put these clothes on. You're going to dress up as a wrestler.\"\n\n\"Alright. But guys — will there be bananas? Otherwise I'm not coming.\"\n\n\"Yes, yes, lots of bananas! Don't worry.\"\n\n\"Alright then!\"\n\nThey rode their quad bikes to the ACW arena. At the entrance, Aristotelis showed his ticket — in he went. Theotokis showed his ticket — in he went. Rillas went to walk in.\n\n\"Hold it!\" said the doorman. \"Only wrestlers in boots are allowed in here.\"\n\nRillas looked at him. \"Does Nicosia need a wrestler? I am a wrestler! I don't need boots.\"\n\n\"And... will there be bananas?\" Rillas asked.\n\n\"The winner gets whatever he wants!\"\n\n\"Oh,\" said Rillas. \"Good idea. Alright then!\"\n\nInside the arena, Aristotelis and Theotokis sat down and waited.\n\n\"Where is Rillas? What if they figure out he's a gorilla?\"\n\n\"I don't know... Come on, sit down and let's watch the show.\"\n\nThe show began. The fighters wrestled, the crowd cheered. Then the announcer said:\n\n\"Ladies and gentlemen! Today we have a brand new wrestler. He is... Rillas the Gorilla!\"\n\nTheotokis and Aristotelis looked at each other. \"Did you hear that? There must be another wrestler called Rillas! What a coincidence!\"\n\n\"Ladies and gentlemen! In the right corner, Polydefkis the Fox! In the left corner, Rillas the Gorilla! Ding-ding-ding!\"\n\nNot even two minutes passed — Rillas grabbed Polydefkis and launched him clean out of the ring. Done!\n\nThen the other athletes came one by one. Not one of them lasted. It didn't even take 30 seconds — bam-boom-bam-boom — he finished them all.\n\n\"Oh, Holy Mary!\" cried Theotokis. \"They're going to realise he's a gorilla, we're going to get in trouble, we'll go to jail!\"\n\n\"Quiet!\" said Aristotelis. \"Look at him! The crowd is going absolutely crazy! Rillas! Rillas! Rillas!\"\n\nThen came the big announcement:\n\n\"Ladies and gentlemen! Because Rillas the Gorilla is so impressive, we have decided on a special challenge: ALL athletes will enter the ring at once, and the last one standing wins whatever he wants!\"\n\nThirty athletes entered. They had made a plan among themselves: \"We'll all go after him at the same time! Two by two, three by three. We'll beat him!\"\n\nThey started. Rillas tossed them left and right like toys. He did one enormous spin — and they flew! At one point there were ten of them on top of him at once.\n\n\"Now we've got him!\"\n\nGRRRRRR!\n\nHe threw all ten of them off! Three remained — he knocked them out too. The crowd exploded!\n\n\"Rillas! Rillas! Rillas!\"\n\n\"Ladies and gentlemen, the winner: Rillas the Gorilla! Mr Rillas, would you like to remove your mask so the crowd can see you?\"\n\n\"No. I prefer to remain a man of mystery.\"\n\n\"And what prize do you want?\"\n\n\"I want... a thousand bananas.\"\n\n\"A thousand bananas?\"\n\n\"Make that a thousand and one!\"\n\n\"Ladies and gentlemen, we will give him a thousand and one bananas! They will be waiting for him backstage!\"\n\nTheotokis found Rillas afterwards. \"What happened out there?\"\n\n\"I walked in through that door, and they all came at me wanting to fight. I decided to protect myself. I was very careful — I didn't cause any damage.\"\n\n\"We were incredibly lucky that nobody figured out what you are!\"\n\n\"Guys, we have a problem now. How are we going to take a thousand and one bananas home on the quad bikes?\"\n\n\"We'll sort it out.\"\n\nThey piled everything onto the quad bikes — vroom-vroom-vroom — and rode home. Rillas was very happy. A thousand and one bananas! For a whole week he wouldn't need to do anything. He was going to stay home and rest.\n\n\"Hey guys, when are we going to wrestling again?\"\n\nTheotokis looked at him. \"Never! Because we were lucky we didn't end up in jail.\"\n\nAnd they all lived happily ever after. The End." }
-    ,
-    gr: { title: "Ρίλλας ο Παλαιστής", text: "Ρίλλας ο Παλαιστής\n\nΟ Θεοτόκης και ο Αριστοτέλης έμαθαν ότι το ACW — το μεγάλο wrestling — θα ερχόταν στη Λευκωσία!\n\n«Θέλω να πάω!» λέει ο Αριστοτέλης.\n\n«Όχι ρε,» λέει ο Θεοτόκης. «Εμένα αρέσουν τα βιβλία. Ας κάνουμε κάτι άλλο.»\n\n«Έλα ρε, θα σου αρέσει! Δεν χτυπάνε αληθινά — είναι σόου! Ωραίο σόου! Κάνε μου τη χάρη, σε παρακαλώ.»\n\nΕντάξει, πείστηκε.\n\n«Να πούμε και στον Ρίλλα;» λέει ο Αριστοτέλης.\n\n«Ρε, πώς θα πάμε τον Ρίλλα; Γορίλλας είναι! Πώς θα τον βάλουμε στο wrestling;»\n\n«Άστο πάνω μου, φίλε. Πάμε να ρωτήσουμε.»\n\nΑνέβηκαν στις γουρούνες τους και έφτασαν στη ζούγκλα. Μπήκαν στο σπίτι του Ρίλλα και φώναξαν: «Ρίλλα! Ρίλλα, έλα κάτω!»\n\nΟ Ρίλλας ήταν ακόμα μισοκοιμισμένος. «Τι τρέχει; Τι θέλετε;»\n\n«Θες να πάμε wrestling την Κυριακή;»\n\n«Μα... θα έχει ανθρώπους εκεί;»\n\n«Ναι!»\n\n«Και μπορώ να έρθω κι εγώ;»\n\n«Έλα, κουμπάρε, μην ανησυχείς. Θα κανονίσουμε. Την άλλη Κυριακή θα σε πάρουμε, εντάξει;»\n\nΌταν ήρθε η Κυριακή, ο Αριστοτέλης είπε: «Έλα, Ρίλλα, βάλε αυτά τα ρούχα. Θα ντυθείς σαν παλαιστής.»\n\n«Εντάξει. Αλλά κοπέλια — θα έχει μπανάνες; Αλλιώς δεν έρχομαι.»\n\n«Ναι, ναι, πολλές μπανάνες! Μην ανησυχείς.»\n\n«Εντάξει!»\n\nΑνέβηκαν στις γουρούνες και έφτασαν στο ACW. Μπροστά στην είσοδο, ο Αριστοτέλης έδειξε το εισιτήριό του — μέσα. Ο Θεοτόκης έδειξε το εισιτήριό του — μέσα. Πήγε και ο Ρίλλας να μπει.\n\n«Στάσου!» λέει ο φύλακας. «Εδώ μπαίνουν μόνο παλαιστές με παπούτσια.»\n\nΟ Ρίλλας τον κοίταξε. «Η Λευκωσία θέλει παλαιστή; Παλαιστής είμαι εγώ! Δεν χρειάζομαι παπούτσια.»\n\n«Και... θα έχει μπανάνες;» ρώτησε ο Ρίλλας.\n\n«Ο νικητής παίρνει ό,τι θέλει!»\n\n«Ωχ,» λέει ο Ρίλλας. «Καλή ιδέα. Εντάξει!»\n\nΜέσα στο γήπεδο, ο Αριστοτέλης και ο Θεοτόκης κάθισαν και περίμεναν.\n\n«Ρε, πού είναι ο Ρίλλας; Κι αν καταλάβουν ότι είναι γορίλλας;»\n\n«Δεν ξέρω... Άντε, κάτσε να δούμε το σόου.»\n\nΞεκίνησε το σόου. Οι μαχητές πάλευαν, ο κόσμος φώναζε. Κάποια στιγμή ο εκφωνητής είπε:\n\n«Κυρίες και κύριοι! Σήμερα έχουμε έναν καινούργιο παλαιστή. Τον Ρίλλα... τον Γορίλλα!»\n\nΟ Θεοτόκης και ο Αριστοτέλης κοιτάχτηκαν. «Άκουσες; Υπάρχει κι άλλος που λέγεται Ρίλλας; Τι σύμπτωση!»\n\n«Κυρίες και κύριοι! Στη δεξιά γωνία, ο Πολυδεύκης ο Αλουπός! Στην αριστερή γωνία, ο Ρίλλας ο Γορίλλας! Ντιν-ντιν-ντιν!»\n\nΔεν πέρασαν ούτε δύο λεπτά — ο Ρίλλας άρπαξε τον Πολυδεύκη και τον εκτόξευσε έξω από το ρινγκ. Τέλος!\n\nΜετά ήρθαν ένας-ένας οι άλλοι αθλητές. Κανένας δεν τα κατάφερε. Δεν χρειαζόταν ούτε 30 δευτερόλεπτα — τακ-τουκ-τακ-τουκ — τους τελείωνε όλους.\n\n«Α, Παναγία μου!» φώναζε ο Θεοτόκης. «Θα καταλάβουν ότι είναι γορίλλας, θα πάμε φυλακή!»\n\n«Σώπα ρε!» λέει ο Αριστοτέλης. «Κοίτα τον! Ο κόσμος είναι τρελαμένος! Ρίλλας! Ρίλλας! Ρίλλας!»\n\nΚαι τότε έγινε η μεγάλη ανακοίνωση:\n\n«Κυρίες και κύριοι! Επειδή ο Ρίλλας ο Γορίλλας είναι τόσο καλός, αποφασίσαμε ένα ξεχωριστό αγώνισμα: όλοι οι αθλητές μπαίνουν στο ρινγκ, και ο τελευταίος που θα μείνει κερδίζει ό,τι θέλει!»\n\nΜπήκαν 30 αθλητές. Είχαν κάνει σχέδιο μεταξύ τους: «Θα πάμε όλοι πάνω του! Δυο-δυο, τρεις-τρεις. Θα τον νικήσουμε!»\n\nΞεκίνησαν. Ο Ρίλλας τους πετούσε δεξιά και αριστερά σαν να ήταν παιχνίδια. Έκανε ένα μεγάλο spin — φύγανε! Κάποια στιγμή τον είχαν 10 πάνω του ταυτόχρονα.\n\n«Τώρα τον έχουμε!»\n\nΓΚΡΡΡΡ!\n\nΠέταξε και τους δέκα! Έμειναν τρεις — τους τελείωσε κι αυτούς με νοκ-άουτ. Ο κόσμος εξερράγη!\n\n«Ρίλλας! Ρίλλας! Ρίλλας!»\n\n«Κυρίες και κύριοι, ο νικητής: Ρίλλας ο Γορίλλας! Κύριε Ρίλλα, θέλετε να βγάλετε τη μάσκα σας για να σας δει ο κόσμος;»\n\n«Όχι. Προτιμώ να μένω μυστήριος.»\n\n«Και τι έπαθλο θέλετε;»\n\n«Θέλω... χίλιες μπανάνες.»\n\n«Χίλιες μπανάνες;»\n\n«Κάντε τες χίλιες και μία!»\n\n«Κυρίες και κύριοι, θα του δώσουμε χίλιες και μία μπανάνες! Θα τον περιμένουν στα παρασκήνια!»\n\nΟ Θεοτόκης βρήκε τον Ρίλλα μετά. «Τι έγινε εκεί μέσα;»\n\n«Μπήκα από εκείνη την πόρτα και όλοι ήρθαν να με πολεμήσουν. Αποφάσισα να υπερασπιστώ τον εαυτό μου. Ήμουν πολύ προσεκτικός — δεν έκανα καμία ζημιά.»\n\n«Είμαστε απίστευτα τυχεροί που κανείς δεν κατάλαβε τι είσαι!»\n\n«Κοπέλια, έχουμε τώρα ένα πρόβλημα. Πώς θα πάρουμε χίλιες και μία μπανάνες σπίτι με τις γουρούνες;»\n\n«Θα κανονίσουμε.»\n\nΤα έβαλαν όλα πάνω στις γουρούνες — βρουμ-βρουμ-βρουμ — και πήγαν σπίτι. Ο Ρίλλας ήταν πολύ χαρούμενος. Χίλιες και μία μπανάνες! Για μια ολόκληρη εβδομάδα δεν θα χρειαζόταν να κάνει τίποτα. Θα έμενε σπίτι και θα ξεκουραζόταν.\n\n«Ρε κοπέλια, πότε ξαναπάμε wrestling;»\n\nΟ Θεοτόκης τον κοίταξε. «Ποτέ! Γιατί είμαστε τυχεροί που δεν πήγαμε φυλακή.»\n\nΚι έζησαν αυτοί καλά κι εμείς καλύτερα. Τέλος." }
-  }
-};
-
-// ── Story reader ─────────────────────────────────────────────
-let _readerStoryId = null;
-
-function showStoryText(storyId) {
-  _readerStoryId = storyId;
-  const lang = (currentLang && currentLang[storyId]) || 'en';
-  _renderStoryReader(storyId, lang);
-  document.querySelectorAll('#reader-btn-en, #reader-btn-gr').forEach(b => b.classList.remove('active'));
-  const ab = document.getElementById('reader-btn-' + lang);
-  if (ab) ab.classList.add('active');
-  showPage('story-reader');
-}
-
-function setReaderLang(lang, btn) {
-  if (_readerStoryId === null) return;
-  if (currentLang) currentLang[_readerStoryId] = lang;
-  document.querySelectorAll('#reader-btn-en, #reader-btn-gr').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  _renderStoryReader(_readerStoryId, lang);
-}
-
-const storyImages = {
-  1: [
-    { after: 0,  src: 'story1/panels/panel_02.webp' }, // classroom, all kids
-    { after: 3,  src: 'story1/panels/panel_01.webp' }, // two boys angry at each other
-    { after: 5,  src: 'story1/panels/panel_03.webp' }, // class walking into forest
-    { after: 6,  src: 'story1/panels/panel_04.webp' }, // boys follow butterfly into trees
-    { after: 8,  src: 'story1/panels/panel_05.webp' }, // each boy alone and lost
-    { after: 11, src: 'story1/panels/panel_06.webp' }, // they meet in the dark forest
-    { after: 16, src: 'story1/panels/panel_07.webp' }, // bickering, torch comes out
-    { after: 17, src: 'story1/panels/panel_08.webp' }, // set off together with map
-    { after: 18, src: 'story1/panels/panel_09.webp' }, // they find the river
-    { after: 21, src: 'story1/panels/panel_10.webp' }, // sitting by river, eating
-    { after: 22, src: 'story1/panels/panel_11.webp' }, // Mr Nikolas finds them
-    { after: 29, src: 'story1/panels/panel_12.webp' }, // best friends, golden sunset
-  ],
-  2: [
-    { after: 1,  src: 'story2/panels/panel_01.webp' }, // Theotokis on the phone
-    { after: 5,  src: 'story2/panels/panel_02.webp' }, // quad bikes to the zoo
-    { after: 6,  src: 'story2/panels/panel_03.webp' }, // zoo — lions and animals
-    { after: 14, src: 'story2/panels/panel_04.webp' }, // meeting Rillas at the cage
-    { after: 19, src: 'story2/panels/panel_05.webp' }, // will you be my friends?
-    { after: 23, src: 'story2/panels/panel_06.webp' }, // Rillas explains the plan
-    { after: 26, src: 'story2/panels/panel_10.webp' }, // boys plan with map
-    { after: 27, src: 'story2/panels/panel_07.webp' }, // spotting the sleepy guard
-    { after: 28, src: 'story2/panels/panel_08.webp' }, // mapping camera blind spots
-    { after: 30, src: 'story2/panels/panel_09.webp' }, // Friday arrives, waiting
-    { after: 31, src: 'story2/panels/panel_11.webp' }, // guard fast asleep
-    { after: 36, src: 'story2/panels/panel_13.webp' }, // boys unlock the cage
-    { after: 40, src: 'story2/panels/panel_12.webp' }, // Rillas bursts out, escapes
-    { after: 43, src: 'story2/panels/panel_14.webp' }, // helicopter overhead
-    { after: 52, src: 'story2/panels/panel_15.webp' }, // three friends in tree, bananas
-  ],
-  3: [
-    { after: 0,  src: 'story3/panels/panel_01.webp' }, // ACW poster, boys react
-    { after: 3,  src: 'story3/panels/panel_02.webp' }, // Aristotelis convincing Theodokis
-    { after: 8,  src: 'story3/panels/panel_03.webp' }, // quad bikes through jungle
-    { after: 9,  src: 'story3/panels/panel_04.webp' }, // arrive at Rillas's house
-    { after: 15, src: 'story3/panels/panel_05.webp' }, // Rillas agrees, thumbs up
-    { after: 16, src: 'story3/panels/panel_06.webp' }, // boys put wrestler mask on Rillas
-    { after: 20, src: 'story3/panels/panel_07.webp' }, // arrive at ACW arena
-    { after: 26, src: 'story3/panels/panel_08.webp' }, // Rillas enters, boys watch
-    { after: 29, src: 'story3/panels/panel_09.webp' }, // boys nervous in the seats
-    { after: 33, src: 'story3/panels/panel_10.webp' }, // Rillas wins first match
-    { after: 35, src: 'story3/panels/panel_11.webp' }, // athletes one by one
-    { after: 39, src: 'story3/panels/panel_12.webp' }, // battle royale, Rillas dominates
-    { after: 41, src: 'story3/panels/panel_13.webp' }, // wrestlers flying in all directions
-    { after: 44, src: 'story3/panels/panel_14.webp' }, // last three knocked out
-    { after: 58, src: 'story3/panels/panel_15.webp' }, // home with 1001 bananas
-  ]
-};
-
-function _renderStoryReader(storyId, lang) {
-  const body = document.getElementById('story-reader-body');
-  if (!body) return;
-  const data = storyText[storyId] && storyText[storyId][lang];
-  if (!data) { body.innerHTML = '<p>Story not found.</p>'; return; }
-  const imgs = storyImages[storyId] || [];
-  const imgAt = {};
-  imgs.forEach(function(im) { imgAt[im.after] = im.src; });
-  const paragraphs = data.text.split('\n\n');
-  let html = '<h2>' + data.title + '</h2>';
-  paragraphs.forEach(function(p, i) {
-    html += '<p>' + p.replace(/\n/g, '<br>') + '</p>';
-    if (imgAt[i] !== undefined) {
-      html += '<img class="story-illustration" src="' + imgAt[i] + '" alt="" loading="lazy" decoding="async">';
-    }
-  });
-  body.innerHTML = html;
-}
-
-</script>
+<script src="https://code.responsivevoice.org/responsivevoice.js?key=FREE"></script>
+<script src="stories-data.js?v=1"></script>
+<script src="app.js?v=1"></script>
 </body>
 </html>
