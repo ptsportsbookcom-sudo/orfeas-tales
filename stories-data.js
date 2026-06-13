@@ -9,9 +9,11 @@ const characters = [
     desc:"The smartest kid around — Theotokis thinks faster, solves problems quicker, and always knows what to do. He is Aristotelis's best friend and the brains behind every adventure." },
   { id:3,  name:"Rilas",       role:"Gorilla — The Escape Artist",file:"characters/rillas.webp",   unlocked:true,
     desc:"Rillas is the friendliest gorilla you'll ever meet. Trapped in a zoo for years, he secretly taught himself to speak by listening to humans — and the first thing he did with that skill was make two best friends. He loves bananas, tall trees, and a very clever plan." },
-  { id:4,  name:"Rilena",      role:"Gorilla — The Mother",file:"characters/9_Rilena.webp",        unlocked:false, desc:"" },
+  { id:4,  name:"Rilena",      role:"Gorilla — Kind & Graceful", file:"characters/rilena_ref.webp",      unlocked:true,
+    desc:"A kind and graceful female gorilla, freed from the Poachers' cage in Story 5. She has a warm smile that made Rillas's ears go red." },
   { id:5,  name:"Rilaki",      role:"Gorilla Son",         file:"characters/10_Rilaki.webp",       unlocked:false, desc:"" },
-  { id:6,  name:"Maimudakis",  role:"Monkey — The Father", file:"characters/11_Maimudakis.webp",   unlocked:false, desc:"" },
+  { id:6,  name:"Maimudakis",  role:"Monkey — The Father", file:"characters/maimudakis_ref.webp",  unlocked:true,
+    desc:"A wise and steady spider monkey — a father figure through and through. Freed from the Poachers' cage in Story 5, he was quick to say yes when Rillas asked to be friends." },
   { id:7,  name:"Maimudakena", role:"Monkey — The Mother", file:"characters/12_Maimudakena.webp",  unlocked:false, desc:"" },
   { id:8,  name:"Dakis",       role:"First Son — Older",   file:"characters/13_Dakis.webp",        unlocked:false, desc:"" },
   { id:9,  name:"Akis",        role:"Second Son — Younger",file:"characters/14_Akis.webp",         unlocked:false, desc:"" },
@@ -22,6 +24,8 @@ const characters = [
   { id:14, name:"Geena",       role:"The Daughter",        file:"characters/5_Geena.webp",         unlocked:false, desc:"" },
   { id:15, name:"Kakeas",      role:"The Villain",         file:"characters/15_Kakeas.webp",       unlocked:false, villain:true,
     desc:"" },
+  { id:16, name:"Gorillatsas", role:"Gorilla — Rillas's Cousin", file:"characters/gorillatsas_ref.webp", unlocked:true,
+    desc:"Rillas's young cousin — full of energy and mischief. Captured by Poachers before Story 5 begins, he was rescued by Rillas and the boys and couldn't be happier to be free." },
 ];
 
 // ── AUDIO FILE MAPPINGS ──────────────────────────────────────
@@ -113,13 +117,4 @@ const storyImages = {
     { after: 12, src: 'story4/panels/panel06_king_kong_holds_boys_captive.webp?v=1' },
     { after: 14, src: 'story4/panels/panel07_rillas_hears_the_calls.webp?v=1' },
     { after: 16, src: 'story4/panels/panel08_rillas_leaps_to_rescue.webp?v=1' },
-    { after: 18, src: 'story4/panels/panel09_rillas_vs_king_kong_standoff.webp?v=1' },
-    { after: 20, src: 'story4/panels/panel10_rillas_shields_the_boys.webp?v=1' },
-    { after: 24, src: 'story4/panels/panel11_theotokis_funny_face.webp?v=1' },
-    { after: 26, src: 'story4/panels/panel12a_aristotelis_closeup_v1.webp?v=1' },
-    { after: 28, src: 'story4/panels/panel12b_aristotelis_closeup_v2.webp?v=1' },
-    { after: 30, src: 'story4/panels/panel12c_aristotelis_angry_fists.webp?v=1' },
-    { after: 33, src: 'story4/panels/panel13_king_kong_bursts_laughing.webp?v=1' },
-    { after: 37, src: 'story4/panels/panel14_happy_ending_celebration.webp?v=1' },
-  ]
-};
+    { after: 18, src: 'story4/panels/panel09_rillas_v
