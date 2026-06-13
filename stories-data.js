@@ -33,7 +33,8 @@ const audioFiles = {
   1: { en: 'story1/story1_en.mp3?v=2', gr: 'story1/story1_gr.mp3?v=2' },
   2: { en: 'story2/story2_en.mp3?v=2', gr: 'story2/story2_gr.mp3?v=3' },
   3: { en: 'story3/story3_en.mp3?v=2', gr: 'story3/story3_gr.mp3?v=3' },
-  4: { en: 'story4/story4_en.mp3?v=1', gr: 'story4/story4_gr.mp3?v=1' }
+  4: { en: 'story4/story4_en.mp3?v=1', gr: 'story4/story4_gr.mp3?v=1' },
+  5: { en: 'story5/story5_en.mp3?v=1', gr: 'story5/story5_gr.mp3?v=1' }
 };
 
 // ── STORY TEXT ───────────────────────────────────────────────
