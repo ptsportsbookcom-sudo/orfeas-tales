@@ -1,6 +1,6 @@
 # Orfeas Tales — New Chat Start Here
 
-_Last updated: 2026-06-12 (session 12)_
+_Last updated: 2026-06-13 (session 14)_
 
 ## What Is This Project?
 
@@ -25,25 +25,20 @@ A Greek/English children's comic website built by Pantelis for his son Orfeas. E
 - Deployed to Vercel via GitHub — auto-deploys on every push to `main`
 - GitHub: https://github.com/ptsportsbookcom-sudo/orfeas-tales
 
-### How to Push Files to GitHub (PRIMARY METHOD)
+### How to Push Files to GitHub (PRIMARY METHOD — updated session 14)
 
-Write a `.bat` file and have Pantelis run it via Win+R:
+**Claude's current working method** (discovered session 14 — no Codex needed):
+1. Stage files using `GIT_INDEX_FILE=/tmp/tmp_idx git add [files]` (bypasses sandbox lock file issue)
+2. `TREE=$(GIT_INDEX_FILE=/tmp/tmp_idx git write-tree)`
+3. `COMMIT=$(GIT_AUTHOR_NAME="Pantelis" GIT_AUTHOR_EMAIL="ptsportsbook.com@gmail.com" GIT_COMMITTER_NAME="Pantelis" GIT_COMMITTER_EMAIL="ptsportsbook.com@gmail.com" git commit-tree "$TREE" -p HEAD -m "message")`
+4. `git update-ref refs/heads/main "$COMMIT"`
+5. Write a one-line `push_story5.bat` (`git push origin main` + `pause`), open via File Explorer, double-click — push completes on Windows. Delete bat after.
 
-```bat
-@echo off
-cd /d "D:\Orfeas tales"
-git add styles.css app.js stories-data.js index.html
-git commit -m "Your message"
-git push origin main
-pause
-```
+**Why not `git add/commit` directly from sandbox**: `.git/index.lock` is created by git but NTFS permissions prevent the sandbox from cleaning it up. The `GIT_INDEX_FILE` trick stages to `/tmp` instead, sidestepping the issue entirely. Push also can't run from sandbox (GitHub blocked by proxy: HTTP 403).
 
-Run: Press **Win+R** → type `"D:\Orfeas tales\yourscript.bat"` → Enter  
-(Quotes are required — folder name has a space)
+**If local git is broken**: double-click `repair_git_v2.bat` in File Explorer — it replaces `.git` with a fresh clone. `.git.bak/` in the root is the safety backup from the last repair.
 
-**If local git is broken**: use `clone_and_push.bat` in the root folder.  
-**Git repair**: use `repair_git_v2.bat` in the root folder.  
-**DO NOT** try git from the bash sandbox — proxy blocks GitHub (HTTP 403).
+**DO NOT** write `.bat` scripts for git that get committed — they are in `.gitignore`. The push bat is a temp file: create, use, delete.
 
 ### Cache Busting
 When you change `styles.css`, `app.js`, or `stories-data.js`, increment the `?v=N` in `index.html`:
@@ -92,13 +87,14 @@ showPage('stories');
 - Use `--cref [URL] --cw 80` directly in prompt text
 - For each new story: generate a story-specific master ref first (see DECISIONS.md)
 
-## Current Status (as of 2026-06-12)
+## Current Status (as of 2026-06-13, session 14)
 
 ### ✅ Fully Live and Working
 - Story 1 — "The Lost Friends" (12 panels, 3 pages, EN+GR audio, auto-sync)
 - Story 2 — "Rillas the Gorilla / Zoo Escape" (15 panels, 4 pages, EN+GR audio, auto-sync)
 - Story 3 — "Rillas the Wrestler" (15+ panels, 4 pages, EN+GR audio, auto-sync)
 - Story 4 — (panels + audio live; see PROGRESS.md for details)
+- **6 characters unlocked** on character gallery: Aristotelis, Theotokis, Rillas, Rilena, Maimudakis, Gorillatsos
 - All audio files return HTTP 200 with correct content ✓
 - SEO/social metadata, robots.txt, sitemap.xml
 - All images compressed to WebP, lazy-loaded
@@ -108,33 +104,20 @@ showPage('stories');
 - `beforePageChange()` extracted — `showPage()` is pure
 - CSS/JS/data assets cached with `?v=2`; Vercel immutable caching via vercel.json
 
-### File Architecture
-```
-D:\Orfeas tales\
-├── index.html          ← HTML shell (loads the 3 below)
-├── styles.css          ← all CSS (?v=2)
-├── app.js              ← all JS logic (?v=2)
-├── stories-data.js     ← all story data (?v=2)
-├── vercel.json         ← Vercel caching rules
-├── generate_audio.js   ← Node.js TTS audio generator
-├── repair_git_v2.bat   ← emergency git repair tool
-├── clone_and_push.bat  ← push when local git is broken
-├── characters/         ← character images (PNG + WebP)
-├── music/              ← background music
-├── story1/panels/      ← story 1 WebP panels + MP3s
-├── story2/             ← story 2 assets
-├── story3/             ← story 3 assets
-├── story4/             ← story 4 assets
-└── _docs/              ← this documentation
-```
+### Story 5 — In Progress
+- Title: "Saving Gorillatsos / Σώζοντας τον Γορίλλατσο"
+- `story5/story5_gr.txt` ✅ — standard Modern Greek, committed
+- `story5/story5_en.txt` ✅ — English, committed
+- `generate_audio.js` ✅ — Story 5 EN+GR entries added, committed
+- 3 character portraits ✅ — gorillatsas_ref.webp, rilena_ref.webp, maimudakis_ref.webp committed
+- `stories-data.js` ✅ — 3 new characters unlocked, committed
+- **PENDING**: Story 5 comic panels (Midjourney account locked — recharge first)
+- **PENDING**: Generate story5_en.mp3 and story5_gr.mp3 (`node generate_audio.js`)
+- **PENDING**: Wire story5 into stories-data.js (comicData, storyImages, audioFiles)
 
-### 🔜 Next Steps
-- Story 5 when ready (same pipeline as 1–4)
-- Review live site and adjust any panel placements in Read mode that feel off
-
-## Do Not Touch Unless Pantelis Asks
-- Story text, audio, panel images, character names
-- Folder structure
-- Background music (`music/The Pyre.mp3`)
-- Original PNG source files
-- `?v=` strings on audio/image URLs
+### Repo State (as of session 14)
+- Latest commit: `1a2b165` — "Story 5: add characters (Gorillatsos, Rilena, Maimudakis), story texts, audio script"
+- `.gitignore` committed — covers temp files, source masters, raw audio
+- `.git.bak/` in root is the git repair safety backup — do not delete
+- `story3/panels/` — panels 01–15 all healthy; panels 12, 13b, 14, 15 new and not yet wired into stories-data.js
+- Many pre-session-14 modified tracked files still deferred — see PROGRESS.md ses

@@ -1,5 +1,5 @@
 # Orfeas Tales — Progress Tracker
-_Last updated: 2026-06-12 (session 12)_
+_Last updated: 2026-06-13 (session 14)_
 
 ## ✅ Done
 
@@ -191,8 +191,41 @@ Same pipeline as Stories 1 & 2:
 - `D:\Orfeas tales\repair_git_v2.bat` — git repair tool (keep for emergencies)
 - `D:\Orfeas tales\clone_and_push.bat` — push-without-local-git tool (keep for emergencies)
 
-## ⚠️ Known Issues / Decisions to Revisit
-- Panel 05 shows both boys together rather than separately lost — may want to regenerate
-- Torch appears in some school/daytime scenes (Midjourney ignored the "no torch" instruction in a couple panels) — acceptable for now
-- `debug_row3_full.png`, `debug_row3_labels.png`, `crop_characters.html` still in root — cannot delete (Windows permissions from sandbox), user can delete manually
-- Several `.bat` files in root (`hardening_push.bat`, `fix_pack_and_push.bat`, `clone_and_push.bat`, `repair_git_v2.bat` etc.) — safe to delete manually once no longer needed
+### Session 13 — 2026-06-13 (Repo audit, critical restore, .gitignore, cleanup)
+
+#### Repo Audit
+- [x] **Full local repo state audit** — identified all modified tracked files and untracked files; categorised by: website-critical, real project work, noise/temp, keep/ask
+- [x] **Critical finding: styles.css truncated locally** — local copy ended at `box-shadow:0 -8p` (line 1,178); deployed HEAD had 1,215 complete lines including all fullscreen-mode CSS. Committed via Codex.
+- [x] **Critical finding: vercel.json corrupted locally** — local file was invalid JSON (unterminated string, missing closing `}` and `]`). Restored via Codex.
+- [x] **Critical finding: story3/panels/ 01–09 were 0 bytes locally** — the `story3/panels/` folder had a Windows NTFS `.gitattributes` path issue (Invalid argument on `ls`). Panels 01–09 were empty/missing locally but intact in git HEAD. Restored via Codex.
+- [x] **Discovery: story3 has 4 new panels** — `panel_12.webp`, `panel_13b.webp`, `panel_14.webp`, `panel_15.webp` are present locally but not yet committed. Story 3 now has 15+ panels ready.
+- [x] **Confirmed safe files** — `index.html`, `app.js`, `stories-data.js` were all identical to HEAD (CRLF line-ending difference only — functionally unchanged). `styles.css`, `vercel.json` match HEAD after restore.
+
+#### Cleanup
+- [x] **`.gitignore` created and committed** — commit `40e412c`. Covers: `.git.bak/`, `story3/panels_corrupt_backup_*/`, `*.bat`, `*.ps1`, `*_log.txt`, `debug_*.png`, `test_write.txt`, `*.aac`, `**/WhatsApp Audio*`, `story4/panels/*.png`, `story1/panels/u663*.png`, `characters/u663*.png`, `story1/panels/preview.html`, `music/background_music.mp3`
+- [x] **30 confirmed temp files deleted** — all `.bat`/`.ps1` repair scripts, all `*_log.txt` files, `debug_row3_full.png`, `debug_row3_labels.png`, `test_write.txt`. Deleted via Codex on Windows side.
+- [x] **Source assets, backups, docs all preserved** — `.git.bak/`, `story3/panels_corrupt_backup_*/`, raw audio (`.aac`, WhatsApp), story text, PNG source masters, character refs, prompts, `index_good.html` all untouched.
+
+#### Workflow Discovery
+- [x] **Bash sandbox has stale Windows mount cache** — Claude's Linux sandbox cannot reliably read, write, or git-commit files that were modified by Codex or other Windows tools in the same session. Git operations and file deletions must go through Codex (Windows-side).
+- [x] **Established clean workflow**: Claude analyses/plans → Codex executes on Windows → Claude verifies via sandbox (understanding sandbox may lag)
+
+#### Deferred (not yet committed — awaiting separate decisions)
+- Compressed audio: `music/The Pyre.mp3`, `story2/story2_gr.mp3`, `story3/story3_gr.mp3` (re-encoded to ~1/3 size)
+- Updated docs: all `_docs/*.md` + root `CLAUDE_STORY_UPDATE_GUIDE.md`
+- Story text: `story2_en.txt`, `story2_gr.txt`, `story3/story3_en.txt`, `story3/story3_gr.txt`
+- Character refs: `characters/aristotelis_ref.webp`, `theotokis_ref.webp`, `panel_master_ref.webp`
+- `tts-generator.html` (expanded)
+- `robots.txt`, `sitemap.xml` (Story 4 entries)
+- `story4/panels/panel12a_aristotelis_closeup_v1.webp`
+- Story 3 new panels: `panel_12.webp`, `panel_13b.webp`, `panel_14.webp`, `panel_15.webp`
+- Untracked source files: story text `.txt` files, prompt `.md` files, `generate_audio.js`, `_docs/PROJECT.md`
+- Character PNGs in root (`1_Arxigeas.png` etc.) — marked modified but same byte size; cause unclear
+
+### Session 14 — 2026-06-13 (Story 5 started: texts, audio script, 3 new characters, pushed)
+
+#### Story 5 — "Saving Gorillatsos / Σώζοντας τον Γορίλλατσο"
+- [x] **`story5/story5_gr.txt` created** — full standard Modern Greek version of Story 5. Cleaned from Cypriot dialect raw transcript. Title: "Σώζοντας τον Γορίλλατσο"
+- [x] **`story5/story5_en.txt` created** — full English version. Title: "Saving Gorillatsos"
+- [x] **Key story facts**: Gorillatsos is Rillas's **cousin** (ξάδερφος) — NOT nephew. Boys + Rillas track Poachers to their hideout. Rillas wears knight's armour as decoy (arrows bounce off shield). Boys sneak in ninja-style, find 3 cages, free Gorillatsos + Maimudakis + Rilena. Rillas hears cousin's voice and smashes through walls. All escape on quad bikes ("γουρούνες"). Rilena catches Rillas's eye (his ears go red). All become friends.
+- [x] **`generate_a

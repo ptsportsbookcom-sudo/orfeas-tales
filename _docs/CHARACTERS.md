@@ -1,6 +1,6 @@
 # Orfeas Tales — Character Visual Bible
 
-_Last updated: 2026-06-09 (session 7)_
+_Last updated: 2026-06-13 (session 14)_
 
 > ⚠️ **CRITICAL FOR CONSISTENCY**: When generating ANY new Midjourney panels, ALWAYS use:
 > `--cref characters/panel_master_ref.webp --cw 80`
@@ -139,53 +139,43 @@ Dogman comic book style, bold thick outlines, flat colours
 **Appears in**: Story 2 ("Rillas the Gorilla"), all future stories
 
 ### Rilena
-**Role**: TBD — female gorilla character  
+**Role**: Kind female gorilla — first appears in Story 5 (rescued from Poachers)  
 **Species**: Gorilla  
-**Reference**: `characters/9_Rilena.png`  
-_Full prompt TBD when used in a story_
+**Age**: Adult  
+**Relationship**: Catches Rillas's eye — his ears go red around her
 
-### Rilaki
-**Role**: TBD — young gorilla character  
-**Species**: Gorilla  
-**Reference**: `characters/10_Rilaki.png`  
-_Full prompt TBD when used in a story_
+**Physical Description** (from rilena_ref.webp, session 14):
+- Build: Slender female gorilla, graceful pose
+- Clothes: Lavender/purple dress
+- Props: Purple flower (in hair or held)
+- Eyes: Warm, expressive, big lashes — clearly feminine
+- Expression: Gentle warm smile
+
+**Midjourney Portrait Prompt** (used session 14):
+```
+female gorilla, clearly feminine, big warm eyelashes, lavender dress, purple flower,
+graceful pose, warm smile, Dogman comic book style, bold thick outlines, flat colours,
+white background --cref https://cdn.midjourney.com/699b54bb-8630-4af2-bc55-0aec7f0bc736/0_0.png
+--cw 60 --ar 1:1 --v 6.1 --no aggressive angry masculine dark
+```
+
+**Reference Images**:
+- `characters/rilena_ref.webp` ← ⭐ USE THIS (109KB, MJ job 02392124, option 3) — committed session 14
+- `characters/9_Rilena.png` — old placeholder, ignore
+
+**Appears in**: Story 5 ("Saving Gorillatsos"), future stories  
+**Website**: Unlocked (session 14) — id:4 in characters array
 
 ---
 
-## OTHER CHARACTERS
+### Gorillatsos
+**Role**: Rillas's young cousin — kidnapped by Poachers before Story 5, rescued during it  
+**Species**: Gorilla (young/small)  
+**Age**: Young — smaller than Rillas  
+**Relationship**: Rillas's cousin (ξάδερφος) — calls Rillas "ξάδερφε Ρίλλα"
 
-### Arxigeas (1_Arxigeas.png)
-**Role**: TBD — appears to be a leader/chief type character  
-**Reference**: `characters/1_Arxigeas.png`
-
-### Arxigeena (2_Arxigeena.png)
-**Role**: TBD — female leader character  
-**Reference**: `characters/2_Arxigeena.png`
-
-### Geas (3_Geas.png), Eas (4_Eas.png), Geena (5_Geena.png)
-**Role**: TBD  
-**Reference**: characters folder
-
-### Maimudakis (11), Maimudakena (12), Dakis (13), Akis (14), Kakeas (15)
-**Role**: TBD — additional characters for future stories  
-**Reference**: characters folder
-
----
-
-## Panel Generation Workflow
-
-When building new story panels:
-
-1. **Start with the master ref**: Always `--cref characters/panel_master_ref.webp --cw 80`
-2. **Describe the scene clearly**: What are the characters doing? What's the setting?
-3. **Reference characters by description**, not by name (Midjourney doesn't know names)
-4. **Verify output** against physical descriptions above before using
-5. **Save any particularly good panel** as a new --cref candidate for that story
-
-### Example panel prompt:
-```
-Two 8-year-old Greek boys in a dark forest at night, one with wild spiky black curly hair
-holding a small torch, one with round glasses and a large backpack, walking together nervously,
-warm torchlight, Dogman comic style, bold outlines --cref characters/panel_master_ref.webp
---cw 80 --ar 4:3 --v 6.1
-```
+**Physical Description** (from gorillatsas_ref.webp, session 14):
+- Build: Small, young gorilla — much smaller than Rillas
+- Clothes: Red t-shirt with yellow star
+- Expression: Big cheerful grin, wide eyes full of energy
+- Vibe: Energetic,
