@@ -117,4 +117,13 @@ const storyImages = {
     { after: 12, src: 'story4/panels/panel06_king_kong_holds_boys_captive.webp?v=1' },
     { after: 14, src: 'story4/panels/panel07_rillas_hears_the_calls.webp?v=1' },
     { after: 16, src: 'story4/panels/panel08_rillas_leaps_to_rescue.webp?v=1' },
-    { after: 18, src: 'story4/panels/panel09_rillas_v
+    { after: 18, src: 'story4/panels/panel09_rillas_vs_king_kong_standoff.webp?v=1' },
+    { after: 20, src: 'story4/panels/panel10_rillas_shields_the_boys.webp?v=1' },
+    { after: 24, src: 'story4/panels/panel11_theotokis_funny_face.webp?v=1' },
+    { after: 26, src: 'story4/panels/panel12a_aristotelis_closeup_v1.webp?v=1' },
+    { after: 28, src: 'story4/panels/panel12b_aristotelis_closeup_v2.webp?v=1' },
+    { after: 30, src: 'story4/panels/panel12c_aristotelis_angry_fists.webp?v=1' },
+    { after: 33, src: 'story4/panels/panel13_king_kong_bursts_laughing.webp?v=1' },
+    { after: 37, src: 'story4/panels/panel14_happy_ending_celebration.webp?v=1' },
+  ]
+};
