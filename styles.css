@@ -881,6 +881,16 @@
     display: block;
   }
 
+  .story5-comic-grid .comic-panel {
+    aspect-ratio: 1232 / 928;
+    background: #f5efe6;
+  }
+
+  .story5-comic-grid .comic-panel img {
+    object-fit: contain;
+    background: #f5efe6;
+  }
+
   /* Captions */
   .panel-caption {
     position: absolute;
