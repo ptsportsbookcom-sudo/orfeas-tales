@@ -247,6 +247,7 @@ function goToComicPage(n) {
   if (target) {
     target.classList.add('active');
     target.querySelectorAll('img').forEach(img => {
+      img.loading = 'eager';
       if (!img.complete || img.naturalWidth === 0) {
         const src = img.src; img.src = ''; img.src = src;
       }
