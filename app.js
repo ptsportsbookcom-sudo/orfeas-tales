@@ -281,7 +281,14 @@ function showComicFromStory() {
   const s3nav = document.getElementById('comic-s3-nav');
   const s4nav = document.getElementById('comic-s4-nav');
   const title = document.getElementById('comic-title');
-  if (walStoryId === 4) {
+  if (walStoryId === 5) {
+    COMIC_PAGES = 0; comicPageIdFn = n => 's5p-' + n; comicNavId = null;
+    if (title) title.textContent = 'Episode V — Saving Gorillatsos';
+    if (s1nav) s1nav.style.display = 'none';
+    if (s2nav) s2nav.style.display = 'none';
+    if (s3nav) s3nav.style.display = 'none';
+    if (s4nav) s4nav.style.display = 'none';
+  } else if (walStoryId === 4) {
     COMIC_PAGES = 4; comicPageIdFn = n => 's4p-' + n; comicNavId = 'comic-s4-nav';
     if (title) title.textContent = 'Episode IV — Rillas and King Kong';
     if (s1nav) s1nav.style.display = 'none';

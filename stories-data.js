@@ -133,26 +133,26 @@ const storyImages = {
     { after: 37, src: 'story4/panels/panel14_happy_ending_celebration.webp?v=1' },
   ],
   5: [
-    { after: 0,  src: 'story5/panels/panel_01.webp' }, // boys on quad bikes arriving
-    { after: 1,  src: 'story5/panels/panel_02.webp' }, // Rillas sitting sad outside
-    { after: 3,  src: 'story5/panels/panel_03.webp' }, // boys with Rillas learning about Gorillatsos
-    { after: 6,  src: 'story5/panels/panel_04.webp' }, // wrecked house
-    { after: 10, src: 'story5/panels/panel_05.webp' }, // boys find tyre tracks
-    { after: 12, src: 'story5/panels/panel_06.webp' }, // boys trudging exhausted through jungle
-    { after: 14, src: 'story5/panels/panel_07.webp' }, // boys spot the fortress
-    { after: 15, src: 'story5/panels/panel_11.webp' }, // boys sneaking through jungle toward fortress
-    { after: 21, src: 'story5/panels/panel_08.webp' }, // Rillas in shining knight armour
-    { after: 22, src: 'story5/panels/panel_09.webp' }, // Rillas deflects arrows, boys sneak in
-    { after: 24, src: 'story5/panels/panel_10.webp' }, // boys sneaking through stone fortress
-    { after: 25, src: 'story5/panels/panel_12.webp' }, // Gorillatsos in cage
-    { after: 28, src: 'story5/panels/panel_13.webp' }, // Rilena in cage
-    { after: 29, src: 'story5/panels/panel_14.webp' }, // Maimudakis in cage
-    { after: 31, src: 'story5/panels/panel_17.webp' }, // Gorillatsos "Freedom!"
-    { after: 33, src: 'story5/panels/panel_15.webp' }, // Rillas smashes through the wall
-    { after: 34, src: 'story5/panels/panel_16.webp' }, // escape on quad bikes
-    { after: 40, src: 'story5/panels/panel_20.webp' }, // Maimudakis "Yes yes yes!"
-    { after: 41, src: 'story5/panels/panel_18.webp' }, // Rillas blushing
-    { after: 42, src: 'story5/panels/panel_19.webp' }, // Rilena smiling
-    { after: 44, src: 'story5/panels/panel_21.webp' }, // boys handshake — we did it again
+    { after: 0,  src: 'story5/panels/panel_01.webp?v=1' }, // boys on quad bikes arriving
+    { after: 1,  src: 'story5/panels/panel_02.webp?v=1' }, // Rillas sitting sad outside
+    { after: 3,  src: 'story5/panels/panel_03.webp?v=1' }, // boys with Rillas learning about Gorillatsos
+    { after: 6,  src: 'story5/panels/panel_04.webp?v=1' }, // wrecked house
+    { after: 10, src: 'story5/panels/panel_05.webp?v=1' }, // boys find tyre tracks
+    { after: 12, src: 'story5/panels/panel_06.webp?v=1' }, // boys trudging exhausted through jungle
+    { after: 14, src: 'story5/panels/panel_07.webp?v=1' }, // boys spot the fortress
+    { after: 15, src: 'story5/panels/panel_11.webp?v=1' }, // boys sneaking through jungle toward fortress
+    { after: 21, src: 'story5/panels/panel_08.webp?v=1' }, // Rillas in shining knight armour
+    { after: 22, src: 'story5/panels/panel_09.webp?v=1' }, // Rillas deflects arrows, boys sneak in
+    { after: 24, src: 'story5/panels/panel_10.webp?v=1' }, // boys sneaking through stone fortress
+    { after: 25, src: 'story5/panels/panel_12.webp?v=1' }, // Gorillatsos in cage
+    { after: 28, src: 'story5/panels/panel_13.webp?v=1' }, // Rilena in cage
+    { after: 29, src: 'story5/panels/panel_14.webp?v=1' }, // Maimudakis in cage
+    { after: 31, src: 'story5/panels/panel_17.webp?v=1' }, // Gorillatsos "Freedom!"
+    { after: 33, src: 'story5/panels/panel_15.webp?v=1' }, // Rillas smashes through the wall
+    { after: 34, src: 'story5/panels/panel_16.webp?v=1' }, // escape on quad bikes
+    { after: 40, src: 'story5/panels/panel_20.webp?v=1' }, // Maimudakis "Yes yes yes!"
+    { after: 41, src: 'story5/panels/panel_18.webp?v=1' }, // Rillas blushing
+    { after: 42, src: 'story5/panels/panel_19.webp?v=1' }, // Rilena smiling
+    { after: 44, src: 'story5/panels/panel_21.webp?v=1' }, // boys handshake — we did it again
   ]
 };
