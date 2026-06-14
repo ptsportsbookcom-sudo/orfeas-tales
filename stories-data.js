@@ -136,23 +136,23 @@ const storyImages = {
     { after: 0,  src: 'story5/panels/panel_01.webp?v=1' }, // boys on quad bikes arriving
     { after: 1,  src: 'story5/panels/panel_02.webp?v=1' }, // Rillas sitting sad outside
     { after: 3,  src: 'story5/panels/panel_03.webp?v=1' }, // boys with Rillas learning about Gorillatsos
-    { after: 6,  src: 'story5/panels/panel_04.webp?v=1' }, // wrecked house
+    { after: 6,  src: 'story5/panels/panel_04.webp?v=2' }, // wrecked house
     { after: 10, src: 'story5/panels/panel_05.webp?v=1' }, // boys find tyre tracks
     { after: 12, src: 'story5/panels/panel_06.webp?v=1' }, // boys trudging exhausted through jungle
     { after: 14, src: 'story5/panels/panel_07.webp?v=1' }, // boys spot the fortress
-    { after: 15, src: 'story5/panels/panel_11.webp?v=1' }, // boys sneaking through jungle toward fortress
+    { after: 15, src: 'story5/panels/panel_11.webp?v=2' }, // boys sneaking through jungle toward fortress
     { after: 21, src: 'story5/panels/panel_08.webp?v=1' }, // Rillas in shining knight armour
     { after: 22, src: 'story5/panels/panel_09.webp?v=1' }, // Rillas deflects arrows, boys sneak in
     { after: 24, src: 'story5/panels/panel_10.webp?v=1' }, // boys sneaking through stone fortress
     { after: 25, src: 'story5/panels/panel_12.webp?v=1' }, // Gorillatsos in cage
     { after: 28, src: 'story5/panels/panel_13.webp?v=1' }, // Rilena in cage
-    { after: 29, src: 'story5/panels/panel_14.webp?v=1' }, // Maimudakis in cage
+    { after: 29, src: 'story5/panels/panel_14.webp?v=2' }, // Maimudakis in cage
     { after: 31, src: 'story5/panels/panel_17.webp?v=1' }, // Gorillatsos "Freedom!"
     { after: 33, src: 'story5/panels/panel_15.webp?v=1' }, // Rillas smashes through the wall
     { after: 34, src: 'story5/panels/panel_16.webp?v=1' }, // escape on quad bikes
     { after: 40, src: 'story5/panels/panel_20.webp?v=1' }, // Maimudakis "Yes yes yes!"
     { after: 41, src: 'story5/panels/panel_18.webp?v=1' }, // Rillas blushing
-    { after: 42, src: 'story5/panels/panel_19.webp?v=1' }, // Rilena smiling
+    { after: 42, src: 'story5/panels/panel_19.webp?v=2' }, // Rilena smiling
     { after: 44, src: 'story5/panels/panel_21.webp?v=1' }, // boys handshake — we did it again
   ]
 };
