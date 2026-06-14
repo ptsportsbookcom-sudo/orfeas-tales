@@ -1,0 +1,51 @@
+name: Repo Safety Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  safety-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Count tracked files
+        run: |
+          COUNT=$(git ls-files | wc -l)
+          echo "Tracked file count: $COUNT"
+          if [ "$COUNT" -lt 180 ]; then
+            echo "ERROR: Only $COUNT tracked files - repo looks partial (minimum 180 required)"
+            exit 1
+          fi
+
+      - name: Required files exist
+        run: |
+          MISSING=0
+          for FILE in index.html app.js styles.css stories-data.js vercel.json scripts/smoke-check.js; do
+            if [ ! -f "$FILE" ]; then
+              echo "MISSING: $FILE"
+              MISSING=1
+            else
+              echo "OK: $FILE"
+            fi
+          done
+          if [ "$MISSING" -eq 1 ]; then
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Syntax check app.js
+        run: node --check app.js
+
+      - name: Syntax check stories-data.js
+        run: node --check stories-data.js
+
+      - name: Smoke check
+        run: node scripts/smoke-check.js
