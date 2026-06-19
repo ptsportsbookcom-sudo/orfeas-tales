@@ -282,8 +282,18 @@ function showComicFromStory() {
   const s3nav = document.getElementById('comic-s3-nav');
   const s4nav = document.getElementById('comic-s4-nav');
   const s5nav = document.getElementById('comic-s5-nav');
+  const s6nav = document.getElementById('comic-s6-nav');
   const title = document.getElementById('comic-title');
-  if (walStoryId === 5) {
+  if (walStoryId === 6) {
+    COMIC_PAGES = 5; comicPageIdFn = n => 's6p-' + n; comicNavId = 'comic-s6-nav';
+    if (title) title.textContent = 'Episode VI — Duke Kaboom';
+    if (s1nav) s1nav.style.display = 'none';
+    if (s2nav) s2nav.style.display = 'none';
+    if (s3nav) s3nav.style.display = 'none';
+    if (s4nav) s4nav.style.display = 'none';
+    if (s5nav) s5nav.style.display = 'none';
+    if (s6nav) s6nav.style.display = 'flex';
+  } else if (walStoryId === 5) {
     COMIC_PAGES = 6; comicPageIdFn = n => 's5p-' + n; comicNavId = 'comic-s5-nav';
     if (title) title.textContent = 'Episode V — Saving Gorillatsos';
     if (s1nav) s1nav.style.display = 'none';
@@ -291,6 +301,7 @@ function showComicFromStory() {
     if (s3nav) s3nav.style.display = 'none';
     if (s4nav) s4nav.style.display = 'none';
     if (s5nav) s5nav.style.display = 'flex';
+    if (s6nav) s6nav.style.display = 'none';
   } else if (walStoryId === 4) {
     COMIC_PAGES = 4; comicPageIdFn = n => 's4p-' + n; comicNavId = 'comic-s4-nav';
     if (title) title.textContent = 'Episode IV — Rillas and King Kong';
@@ -299,6 +310,7 @@ function showComicFromStory() {
     if (s3nav) s3nav.style.display = 'none';
     if (s4nav) s4nav.style.display = 'flex';
     if (s5nav) s5nav.style.display = 'none';
+    if (s6nav) s6nav.style.display = 'none';
   } else if (walStoryId === 3) {
     COMIC_PAGES = 4; comicPageIdFn = n => 's3p-' + n; comicNavId = 'comic-s3-nav';
     if (title) title.textContent = 'Episode III — Rillas the Wrestler';
@@ -307,6 +319,7 @@ function showComicFromStory() {
     if (s3nav) s3nav.style.display = 'flex';
     if (s4nav) s4nav.style.display = 'none';
     if (s5nav) s5nav.style.display = 'none';
+    if (s6nav) s6nav.style.display = 'none';
   } else if (walStoryId === 2) {
     COMIC_PAGES = 4; comicPageIdFn = n => 's2p-' + n; comicNavId = 'comic-s2-nav';
     if (title) title.textContent = 'Episode II — Rillas the Gorilla';
@@ -315,6 +328,7 @@ function showComicFromStory() {
     if (s3nav) s3nav.style.display = 'none';
     if (s4nav) s4nav.style.display = 'none';
     if (s5nav) s5nav.style.display = 'none';
+    if (s6nav) s6nav.style.display = 'none';
   } else {
     COMIC_PAGES = 3; comicPageIdFn = n => 'cpage-' + n; comicNavId = 'comic-s1-nav';
     if (title) title.textContent = 'Episode I — The Day Two Friends Met';
@@ -323,6 +337,7 @@ function showComicFromStory() {
     if (s3nav) s3nav.style.display = 'none';
     if (s4nav) s4nav.style.display = 'none';
     if (s5nav) s5nav.style.display = 'none';
+    if (s6nav) s6nav.style.display = 'none';
   }
   goToComicPage(1);
   beforePageChange('comic');
