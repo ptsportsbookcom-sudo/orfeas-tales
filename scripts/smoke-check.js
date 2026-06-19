@@ -4,6 +4,7 @@ const vm = require("vm");
 
 const root = path.resolve(__dirname, "..");
 const errors = [];
+const STORY6_PANEL_ORDER = ["01", "19", "03", "04", "05", "15", "07", "08", "13", "09", "10", "11", "12", "14", "06", "16", "17", "18", "02"];
 
 function read(file) {
   return fs.readFileSync(path.join(root, file), "utf8");
@@ -62,6 +63,10 @@ function checkIndex() {
   if (story6WalPanels.length !== 19) {
     fail(`Story 6 Watch & Listen must reference 19 panels; found ${story6WalPanels.length}.`);
   }
+  const story6WalOrder = story6WalPanels.map(src => src.match(/panel_(\d{2})/)[1]);
+  if (JSON.stringify(story6WalOrder) !== JSON.stringify(STORY6_PANEL_ORDER)) {
+    fail(`Story 6 Watch & Listen panel order is incorrect: ${story6WalOrder.join(", ")}.`);
+  }
 }
 
 function loadStoryData() {
@@ -103,6 +108,14 @@ function checkStoryData() {
     if (!Array.isArray(images) || images.length === 0) {
       fail(`Story ${storyId} must have story image mappings.`);
     }
+  }
+
+  const story6ReadOrder = (data.storyImages[6] || []).map(image => {
+    const match = image.src && image.src.match(/panel_(\d{2})/);
+    return match ? match[1] : "missing";
+  });
+  if (JSON.stringify(story6ReadOrder) !== JSON.stringify(STORY6_PANEL_ORDER)) {
+    fail(`Story 6 Read panel order is incorrect: ${story6ReadOrder.join(", ")}.`);
   }
 
   const assetPaths = [];
