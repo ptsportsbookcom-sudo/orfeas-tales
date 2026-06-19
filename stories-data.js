@@ -162,23 +162,23 @@ const storyImages = {
   ],
   6: [
     { after: 1,  src: 'story6/panels/panel_01.webp?v=1' }, // boys react to Duke Kaboom on TV
-    { after: 6,  src: 'story6/panels/panel_02.webp?v=1' }, // Rillas eating bananas
+    { after: 6,  src: 'story6/panels/panel_19.webp?v=1' }, // Rillas is confused by Duke's name
     { after: 7,  src: 'story6/panels/panel_03.webp?v=1' }, // boys head to the ticket booth
     { after: 12, src: 'story6/panels/panel_04.webp?v=1' }, // Rillas in hat and coat
     { after: 13, src: 'story6/panels/panel_05.webp?v=1' }, // boys ride to the arena
-    { after: 14, src: 'story6/panels/panel_06.webp?v=1' }, // disguised Rillas arrives by quad bike
-    { after: 15, src: 'story6/panels/panel_07.webp?v=1' }, // Duke Kaboom enters
+    { after: 15, src: 'story6/panels/panel_15.webp?v=1' }, // Duke Kaboom is presented
+    { after: 17, src: 'story6/panels/panel_07.webp?v=1' }, // Duke begins the first stunt
     { after: 18, src: 'story6/panels/panel_08.webp?v=1' }, // rings of fire stunt
+    { after: 19, src: 'story6/panels/panel_13.webp?v=1' }, // boys cheer from their seats
     { after: 20, src: 'story6/panels/panel_09.webp?v=1' }, // Rillas cheers
     { after: 22, src: 'story6/panels/panel_10.webp?v=1' }, // record-height jump
     { after: 28, src: 'story6/panels/panel_11.webp?v=1' }, // burst motorcycle tyre
     { after: 32, src: 'story6/panels/panel_12.webp?v=1' }, // Aristotelis offers the quad bikes
-    { after: 34, src: 'story6/panels/panel_13.webp?v=1' }, // boys cheer their solution
     { after: 36, src: 'story6/panels/panel_14.webp?v=1' }, // Duke Kaboom sees Rillas
-    { after: 39, src: 'story6/panels/panel_15.webp?v=1' }, // Duke accepts the quad bike
+    { after: 41, src: 'story6/panels/panel_06.webp?v=1' }, // Rillas takes warm-up laps
     { after: 44, src: 'story6/panels/panel_16.webp?v=1' }, // Duke flies over the trucks
     { after: 49, src: 'story6/panels/panel_17.webp?v=1' }, // world-record celebration
     { after: 55, src: 'story6/panels/panel_18.webp?v=1' }, // signed helmet and cape
-    { after: 58, src: 'story6/panels/panel_19.webp?v=1' }, // Rillas with ten bananas
+    { after: 58, src: 'story6/panels/panel_02.webp?v=1' }, // Rillas enjoys his bananas backstage
   ]
 };
