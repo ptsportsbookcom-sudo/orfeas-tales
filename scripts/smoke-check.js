@@ -49,10 +49,18 @@ function checkIndex() {
     }
   }
 
-  for (const storyId of [1, 2, 3, 4, 5]) {
+  for (const storyId of [1, 2, 3, 4, 5, 6]) {
     if (!html.includes(`data-action="show-wal" data-story="${storyId}"`)) {
       fail(`Story ${storyId} Watch & Listen button is not wired with data-action.`);
     }
+  }
+
+  for (let page = 1; page <= 5; page += 1) {
+    if (!html.includes(`id="s6p-${page}"`)) fail(`Story 6 Watch & Listen page ${page} is missing.`);
+  }
+  const story6WalPanels = html.match(/src="story6\/panels\/panel_\d{2}\.webp\?v=\d+"/g) || [];
+  if (story6WalPanels.length !== 19) {
+    fail(`Story 6 Watch & Listen must reference 19 panels; found ${story6WalPanels.length}.`);
   }
 }
 
@@ -78,7 +86,7 @@ function checkStoryData() {
     fail("stories-data.js must define at least the live characters.");
   }
 
-  for (const storyId of [1, 2, 3, 4, 5]) {
+  for (const storyId of [1, 2, 3, 4, 5, 6]) {
     const audio = data.audioFiles && data.audioFiles[storyId];
     if (!audio || !audio.en || !audio.gr) {
       fail(`Story ${storyId} must have EN and GR audio mappings.`);
@@ -131,6 +139,10 @@ function checkApp() {
 
   if (!/document\.addEventListener\(['"]click['"]/.test(app)) {
     fail("app.js must attach delegated click handling.");
+  }
+
+  if (!/walStoryId\s*===\s*6/.test(app) || !/s6p-/.test(app) || !/comic-s6-nav/.test(app)) {
+    fail("app.js must configure Story 6 Watch & Listen navigation.");
   }
 }
 
