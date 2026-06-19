@@ -43,10 +43,13 @@ function checkIndex() {
     if (!match) fail(`index.html must load ${file} with a ?v= cache-busting value.`);
   }
 
-  for (const storyId of [1, 2, 3, 4]) {
+  for (const storyId of [1, 2, 3, 4, 5, 6]) {
     if (!html.includes(`data-action="show-story-text" data-story="${storyId}"`)) {
       fail(`Story ${storyId} Read button is not wired with data-action.`);
     }
+  }
+
+  for (const storyId of [1, 2, 3, 4, 5]) {
     if (!html.includes(`data-action="show-wal" data-story="${storyId}"`)) {
       fail(`Story ${storyId} Watch & Listen button is not wired with data-action.`);
     }
@@ -75,12 +78,14 @@ function checkStoryData() {
     fail("stories-data.js must define at least the live characters.");
   }
 
-  for (const storyId of [1, 2, 3, 4]) {
+  for (const storyId of [1, 2, 3, 4, 5]) {
     const audio = data.audioFiles && data.audioFiles[storyId];
     if (!audio || !audio.en || !audio.gr) {
       fail(`Story ${storyId} must have EN and GR audio mappings.`);
     }
+  }
 
+  for (const storyId of [1, 2, 3, 4, 5, 6]) {
     const text = data.storyText && data.storyText[storyId];
     if (!text || !text.en || !text.gr) {
       fail(`Story ${storyId} must have EN and GR story text.`);
