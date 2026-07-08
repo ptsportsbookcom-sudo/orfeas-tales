@@ -231,6 +231,79 @@ let comicLang = 'en';
 let comicPageIdFn = n => 'cpage-' + n;
 let comicNavId = 'comic-s1-nav';
 
+function clearDynamicComicPages() {
+  document.querySelectorAll('.dynamic-comic-page').forEach(page => page.remove());
+  const dynamicNav = document.getElementById('comic-dynamic-nav');
+  if (dynamicNav) dynamicNav.remove();
+}
+
+function hideComicNavs() {
+  document.querySelectorAll('.comic-dots').forEach(nav => {
+    nav.style.display = 'none';
+  });
+}
+
+function renderDynamicComicPages(storyId, pagePrefix, gridClass) {
+  clearDynamicComicPages();
+  const reader = document.querySelector('#page-comic .comic-reader');
+  const nav = document.querySelector('#page-comic .comic-nav');
+  const next = document.getElementById('comic-next');
+  const images = storyImages[storyId] || [];
+  const pageSize = 4;
+  const totalPages = Math.ceil(images.length / pageSize);
+  if (!reader || !nav || !next || totalPages === 0) return 0;
+
+  for (let page = 1; page <= totalPages; page += 1) {
+    const pageEl = document.createElement('div');
+    pageEl.className = 'comic-page dynamic-comic-page';
+    pageEl.id = pagePrefix + page;
+
+    const grid = document.createElement('div');
+    grid.className = 'comic-grid ' + gridClass;
+
+    images.slice((page - 1) * pageSize, page * pageSize).forEach((image, index) => {
+      const panelNumber = ((page - 1) * pageSize) + index + 1;
+      const panel = document.createElement('div');
+      panel.className = 'comic-panel';
+
+      const img = document.createElement('img');
+      img.src = image.src;
+      img.alt = 'Story ' + storyId + ' panel ' + panelNumber;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+
+      panel.appendChild(img);
+      grid.appendChild(panel);
+    });
+
+    const label = document.createElement('div');
+    label.className = 'comic-page-label';
+    label.dataset.en = 'Page ' + page + ' of ' + totalPages;
+    label.dataset.gr = 'Σελίδα ' + page + ' από ' + totalPages;
+    label.textContent = comicLang === 'gr' ? label.dataset.gr : label.dataset.en;
+
+    pageEl.appendChild(grid);
+    pageEl.appendChild(label);
+    reader.appendChild(pageEl);
+  }
+
+  const dots = document.createElement('div');
+  dots.id = 'comic-dynamic-nav';
+  dots.className = 'comic-dots';
+  for (let page = 1; page <= totalPages; page += 1) {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'comic-dot';
+    dot.dataset.action = 'comic-go';
+    dot.dataset.page = String(page);
+    dot.setAttribute('aria-label', 'Go to comic page ' + page);
+    dots.appendChild(dot);
+  }
+  nav.insertBefore(dots, next);
+
+  return totalPages;
+}
+
 function setComicLang(lang, btn) {
   comicLang = lang;
   document.querySelectorAll('.comic-lang-btn').forEach(b => b.classList.remove('active'));
@@ -284,6 +357,19 @@ function showComicFromStory() {
   const s5nav = document.getElementById('comic-s5-nav');
   const s6nav = document.getElementById('comic-s6-nav');
   const title = document.getElementById('comic-title');
+  clearDynamicComicPages();
+  if (walStoryId === 7) {
+    COMIC_PAGES = renderDynamicComicPages(7, 's7p-', 'story7-comic-grid');
+    comicPageIdFn = n => 's7p-' + n; comicNavId = 'comic-dynamic-nav';
+    if (title) title.textContent = 'Episode VII - Rillas and the Skyscraper';
+    hideComicNavs();
+    const dynamicNav = document.getElementById('comic-dynamic-nav');
+    if (dynamicNav) dynamicNav.style.display = 'flex';
+    goToComicPage(1);
+    beforePageChange('comic');
+    showPage('comic');
+    return;
+  }
   if (walStoryId === 6) {
     COMIC_PAGES = 5; comicPageIdFn = n => 's6p-' + n; comicNavId = 'comic-s6-nav';
     if (title) title.textContent = 'Episode VI — Duke Kaboom';
