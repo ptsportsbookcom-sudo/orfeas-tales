@@ -44,13 +44,13 @@ function checkIndex() {
     if (!match) fail(`index.html must load ${file} with a ?v= cache-busting value.`);
   }
 
-  for (const storyId of [1, 2, 3, 4, 5, 6]) {
+  for (const storyId of [1, 2, 3, 4, 5, 6, 7]) {
     if (!html.includes(`data-action="show-story-text" data-story="${storyId}"`)) {
       fail(`Story ${storyId} Read button is not wired with data-action.`);
     }
   }
 
-  for (const storyId of [1, 2, 3, 4, 5, 6]) {
+  for (const storyId of [1, 2, 3, 4, 5, 6, 7]) {
     if (!html.includes(`data-action="show-wal" data-story="${storyId}"`)) {
       fail(`Story ${storyId} Watch & Listen button is not wired with data-action.`);
     }
@@ -91,14 +91,14 @@ function checkStoryData() {
     fail("stories-data.js must define at least the live characters.");
   }
 
-  for (const storyId of [1, 2, 3, 4, 5, 6]) {
+  for (const storyId of [1, 2, 3, 4, 5, 6, 7]) {
     const audio = data.audioFiles && data.audioFiles[storyId];
     if (!audio || !audio.en || !audio.gr) {
       fail(`Story ${storyId} must have EN and GR audio mappings.`);
     }
   }
 
-  for (const storyId of [1, 2, 3, 4, 5, 6]) {
+  for (const storyId of [1, 2, 3, 4, 5, 6, 7]) {
     const text = data.storyText && data.storyText[storyId];
     if (!text || !text.en || !text.gr) {
       fail(`Story ${storyId} must have EN and GR story text.`);
@@ -116,6 +116,15 @@ function checkStoryData() {
   });
   if (JSON.stringify(story6ReadOrder) !== JSON.stringify(STORY6_PANEL_ORDER)) {
     fail(`Story 6 Read panel order is incorrect: ${story6ReadOrder.join(", ")}.`);
+  }
+
+  const story7ReadPanels = (data.storyImages[7] || []).map(image => {
+    const match = image.src && image.src.match(/s7p(\d{2})/);
+    return match ? match[1] : "missing";
+  });
+  const expectedStory7Panels = Array.from({ length: 20 }, (_, index) => String(index + 1).padStart(2, "0"));
+  if (JSON.stringify(story7ReadPanels) !== JSON.stringify(expectedStory7Panels)) {
+    fail(`Story 7 Read panel order is incorrect: ${story7ReadPanels.join(", ")}.`);
   }
 
   const assetPaths = [];
@@ -156,6 +165,10 @@ function checkApp() {
 
   if (!/walStoryId\s*===\s*6/.test(app) || !/s6p-/.test(app) || !/comic-s6-nav/.test(app)) {
     fail("app.js must configure Story 6 Watch & Listen navigation.");
+  }
+
+  if (!/walStoryId\s*===\s*7/.test(app) || !/renderDynamicComicPages\(7,\s*['"]s7p-/.test(app) || !/comic-dynamic-nav/.test(app)) {
+    fail("app.js must configure dynamic Story 7 Watch & Listen navigation.");
   }
 }
 
