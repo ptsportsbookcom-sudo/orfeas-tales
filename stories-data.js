@@ -180,5 +180,87 @@ const storyImages = {
     { after: 49, src: 'story6/panels/panel_17.webp?v=1' }, // world-record celebration
     { after: 55, src: 'story6/panels/panel_18.webp?v=1' }, // signed helmet and cape
     { after: 58, src: 'story6/panels/panel_02.webp?v=1' }, // Rillas enjoys his bananas backstage
+  ],
+  7: [
+    {
+      after: 1,
+      src: 'story7/panels/s7p01.png'
+    },
+    {
+      after: 2,
+      src: 'story7/panels/s7p02.png'
+    },
+    {
+      after: 3,
+      src: 'story7/panels/s7p03.png'
+    },
+    {
+      after: 4,
+      src: 'story7/panels/s7p04.png'
+    },
+    {
+      after: 5,
+      src: 'story7/panels/s7p05.png'
+    },
+    {
+      after: 6,
+      src: 'story7/panels/s7p06.png'
+    },
+    {
+      after: 7,
+      src: 'story7/panels/s7p07.png'
+    },
+    {
+      after: 8,
+      src: 'story7/panels/s7p08.png'
+    },
+    {
+      after: 9,
+      src: 'story7/panels/s7p09.png'
+    },
+    {
+      after: 11,
+      src: 'story7/panels/s7p10.png'
+    },
+    {
+      after: 12,
+      src: 'story7/panels/s7p11.png'
+    },
+    {
+      after: 13,
+      src: 'story7/panels/s7p12.png'
+    },
+    {
+      after: 18,
+      src: 'story7/panels/s7p13.png'
+    },
+    {
+      after: 19,
+      src: 'story7/panels/s7p14.png'
+    },
+    {
+      after: 20,
+      src: 'story7/panels/s7p15.png'
+    },
+    {
+      after: 21,
+      src: 'story7/panels/s7p16.png'
+    },
+    {
+      after: 22,
+      src: 'story7/panels/s7p17.png'
+    },
+    {
+      after: 23,
+      src: 'story7/panels/s7p18.png'
+    },
+    {
+      after: 25,
+      src: 'story7/panels/s7p19.png'
+    },
+    {
+      after: 27,
+      src: 'story7/panels/s7p20.png'
+    }
   ]
 };
