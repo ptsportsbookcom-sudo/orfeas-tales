@@ -230,7 +230,7 @@ let COMIC_PAGES = 3;
 let comicLang = 'en';
 let comicPageIdFn = n => 'cpage-' + n;
 let comicNavId = 'comic-s1-nav';
-const DYNAMIC_WAL_STORY_IDS = [5, 6, 7];
+const DYNAMIC_WAL_STORY_IDS = [5, 6, 7, 8];
 
 function usesDynamicWalStory(storyId) {
   return DYNAMIC_WAL_STORY_IDS.includes(storyId);
