@@ -22,6 +22,21 @@ function stripVersion(assetPath) {
   return assetPath.split("?")[0];
 }
 
+function numericKeys(object) {
+  return Object.keys(object || {})
+    .map(key => Number(key))
+    .filter(Number.isInteger)
+    .sort((a, b) => a - b);
+}
+
+function liveStoryIds(data) {
+  return [...new Set([
+    ...numericKeys(data && data.audioFiles),
+    ...numericKeys(data && data.storyText),
+    ...numericKeys(data && data.storyImages),
+  ])].sort((a, b) => a - b);
+}
+
 function checkSyntax(file) {
   try {
     new vm.Script(read(file), { filename: file });
@@ -30,8 +45,9 @@ function checkSyntax(file) {
   }
 }
 
-function checkIndex() {
+function checkIndex(data) {
   const html = read("index.html");
+  const storyIds = liveStoryIds(data);
 
   if (/<style[\s>]/i.test(html)) fail("index.html must not contain inline <style> blocks.");
   if (/\sonclick=/i.test(html)) fail("index.html must not contain inline onclick handlers.");
@@ -44,13 +60,23 @@ function checkIndex() {
     if (!match) fail(`index.html must load ${file} with a ?v= cache-busting value.`);
   }
 
-  for (const storyId of [1, 2, 3, 4, 5, 6, 7]) {
+  const heroBadge = html.match(/<div class="hero-badge">(\d+) Episodes Now Live<\/div>/);
+  if (!heroBadge || Number(heroBadge[1]) !== storyIds.length) {
+    fail(`Homepage hero story count must match live stories (${storyIds.length}).`);
+  }
+
+  const storiesStat = html.match(/<span class="stat-value">(\d+)<\/span>\s*<span class="stat-label">Stories Available<\/span>/);
+  if (!storiesStat || Number(storiesStat[1]) !== storyIds.length) {
+    fail(`Homepage Stories Available stat must match live stories (${storyIds.length}).`);
+  }
+
+  for (const storyId of storyIds) {
     if (!html.includes(`data-action="show-story-text" data-story="${storyId}"`)) {
       fail(`Story ${storyId} Read button is not wired with data-action.`);
     }
   }
 
-  for (const storyId of [1, 2, 3, 4, 5, 6, 7]) {
+  for (const storyId of storyIds) {
     if (!html.includes(`data-action="show-wal" data-story="${storyId}"`)) {
       fail(`Story ${storyId} Watch & Listen button is not wired with data-action.`);
     }
@@ -83,22 +109,26 @@ globalThis.__orfeasData = { characters, audioFiles, storyText, storyImages };`;
   return context.__orfeasData;
 }
 
-function checkStoryData() {
-  const data = loadStoryData();
+function checkStoryData(data) {
   if (!data) return;
+  const storyIds = liveStoryIds(data);
 
   if (!Array.isArray(data.characters) || data.characters.length < 4) {
     fail("stories-data.js must define at least the live characters.");
   }
 
-  for (const storyId of [1, 2, 3, 4, 5, 6, 7]) {
+  if (storyIds.length === 0) {
+    fail("stories-data.js must define at least one live story.");
+  }
+
+  for (const storyId of storyIds) {
     const audio = data.audioFiles && data.audioFiles[storyId];
     if (!audio || !audio.en || !audio.gr) {
       fail(`Story ${storyId} must have EN and GR audio mappings.`);
     }
   }
 
-  for (const storyId of [1, 2, 3, 4, 5, 6, 7]) {
+  for (const storyId of storyIds) {
     const text = data.storyText && data.storyText[storyId];
     if (!text || !text.en || !text.gr) {
       fail(`Story ${storyId} must have EN and GR story text.`);
@@ -192,8 +222,9 @@ function checkVercelConfig() {
 
 checkSyntax("stories-data.js");
 checkSyntax("app.js");
-checkIndex();
-checkStoryData();
+const storyData = loadStoryData();
+checkIndex(storyData);
+checkStoryData(storyData);
 checkApp();
 checkVercelConfig();
 
