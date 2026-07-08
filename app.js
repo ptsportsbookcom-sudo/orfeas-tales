@@ -230,6 +230,21 @@ let COMIC_PAGES = 3;
 let comicLang = 'en';
 let comicPageIdFn = n => 'cpage-' + n;
 let comicNavId = 'comic-s1-nav';
+const DYNAMIC_WAL_STORY_IDS = [5, 6, 7];
+
+function usesDynamicWalStory(storyId) {
+  return DYNAMIC_WAL_STORY_IDS.includes(storyId);
+}
+
+function episodeNumeral(storyId) {
+  return ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII'][storyId] || String(storyId);
+}
+
+function storyDisplayTitle(storyId) {
+  const story = storyText[storyId] && (storyText[storyId].en || storyText[storyId].gr);
+  const title = story && story.title ? story.title : 'Story ' + storyId;
+  return 'Episode ' + episodeNumeral(storyId) + ' - ' + title;
+}
 
 function clearDynamicComicPages() {
   document.querySelectorAll('.dynamic-comic-page').forEach(page => page.remove());
@@ -358,10 +373,10 @@ function showComicFromStory() {
   const s6nav = document.getElementById('comic-s6-nav');
   const title = document.getElementById('comic-title');
   clearDynamicComicPages();
-  if (walStoryId === 7) {
-    COMIC_PAGES = renderDynamicComicPages(7, 's7p-', 'story7-comic-grid');
-    comicPageIdFn = n => 's7p-' + n; comicNavId = 'comic-dynamic-nav';
-    if (title) title.textContent = 'Episode VII - Rillas and the Skyscraper';
+  if (usesDynamicWalStory(walStoryId)) {
+    COMIC_PAGES = renderDynamicComicPages(walStoryId, 's' + walStoryId + 'p-', 'story' + walStoryId + '-comic-grid');
+    comicPageIdFn = n => 's' + walStoryId + 'p-' + n; comicNavId = 'comic-dynamic-nav';
+    if (title) title.textContent = storyDisplayTitle(walStoryId);
     hideComicNavs();
     const dynamicNav = document.getElementById('comic-dynamic-nav');
     if (dynamicNav) dynamicNav.style.display = 'flex';
