@@ -197,8 +197,8 @@ function checkApp() {
     fail("app.js must configure Story 6 Watch & Listen navigation.");
   }
 
-  if (!/DYNAMIC_WAL_STORY_IDS\s*=\s*\[5,\s*6,\s*7,\s*8\]/.test(app) || !/usesDynamicWalStory\(walStoryId\)/.test(app) || !/renderDynamicComicPages\(walStoryId/.test(app) || !/comic-dynamic-nav/.test(app)) {
-    fail("app.js must configure data-driven Watch & Listen navigation for later stories including Story 8.");
+  if (!/DYNAMIC_WAL_STORY_IDS\s*=\s*\[5,\s*6,\s*7,\s*8,\s*9\]/.test(app) || !/usesDynamicWalStory\(walStoryId\)/.test(app) || !/renderDynamicComicPages\(walStoryId/.test(app) || !/comic-dynamic-nav/.test(app)) {
+    fail("app.js must configure data-driven Watch & Listen navigation for later stories including Story 9.");
   }
 }
 
