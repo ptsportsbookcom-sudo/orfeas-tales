@@ -230,14 +230,14 @@ let COMIC_PAGES = 3;
 let comicLang = 'en';
 let comicPageIdFn = n => 'cpage-' + n;
 let comicNavId = 'comic-s1-nav';
-const DYNAMIC_WAL_STORY_IDS = [5, 6, 7, 8, 9];
+const DYNAMIC_WAL_STORY_IDS = [5, 6, 7, 8, 9, 10];
 
 function usesDynamicWalStory(storyId) {
   return DYNAMIC_WAL_STORY_IDS.includes(storyId);
 }
 
 function episodeNumeral(storyId) {
-  return ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'][storyId] || String(storyId);
+  return ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'][storyId] || String(storyId);
 }
 
 function storyDisplayTitle(storyId) {
