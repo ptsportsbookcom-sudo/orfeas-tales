@@ -22,6 +22,35 @@ function stripVersion(assetPath) {
   return assetPath.split("?")[0];
 }
 
+function validatePng(file) {
+  const localPath = path.join(root, file);
+  const buffer = fs.readFileSync(localPath);
+  const signature = "89504e470d0a1a0a";
+  if (buffer.length < 12 || buffer.subarray(0, 8).toString("hex") !== signature) {
+    fail(`PNG asset has an invalid signature: ${file}`);
+    return;
+  }
+
+  let offset = 8;
+  let foundEnd = false;
+  while (offset + 12 <= buffer.length) {
+    const length = buffer.readUInt32BE(offset);
+    const type = buffer.subarray(offset + 4, offset + 8).toString("ascii");
+    const chunkEnd = offset + 12 + length;
+    if (!/^[A-Za-z]{4}$/.test(type) || chunkEnd > buffer.length) {
+      fail(`PNG asset has an invalid chunk: ${file}`);
+      return;
+    }
+    offset = chunkEnd;
+    if (type === "IEND") {
+      foundEnd = true;
+      break;
+    }
+  }
+
+  if (!foundEnd) fail(`PNG asset is missing IEND chunk: ${file}`);
+}
+
 function numericKeys(object) {
   return Object.keys(object || {})
     .map(key => Number(key))
@@ -173,6 +202,7 @@ function checkStoryData(data) {
   for (const assetPath of assetPaths) {
     const localPath = stripVersion(assetPath);
     if (!exists(localPath)) fail(`Referenced asset is missing locally: ${assetPath}`);
+    else if (/\.png$/i.test(localPath)) validatePng(localPath);
   }
 }
 
