@@ -11,7 +11,7 @@ const characters = [
     desc:"Rillas is the friendliest gorilla you'll ever meet. Trapped in a zoo for years, he secretly taught himself to speak by listening to humans — and the first thing he did with that skill was make two best friends. He loves bananas, tall trees, and a very clever plan." },
   { id:4,  name:"Rilena",      role:"Gorilla — Kind & Graceful", file:"characters/rilena_ref.webp",      unlocked:true,
     desc:"A kind and graceful female gorilla, freed from the Poachers' cage in Story 5. She has a warm smile that made Rillas's ears go red." },
-  { id:5,  name:"Rilaki",      role:"Gorilla Son",         file:"characters/rilaki_ref.webp",       unlocked:true,
+  { id:5,  name:"Rilaki",      role:"Gorilla Son",         file:"characters/rilaki_ref.webp?v=2",       unlocked:true,
     desc:"Rillas and Rilena's son — born in Story 10. Grows up with his dad's confident grin and love of tactical gear, and a wild spiky hairdo all his own." },
   { id:6,  name:"Maimudakis",  role:"Monkey — The Father", file:"characters/maimudakis_ref.webp",  unlocked:true,
     desc:"A wise and steady spider monkey — a father figure through and through. Freed from the Poachers' cage in Story 5, he was quick to say yes when Rillas asked to be friends." },
