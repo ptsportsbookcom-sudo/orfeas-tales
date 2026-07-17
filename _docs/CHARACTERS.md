@@ -296,6 +296,58 @@ white background --cref https://cdn.midjourney.com/699b54bb-8630-4af2-bc55-0aec7
 
 ---
 
+### Dakis
+**Role**: Maimudakis and Maimudakena's older son — debuts in Story 11 ("New Friends for Rilaki")
+**Species**: Monkey (child)
+**Age**: Young, older of the two brothers
+
+**⚠️ CORRECTION (session 21, Story 11)**: `stories-data.js` character #8 (Dakis) previously pointed to `characters/13_Dakis.webp` — same recurring "wrong reference" bug pattern as Maimudakis/Maimudakena/Rilaki: it's a fully-rendered fantasy/anime digital painting (orange-haired monkey in a jetpack, cosmic background), completely wrong style and design. The true reference is `base desgins/Dakis.png`, confirmed by Pantelis. Converted to `characters/dakis_ref.webp` for site use.
+
+**Physical Description** (from `base desgins/Dakis.png`):
+- Build: Slim young monkey, energetic stance
+- Hair: Spiky black hair with blonde/tan tips, messy and wild
+- Ears: Big, round, floppy — held out to the sides
+- Face: Pink-tan muzzle, wide amber/orange eyes, huge toothy grin — mischievous and upbeat
+- Clothes: Red hoodie/polo shirt, grey shorts, gold-and-red sneakers
+- Tail: Long, curled, cream/tan colored — a signature loose spiral
+- Line style: Loose, sketchy ink-brush linework with watercolor-style flat washes — same family style as Maimudakena, distinct from the flat "Dogman" comic style used for the boys/gorillas
+- Vibe: The bolder, more mischievous of the two brothers — first to sneak a banana
+
+**Reference Images**:
+- `characters/dakis_ref.webp` ← ⭐ USE THIS (converted from `base desgins/Dakis.png`)
+- `characters/13_Dakis.webp` / `.png` — ⚠️ DO NOT USE for identity; wrong character (fantasy jetpack monkey)
+
+**Appears in**: Story 11 ("New Friends for Rilaki" — debut)
+**Website**: Currently locked (id:8, `unlocked:false`) — unlock as part of the Story 11 deploy
+
+---
+
+### Akis
+**Role**: Maimudakis and Maimudakena's younger son — debuts in Story 11 ("New Friends for Rilaki")
+**Species**: Monkey (child)
+**Age**: Young, younger of the two brothers
+
+**⚠️ CORRECTION (session 21, Story 11)**: `stories-data.js` character #9 (Akis) previously pointed to `characters/14_Akis.webp` — same bug pattern: a fully-rendered fantasy/anime digital painting (green-haired monkey holding a magic staff, cosmic background), completely wrong style and design. The true reference is `base desgins/Akis.png`, confirmed by Pantelis. Converted to `characters/akis_ref.webp` for site use.
+
+**Physical Description** (from `base desgins/Akis.png`):
+- Build: Smaller and younger-looking than Dakis
+- Hair: Spiky black hair with orange/tan tips, slightly less wild than Dakis's
+- Ears: Smaller and rounder than Dakis's
+- Face: Tan-brown fur, big round solid dark eyes (no bright iris highlight like Dakis — reads as a touch more innocent/impish), warm smile
+- Clothes: Red-and-orange striped shirt, grey pants, tan boots
+- Tail: Shaggier, bushier than Dakis's, drawn with loose energetic linework suggesting movement
+- Line style: Same loose ink-brush family style as Dakis and Maimudakena
+- Vibe: The quieter, more cautious little brother — tags along on Dakis's mischief
+
+**Reference Images**:
+- `characters/akis_ref.webp` ← ⭐ USE THIS (converted from `base desgins/Akis.png`)
+- `characters/14_Akis.webp` / `.png` — ⚠️ DO NOT USE for identity; wrong character (fantasy staff-wielding monkey)
+
+**Appears in**: Story 11 ("New Friends for Rilaki" — debut)
+**Website**: Currently locked (id:9, `unlocked:false`) — unlock as part of the Story 11 deploy
+
+---
+
 ## ⚠️ STORY 8 HARD RULES (reconstructed — see Restoration Note at top)
 
 These rules came out of repeated Midjourney failures while generating Story 8 ("Rillas and Rilena") multi-character panels. The original detailed writeup was lost in the file corruption; this is a reconstruction of the rule of thumb that survived in `NEW_CHAT_START_HERE.md`. Apply with judgement, and update this section with specifics as they're re-confirmed during Story 9 panel work.
@@ -312,7 +364,7 @@ These rules came out of repeated Midjourney failures while generating Story 8 ("
 
 These characters exist in `stories-data.js`'s `characters` array (with `id`/`role`/`file`) but have no written visual-bible entry in any version of this file found during restoration. Write a full entry (following the pattern above) before generating panels featuring them:
 
-- **Dakis** — id:8, "First Son — Older" (Maimudakis/Maimudakena's son), `characters/13_Dakis.webp`, currently locked
-- **Akis** — id:9, "Second Son — Younger" (Maimudakis/Maimudakena's son), `characters/14_Akis.webp`, currently locked
 - **Kakeas** — id:15, "The Villain", `characters/15_Kakeas.webp`, currently locked, `villain:true`
 - **Arxigeas** (id:10), **Arxigeena** (id:11), **Geas** (id:12), **Eas** (id:13), **Geena** (id:14) — alien family, all currently locked
+
+(Dakis and Akis now documented above — see MONKEY CHARACTERS section.)
