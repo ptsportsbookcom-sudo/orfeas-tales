@@ -318,10 +318,10 @@ const storyImages = {
   ]
 ,
   9: [
-    { after: 1 , src: 'story9/panels/s9p01.png' },
-    { after: 2 , src: 'story9/panels/s9p02.png' },
-    { after: 2 , src: 'story9/panels/s9p03.png' },
-    { after: 3 , src: 'story9/panels/s9p04.png' },
+    { after: 1 , src: 'story9/panels/s9p01.png?v=2' },
+    { after: 2 , src: 'story9/panels/s9p02.png?v=2' },
+    { after: 2 , src: 'story9/panels/s9p03.png?v=2' },
+    { after: 3 , src: 'story9/panels/s9p04.png?v=2' },
     { after: 4 , src: 'story9/panels/s9p05.png' },
     { after: 5 , src: 'story9/panels/s9p06.png' },
     { after: 6 , src: 'story9/panels/s9p07.png' },

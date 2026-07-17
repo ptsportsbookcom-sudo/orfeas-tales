@@ -15,10 +15,16 @@ let walSpeechUtterance = null;
 const VALID_PAGES = new Set(['home', 'stories', 'characters', 'story-reader', 'comic']);
 let currentPageName = 'home';
 
-function getUrlForPage(name) {
+function getUrlForPage(name, options = {}) {
   const url = new URL(location.href);
-  if (name === 'home') url.searchParams.delete('page');
-  else url.searchParams.set('page', name);
+  if (name === 'home') {
+    url.searchParams.delete('page');
+    url.searchParams.delete('story');
+  } else {
+    url.searchParams.set('page', name);
+    if (name === 'story-reader' && options.storyId) url.searchParams.set('story', String(options.storyId));
+    else if (name !== 'story-reader') url.searchParams.delete('story');
+  }
   return url.pathname + url.search + url.hash;
 }
 
@@ -44,15 +50,17 @@ function showPage(name, options = {}) {
   window.scrollTo(0, 0);
   currentPageName = name;
   if (options.updateHistory !== false && previousPageName !== name) {
-    history.pushState({ orfeasPage: name }, '', getUrlForPage(name));
+    history.pushState({ orfeasPage: name, storyId: options.storyId || null }, '', getUrlForPage(name, options));
   }
 }
 
-const initialPage = VALID_PAGES.has(new URLSearchParams(location.search).get('page'))
-  ? new URLSearchParams(location.search).get('page')
+const initialParams = new URLSearchParams(location.search);
+const initialPage = VALID_PAGES.has(initialParams.get('page'))
+  ? initialParams.get('page')
   : 'home';
-history.replaceState({ orfeasPage: initialPage }, '', getUrlForPage(initialPage));
-if (initialPage !== 'home') showPage(initialPage, { updateHistory: false });
+const initialStoryId = Number(initialParams.get('story')) || null;
+history.replaceState({ orfeasPage: initialPage, storyId: initialStoryId }, '', getUrlForPage(initialPage, { storyId: initialStoryId }));
+if (initialPage !== 'home') showPage(initialPage, { updateHistory: false, storyId: initialStoryId });
 
 window.addEventListener('popstate', e => {
   if (walFullscreenOn) {
@@ -64,7 +72,8 @@ window.addEventListener('popstate', e => {
     : 'home';
   const targetPage = e.state?.orfeasPage || fallbackPage;
   beforePageChange(targetPage);
-  showPage(targetPage, { updateHistory: false });
+  showPage(targetPage, { updateHistory: false, storyId: e.state?.storyId || null });
+  if (targetPage === 'story-reader') renderStoryReaderFromRoute(e.state?.storyId);
 });
 
 function toggleNav() {
@@ -588,7 +597,7 @@ audioEl.addEventListener('ended', () => {
 // ── STORY READER ─────────────────────────────────────────────
 let _readerStoryId = null;
 
-function showStoryText(storyId) {
+function showStoryText(storyId, options = {}) {
   _readerStoryId = storyId;
   const lang = (currentLang && currentLang[storyId]) || 'en';
   _renderStoryReader(storyId, lang);
@@ -596,7 +605,10 @@ function showStoryText(storyId) {
   const ab = document.getElementById('reader-btn-' + lang);
   if (ab) ab.classList.add('active');
   beforePageChange('story-reader');
-  showPage('story-reader');
+  showPage('story-reader', { updateHistory: options.updateHistory !== false, storyId });
+  if (options.updateHistory === false || options.replaceHistory) {
+    history.replaceState({ orfeasPage: 'story-reader', storyId }, '', getUrlForPage('story-reader', { storyId }));
+  }
 }
 
 function setReaderLang(lang, btn) {
@@ -614,17 +626,34 @@ function _renderStoryReader(storyId, lang) {
   if (!data) { body.innerHTML = '<p>Story not found.</p>'; return; }
   const imgs = storyImages[storyId] || [];
   const imgAt = {};
-  imgs.forEach(function (im) { imgAt[im.after] = im.src; });
+  imgs.forEach(function (im) {
+    if (!imgAt[im.after]) imgAt[im.after] = [];
+    imgAt[im.after].push(im.src);
+  });
   const paragraphs = data.text.split('\n\n');
   let html = '<h2>' + data.title + '</h2>';
   paragraphs.forEach(function (p, i) {
     html += '<p>' + p.replace(/\n/g, '<br>') + '</p>';
     if (imgAt[i] !== undefined) {
-      html += '<img class="story-illustration" src="' + imgAt[i] + '" alt="" loading="lazy" decoding="async">';
+      imgAt[i].forEach(function (src) {
+        html += '<img class="story-illustration" src="' + src + '" alt="" loading="lazy" decoding="async">';
+      });
     }
   });
   body.innerHTML = html;
 }
+
+function getLatestStoryId() {
+  return Math.max.apply(null, Object.keys(storyText || {}).map(Number).filter(Boolean));
+}
+
+function renderStoryReaderFromRoute(storyId) {
+  const requestedStoryId = Number(storyId) || Number(new URLSearchParams(location.search).get('story')) || getLatestStoryId();
+  const safeStoryId = storyText[requestedStoryId] ? requestedStoryId : getLatestStoryId();
+  showStoryText(safeStoryId, { updateHistory: false, replaceHistory: true });
+}
+
+if (initialPage === 'story-reader') renderStoryReaderFromRoute(initialStoryId);
 
 // ── EVENT DELEGATION ─────────────────────────────────────────
 // Replaces all inline onclick handlers.
