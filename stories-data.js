@@ -347,21 +347,21 @@ const storyImages = {
   ]
 ,
   10: [
-    { after: 1 , src: 'story10/panels/s10p01.png' },
-    { after: 2 , src: 'story10/panels/s10p02.png' },
-    { after: 3 , src: 'story10/panels/s10p03.png' },
-    { after: 4 , src: 'story10/panels/s10p04.png' },
-    { after: 5 , src: 'story10/panels/s10p05.png' },
-    { after: 5 , src: 'story10/panels/s10p06.png' },
-    { after: 6 , src: 'story10/panels/s10p07.png' },
-    { after: 7 , src: 'story10/panels/s10p08.png' },
-    { after: 8 , src: 'story10/panels/s10p09.png' },
-    { after: 8 , src: 'story10/panels/s10p10.png' },
-    { after: 8 , src: 'story10/panels/s10p11.png' },
-    { after: 9 , src: 'story10/panels/s10p12.png' },
-    { after: 9 , src: 'story10/panels/s10p13.png' },
-    { after: 9 , src: 'story10/panels/s10p14.png' },
-    { after: 11, src: 'story10/panels/s10p15.png' },
-    { after: 12, src: 'story10/panels/s10p17.png' }
+    { after: 1,  src: 'story10/panels/s10p01.png?v=2' },
+    { after: 2,  src: 'story10/panels/s10p02.png?v=2' },
+    { after: 3,  src: 'story10/panels/s10p03.png?v=2' },
+    { after: 4,  src: 'story10/panels/s10p04.png?v=2' },
+    { after: 5,  src: 'story10/panels/s10p05.png?v=2' },
+    { after: 5,  src: 'story10/panels/s10p06.png?v=2' },
+    { after: 6,  src: 'story10/panels/s10p07.png?v=2' },
+    { after: 7,  src: 'story10/panels/s10p08.png?v=2' },
+    { after: 8,  src: 'story10/panels/s10p09.png?v=2' },
+    { after: 8,  src: 'story10/panels/s10p10.png?v=2' },
+    { after: 8,  src: 'story10/panels/s10p11.png?v=2' },
+    { after: 9,  src: 'story10/panels/s10p12.png?v=2' },
+    { after: 9,  src: 'story10/panels/s10p13.png?v=2' },
+    { after: 9,  src: 'story10/panels/s10p14.png?v=2' },
+    { after: 11, src: 'story10/panels/s10p15.png?v=2' },
+    { after: 12, src: 'story10/panels/s10p17.png?v=2' }
   ]
 };
