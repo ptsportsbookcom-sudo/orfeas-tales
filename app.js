@@ -248,7 +248,7 @@ function usesDynamicWalStory(storyId) {
 }
 
 function episodeNumeral(storyId) {
-  return ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX'][storyId] || String(storyId);
+  return ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX'][storyId] || String(storyId);
 }
 
 function storyDisplayTitle(storyId) {
