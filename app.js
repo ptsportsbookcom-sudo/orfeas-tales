@@ -519,8 +519,11 @@ function walStopSpeech() {
 
 function walSeek(e) {
   if (!audioEl.duration) return;
-  const rect = e.currentTarget.getBoundingClientRect();
-  audioEl.currentTime = ((e.clientX - rect.left) / rect.width) * audioEl.duration;
+  const track = e.target.closest('.wal-progress-wrap');
+  if (!track) return;
+  const rect = track.getBoundingClientRect();
+  const fraction = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+  audioEl.currentTime = fraction * audioEl.duration;
 }
 
 function walToggleSync() {
