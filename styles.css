@@ -1074,6 +1074,7 @@
 
 /* ── Story card actions ──────────────────────────────── */
 .card-lang-toggle { display:flex; gap:8px; margin:12px 0 10px; }
+.page-header .card-lang-toggle { justify-content:center; margin:18px auto 0; }
 .story-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; }
 .btn-story-read, .btn-story-watch {
   padding:10px 20px; border-radius:24px; font-weight:700; font-size:0.85rem;

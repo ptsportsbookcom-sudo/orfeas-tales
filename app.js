@@ -98,11 +98,19 @@ function closeNav() {
 }
 
 // ── MODAL ────────────────────────────────────────────────────
+let charactersLang = 'en';
+
+function characterCopy(c) {
+  if (charactersLang === 'gr' && characterTextGr[c.id]) return characterTextGr[c.id];
+  return { role: c.role, desc: c.desc };
+}
+
 function openModal(c) {
+  const copy = characterCopy(c);
   document.getElementById('modal-img').src = c.file;
   document.getElementById('modal-name').textContent = c.name;
-  document.getElementById('modal-role').textContent = c.role;
-  document.getElementById('modal-desc').textContent = c.desc || 'More details coming soon...';
+  document.getElementById('modal-role').textContent = copy.role;
+  document.getElementById('modal-desc').textContent = copy.desc || (charactersLang === 'gr' ? 'Περισσότερες πληροφορίες σύντομα...' : 'More details coming soon...');
   document.getElementById('charModal').classList.add('open');
 }
 function closeModalDirect() {
@@ -119,28 +127,43 @@ document.addEventListener('keydown', e => {
 // ── RENDER CHARACTERS ────────────────────────────────────────
 function buildCharacters() {
   const grid = document.getElementById('chars-grid');
+  const isGreek = charactersLang === 'gr';
+  const heading = document.querySelector('#page-characters .page-header h2');
+  const intro = document.querySelector('#page-characters .page-header p');
+  if (heading) heading.textContent = isGreek ? 'ΧΑΡΑΚΤΗΡΕΣ' : 'CHARACTERS';
+  if (intro) intro.textContent = isGreek ? 'Γνωρίστε τους ήρωες και τους θρύλους του κόσμου του Ορφέα' : 'Discover the heroes and legends of the Orfeas universe';
+  document.querySelectorAll('.characters-lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === charactersLang);
+  });
   grid.innerHTML = '';
   characters.forEach(c => {
+    const copy = characterCopy(c);
     const card = document.createElement('div');
     card.className = 'char-card' + (c.unlocked ? ' unlocked' : ' locked') + (c.villain ? ' villain' : '');
     if (c.unlocked) card.addEventListener('click', () => openModal(c));
     card.innerHTML = `
       <div class="char-img-wrap">
         <img src="${c.file}" alt="${c.name}" loading="lazy" decoding="async">
-        ${c.unlocked ? '<div class="unlock-badge">+ Unlocked</div>' : `
+        ${c.unlocked ? `<div class="unlock-badge">+ ${isGreek ? 'Ξεκλειδώθηκε' : 'Unlocked'}</div>` : `
         <div class="lock-overlay">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
           </svg>
-          <span>Coming Soon</span>
+          <span>${isGreek ? 'Σύντομα' : 'Coming Soon'}</span>
         </div>`}
       </div>
       <div class="char-info">
         <div class="char-name">${c.name}</div>
-        <div class="char-role">${c.role}</div>
+        <div class="char-role">${copy.role}</div>
       </div>`;
     grid.appendChild(card);
   });
+}
+
+function setCharactersLang(lang) {
+  charactersLang = lang === 'gr' ? 'gr' : 'en';
+  closeModalDirect();
+  buildCharacters();
 }
 buildCharacters();
 
@@ -152,11 +175,40 @@ let isPlaying = false;
 
 function setCardLang(storyId, lang, btn) {
   currentLang[storyId] = lang;
+  const card = btn?.closest('.story-card');
   const toggle = btn?.closest('.card-lang-toggle');
   if (toggle) {
     toggle.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   }
+  if (!card) return;
+
+  const label = card.querySelector('.story-ep-label');
+  const title = card.querySelector('.story-title');
+  const desc = card.querySelector('.story-desc');
+  const meta = card.querySelector('.story-meta');
+  const readBtn = card.querySelector('.btn-story-read');
+  const watchBtn = card.querySelector('.btn-story-watch');
+  [label, title, desc, meta].forEach(el => {
+    if (el && !el.dataset.en) el.dataset.en = el.textContent.trim();
+  });
+
+  const isGreek = lang === 'gr';
+  const numeral = (label?.dataset.en || '').replace(/^Episode\s+/i, '');
+  if (label) label.textContent = isGreek ? `Επεισόδιο ${numeral}` : label.dataset.en;
+  if (title) title.textContent = isGreek ? (storyText[storyId]?.gr?.title || title.dataset.en) : title.dataset.en;
+  if (desc) desc.textContent = isGreek ? (storyCardTextGr[storyId] || desc.dataset.en) : desc.dataset.en;
+  if (meta) {
+    const match = meta.dataset.en.match(/(\d+)\s*min read\s*·\s*(\d+)\s*panels/i);
+    meta.textContent = isGreek && match ? `${match[1]} λεπτά ανάγνωση · ${match[2]} καρέ` : meta.dataset.en;
+  }
+  if (readBtn) readBtn.textContent = isGreek ? '📖 Ανάγνωση' : '📖 Read';
+  if (watchBtn) watchBtn.textContent = isGreek ? '🎬 Προβολή & Ακρόαση' : '🎬 Watch & Listen';
+
+  const pageHeading = document.querySelector('#page-stories .page-header h2');
+  const pageIntro = document.querySelector('#page-stories .page-header p');
+  if (pageHeading) pageHeading.textContent = isGreek ? 'ΙΣΤΟΡΙΕΣ' : 'STORIES';
+  if (pageIntro) pageIntro.textContent = isGreek ? 'Επικές ιστορίες από τον κόσμο του Ορφέα — νέες περιπέτειες έρχονται σύντομα' : 'Epic tales from the Orfeas universe — new episodes coming soon';
 }
 
 function fmtTime(s) {
@@ -675,6 +727,7 @@ document.addEventListener('click', function (e) {
     case 'close-nav':          closeNav(); break;
     case 'toggle-music':       toggleMusic(); break;
     case 'set-card-lang':      setCardLang(+el.dataset.story, el.dataset.lang, el); break;
+    case 'set-characters-lang': setCharactersLang(el.dataset.lang); break;
     case 'show-story-text':    showStoryText(+el.dataset.story); break;
     case 'show-wal':           showWatchAndListen(+el.dataset.story); break;
     case 'set-reader-lang':    setReaderLang(el.dataset.lang, el); break;
