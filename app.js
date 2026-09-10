@@ -102,13 +102,13 @@ let charactersLang = 'en';
 
 function characterCopy(c) {
   if (charactersLang === 'gr' && characterTextGr[c.id]) return characterTextGr[c.id];
-  return { role: c.role, desc: c.desc };
+  return { name: c.name, role: c.role, desc: c.desc };
 }
 
 function openModal(c) {
   const copy = characterCopy(c);
   document.getElementById('modal-img').src = c.file;
-  document.getElementById('modal-name').textContent = c.name;
+  document.getElementById('modal-name').textContent = copy.name || c.name;
   document.getElementById('modal-role').textContent = copy.role;
   document.getElementById('modal-desc').textContent = copy.desc || (charactersLang === 'gr' ? 'Περισσότερες πληροφορίες σύντομα...' : 'More details coming soon...');
   document.getElementById('charModal').classList.add('open');
@@ -153,7 +153,7 @@ function buildCharacters() {
         </div>`}
       </div>
       <div class="char-info">
-        <div class="char-name">${c.name}</div>
+        <div class="char-name">${copy.name || c.name}</div>
         <div class="char-role">${copy.role}</div>
       </div>`;
     grid.appendChild(card);
@@ -300,7 +300,7 @@ function usesDynamicWalStory(storyId) {
 }
 
 function episodeNumeral(storyId) {
-  return ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI'][storyId] || String(storyId);
+  return ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI', 'XXII'][storyId] || String(storyId);
 }
 
 function storyDisplayTitle(storyId) {
@@ -681,13 +681,30 @@ function _renderStoryReader(storyId, lang) {
   if (!body) return;
   const data = storyText[storyId] && storyText[storyId][lang];
   if (!data) { body.innerHTML = '<p>Story not found.</p>'; return; }
+  if (data.textFile && !data.loadedText) {
+    body.innerHTML = '<h2>' + data.title + '</h2><p>' + (lang === 'gr' ? 'Φόρτωση ιστορίας…' : 'Loading story…') + '</p>';
+    fetch(data.textFile)
+      .then(function (response) {
+        if (!response.ok) throw new Error('Story text could not be loaded');
+        return response.text();
+      })
+      .then(function (text) {
+        data.loadedText = text.trim();
+        if (_readerStoryId === storyId) _renderStoryReader(storyId, lang);
+      })
+      .catch(function () {
+        data.loadedText = data.text;
+        if (_readerStoryId === storyId) _renderStoryReader(storyId, lang);
+      });
+    return;
+  }
   const imgs = storyImages[storyId] || [];
   const imgAt = {};
   imgs.forEach(function (im) {
     if (!imgAt[im.after]) imgAt[im.after] = [];
     imgAt[im.after].push(im.src);
   });
-  const paragraphs = data.text.split('\n\n');
+  const paragraphs = (data.loadedText || data.text).split('\n\n');
   let html = '<h2>' + data.title + '</h2>';
   paragraphs.forEach(function (p, i) {
     html += '<p>' + p.replace(/\n/g, '<br>') + '</p>';
