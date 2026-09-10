@@ -32,6 +32,8 @@ const characters = [
     desc:"" },
   { id:16, name:"Gorillatsos", role:"Gorilla — Rillas's Cousin", file:"characters/gorillatsas_ref.webp", unlocked:true,
     desc:"Rillas's young cousin — full of energy and mischief. Captured by Poachers before Story 5 begins, he was rescued by Rillas and the boys and couldn't be happier to be free." },
+  { id:17, name:"The Dragon", role:"Treasure Guardian", file:"characters/dragon_ref.webp", unlocked:true,
+    desc:"A mighty fire-breathing dragon who guards a magical treasure meadow behind a riddle-locked door. His fearsome roar hides a lonely heart, and Rilaki's kindness helps him discover that friendship is worth more than all the gold he protects." },
 ];
 
 // ── AUDIO FILE MAPPINGS ──────────────────────────────────────
@@ -649,7 +651,8 @@ const characterTextGr = {
   13: { role:"Δίδυμος Γιος — Ο Μικρότερος", desc:"" },
   14: { role:"Η Κόρη", desc:"" },
   15: { role:"Ο Κακός", desc:"" },
-  16: { role:"Γορίλλας — Ο Ξάδελφος του Ρίλλα", desc:"Ο νεαρός ξάδελφος του Ρίλλα — γεμάτος ενέργεια και σκανταλιές. Αιχμαλωτίστηκε από λαθροκυνηγούς πριν αρχίσει η Ιστορία 5, αλλά ο Ρίλλας και τα αγόρια τον έσωσαν και τώρα χαίρεται όσο ποτέ την ελευθερία του." }
+  16: { role:"Γορίλλας — Ο Ξάδελφος του Ρίλλα", desc:"Ο νεαρός ξάδελφος του Ρίλλα — γεμάτος ενέργεια και σκανταλιές. Αιχμαλωτίστηκε από λαθροκυνηγούς πριν αρχίσει η Ιστορία 5, αλλά ο Ρίλλας και τα αγόρια τον έσωσαν και τώρα χαίρεται όσο ποτέ την ελευθερία του." },
+  17: { name:"Ο Δράκος", role:"Φύλακας του Θησαυρού", desc:"Ένας πανίσχυρος δράκος που αναπνέει φωτιά και φυλάει ένα μαγικό χρυσό λιβάδι πίσω από μια πόρτα που ανοίγει μόνο με γρίφους. Πίσω από τον τρομακτικό βρυχηθμό του κρύβεται μια μοναχική καρδιά, και η καλοσύνη του Ριλλακιού τον βοηθά να ανακαλύψει ότι η φιλία αξίζει περισσότερο από όλο το χρυσάφι που προστατεύει." }
 };
 
 const storyCardTextGr = {
@@ -673,7 +676,8 @@ const storyCardTextGr = {
   18:"Όταν μια οικοδομή απειλεί να καταστρέψει τη ζούγκλα, τα αγόρια έχουν επτά ημέρες για να αποδείξουν ότι εκεί ζει ακόμη ένα θρυλικό προστατευόμενο είδος. Με το μοναδικό βιβλίο του Άκη και μία προσεκτικά τοποθετημένη κάμερα, αναζητούν το τεράστιο και μυστηριώδες Πουλί της Γνώσης πριν να είναι πολύ αργά.",
   19:"Ο Αρχηγέας βαριέται στην Αφροδίτη και επισκέπτεται τους φίλους του στη Γη — αλλά ξεχνά να κρύψει το διαστημόπλοιό του και ο αμερικανικός στρατός ορμά στη ζούγκλα. Τα αγόρια πρέπει να επινοήσουν ένα τεράστιο εξωγήινο ψέμα για να βοηθήσουν τον φίλο τους να ξεφύγει με ασφάλεια.",
   20:"Μολυσμένο νερό μεταμορφώνει έναν χαμαιλέοντα σε τέρας στο μέγεθος πολυκατοικίας. Τα ζώα της ζούγκλας ενώνουν τις δυνάμεις τους, ενώ ο Θεοτόκης δημιουργεί ένα αντίδοτο και ο Αριστοτέλης ετοιμάζεται για τρεις αδύνατες βολές.",
-  21:"Ένα ταξίδι-έκπληξη προς την Αφροδίτη βγαίνει τελείως εκτός πορείας και η παρέα παγιδεύεται στον βροχερό Πλανήτη 650. Εκεί γνωρίζουν την Αρχηγένα, μια ατρόμητη φρουρό που ίσως γίνει ένα πολύ ξεχωριστό πρόσωπο για τον Αρχηγέα."
+  21:"Ένα ταξίδι-έκπληξη προς την Αφροδίτη βγαίνει τελείως εκτός πορείας και η παρέα παγιδεύεται στον βροχερό Πλανήτη 650. Εκεί γνωρίζουν την Αρχηγένα, μια ατρόμητη φρουρό που ίσως γίνει ένα πολύ ξεχωριστό πρόσωπο για τον Αρχηγέα.",
+  22:"Ο Ριλλάκι, ο Δάκης και ο Άκης ανακαλύπτουν μια πόρτα που ανοίγει με γρίφους και κρύβει ένα χρυσό λιβάδι με έναν τρομερό φύλακα. Όμως ο μεγαλύτερος θησαυρός ίσως είναι ένας μοναχικός δράκος που βρίσκει τους πρώτους αληθινούς του φίλους."
 };
 
 
@@ -760,4 +764,51 @@ storyImages[21] = [
   { after: 33, src: 'story21/panels/s21p35.webp' },
   { after: 35, src: 'story21/panels/s21p36.webp' },
   { after: 37, src: 'story21/panels/s21p37.webp' }
+];
+
+// ── ORFEAS STORY 22 ──────────────────────────────────────────────────────
+audioFiles[22] = { en: 'story22/story22_en.mp3', gr: 'story22/story22_gr.aac' };
+storyText[22] = {
+  en: {
+    title: "The Treasure Dragon",
+    textFile: "story22/story22_en.txt",
+    text: "Rilaki and his friends discover a magical treasure door guarded by a lonely dragon. By choosing kindness over gold, they turn a frightening encounter into a wonderful new friendship."
+  },
+  gr: {
+    title: "Ο Δράκος του Θησαυρού",
+    textFile: "story22/story22_gr.txt",
+    text: "Ο Ριλλάκι και οι φίλοι του ανακαλύπτουν μια μαγική πόρτα θησαυρού που φυλάει ένας μοναχικός δράκος. Επιλέγοντας την καλοσύνη αντί για το χρυσάφι, μετατρέπουν μια τρομακτική συνάντηση σε μια υπέροχη καινούρια φιλία."
+  }
+};
+storyImages[22] = [
+  { after: 1,  src: 'story22/panels/s22p01.webp' },
+  { after: 1,  src: 'story22/panels/s22p02.webp' },
+  { after: 2,  src: 'story22/panels/s22p03.webp' },
+  { after: 2,  src: 'story22/panels/s22p04.webp' },
+  { after: 2,  src: 'story22/panels/s22p05.webp' },
+  { after: 3,  src: 'story22/panels/s22p06.webp' },
+  { after: 3,  src: 'story22/panels/s22p07.webp' },
+  { after: 3,  src: 'story22/panels/s22p08.webp' },
+  { after: 4,  src: 'story22/panels/s22p09.webp' },
+  { after: 5,  src: 'story22/panels/s22p10.webp' },
+  { after: 6,  src: 'story22/panels/s22p11.webp' },
+  { after: 6,  src: 'story22/panels/s22p12.webp' },
+  { after: 7,  src: 'story22/panels/s22p13.webp' },
+  { after: 9,  src: 'story22/panels/s22p14.webp' },
+  { after: 10, src: 'story22/panels/s22p15.webp' },
+  { after: 10, src: 'story22/panels/s22p16.webp' },
+  { after: 10, src: 'story22/panels/s22p17.webp' },
+  { after: 11, src: 'story22/panels/s22p18.webp' },
+  { after: 11, src: 'story22/panels/s22p19.webp' },
+  { after: 11, src: 'story22/panels/s22p20.webp' },
+  { after: 12, src: 'story22/panels/s22p21.webp' },
+  { after: 13, src: 'story22/panels/s22p22.webp' },
+  { after: 14, src: 'story22/panels/s22p23.webp' },
+  { after: 14, src: 'story22/panels/s22p24.webp' },
+  { after: 15, src: 'story22/panels/s22p25.webp' },
+  { after: 17, src: 'story22/panels/s22p26.webp' },
+  { after: 19, src: 'story22/panels/s22p27.webp' },
+  { after: 19, src: 'story22/panels/s22p28.webp' },
+  { after: 20, src: 'story22/panels/s22p29.webp' },
+  { after: 24, src: 'story22/panels/s22p30.webp' }
 ];
