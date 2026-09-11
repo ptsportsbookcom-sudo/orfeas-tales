@@ -812,3 +812,49 @@ storyImages[22] = [
   { after: 20, src: 'story22/panels/s22p29.webp' },
   { after: 24, src: 'story22/panels/s22p30.webp' }
 ];
+
+// ── ORFEAS STORY 23 ──────────────────────────────────────────────────────
+audioFiles[23] = { en: 'story23/story23_en.mp3', gr: 'story23/story23_gr.aac' };
+storyText[23] = {
+  en: {
+    title: "The Race for Her Heart",
+    textFile: "story23/story23_en.txt",
+    text: "The Chief finally asks Arxigeena on a date at Planet 67's greatest spaceship race. Their friendly wager comes down to a flashy favourite and one tiny underdog."
+  },
+  gr: {
+    title: "Ο Αγώνας για την Καρδιά της",
+    textFile: "story23/story23_gr.txt",
+    text: "Ο Αρχηγός καλεί επιτέλους την Αρχηγένα σε ραντεβού στον μεγαλύτερο αγώνα διαστημοπλοίων του Πλανήτη 67. Το φιλικό τους στοίχημα κρίνεται ανάμεσα σε ένα εντυπωσιακό φαβορί και ένα μικρό αουτσάιντερ."
+  }
+};
+storyImages[23] = [
+  { after: 1,  src: 'story23/panels/s23p01.webp' },
+  { after: 2,  src: 'story23/panels/s23p02.webp' },
+  { after: 3,  src: 'story23/panels/s23p03.webp' },
+  { after: 5,  src: 'story23/panels/s23p04.webp' },
+  { after: 7,  src: 'story23/panels/s23p05.webp' },
+  { after: 10, src: 'story23/panels/s23p06.webp' },
+  { after: 11, src: 'story23/panels/s23p07.webp' },
+  { after: 17, src: 'story23/panels/s23p08.webp' },
+  { after: 18, src: 'story23/panels/s23p09.webp' },
+  { after: 19, src: 'story23/panels/s23p10.webp' },
+  { after: 20, src: 'story23/panels/s23p11.webp' },
+  { after: 21, src: 'story23/panels/s23p12.webp' },
+  { after: 24, src: 'story23/panels/s23p13.webp' },
+  { after: 25, src: 'story23/panels/s23p14.webp' },
+  { after: 26, src: 'story23/panels/s23p15.webp' },
+  { after: 27, src: 'story23/panels/s23p16.webp' },
+  { after: 27, src: 'story23/panels/s23p17.webp' },
+  { after: 27, src: 'story23/panels/s23p18.webp' },
+  { after: 27, src: 'story23/panels/s23p19.webp' },
+  { after: 29, src: 'story23/panels/s23p20.webp' },
+  { after: 30, src: 'story23/panels/s23p21.webp' },
+  { after: 31, src: 'story23/panels/s23p22.webp' },
+  { after: 31, src: 'story23/panels/s23p23.webp' },
+  { after: 32, src: 'story23/panels/s23p24.webp' },
+  { after: 33, src: 'story23/panels/s23p25.webp' },
+  { after: 34, src: 'story23/panels/s23p26.webp' },
+  { after: 35, src: 'story23/panels/s23p27.webp' },
+  { after: 36, src: 'story23/panels/s23p28.webp' },
+  { after: 37, src: 'story23/panels/s23p29.webp' }
+];
