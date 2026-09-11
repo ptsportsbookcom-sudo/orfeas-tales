@@ -34,6 +34,12 @@ const characters = [
     desc:"Rillas's young cousin — full of energy and mischief. Captured by Poachers before Story 5 begins, he was rescued by Rillas and the boys and couldn't be happier to be free." },
   { id:17, name:"The Dragon", role:"Treasure Guardian", file:"characters/dragon_ref.webp", unlocked:true,
     desc:"A mighty fire-breathing dragon who guards a magical treasure meadow behind a riddle-locked door. His fearsome roar hides a lonely heart, and Rilaki's kindness helps him discover that friendship is worth more than all the gold he protects." },
+  { id:18, name:"Ntakis", role:"The Lost Little Elephant", file:"characters/ntakis_ref.webp", unlocked:true,
+    desc:"A brave little elephant with enormous ears and an even bigger heart. After getting separated from his herd and falling into a deep jungle hole, he learns that help can arrive from the most unexpected friends." },
+  { id:19, name:"Elephanteas", role:"Leader of the Elephant Herd", file:"characters/elephanteas_ref.webp", unlocked:true,
+    desc:"The wise and steady leader of the jungle's elephant herd. When Ntakis is in danger, Elephanteas brings the whole herd together and puts their tremendous strength to work." },
+  { id:20, name:"Ntina", role:"Ntakis's Mother", file:"characters/ntina_ref.webp", unlocked:true,
+    desc:"Ntakis's gentle and protective mother. She never gives up searching for her lost son and is overjoyed when the friends bring him safely back to the herd." },
 ];
 
 // ── AUDIO FILE MAPPINGS ──────────────────────────────────────
@@ -857,4 +863,46 @@ storyImages[23] = [
   { after: 35, src: 'story23/panels/s23p27.webp' },
   { after: 36, src: 'story23/panels/s23p28.webp' },
   { after: 37, src: 'story23/panels/s23p29.webp' }
+];
+
+// ── ORFEAS STORY 24 ──────────────────────────────────────────────────────
+audioFiles[24] = { en: 'story24/story24_en.mp3', gr: 'story24/story24_gr.mp3' };
+storyText[24] = {
+  en: {
+    title: "The Lost Little Elephant",
+    textFile: "story24/story24_en.txt",
+    text: "Theotokis and Aristotelis discover Ntakis, a frightened little elephant trapped in a deep jungle hole. Rescuing him will take clever ideas, Rillas's strength, and an entire elephant herd working together."
+  },
+  gr: {
+    title: "Το Χαμένο Ελεφαντάκι",
+    textFile: "story24/story24_gr.txt",
+    text: "Ο Θεοτόκης και ο Αριστοτέλης βρίσκουν τον Ντάκη, ένα φοβισμένο ελεφαντάκι παγιδευμένο σε μια βαθιά τρύπα στη ζούγκλα. Για να τον σώσουν θα χρειαστούν έξυπνες ιδέες, τη δύναμη του Ρίλλα και τη συνεργασία ολόκληρου του κοπαδιού."
+  }
+};
+storyImages[24] = [
+  { after: 1,  src: 'story24/panels/s24p01.webp' },
+  { after: 1,  src: 'story24/panels/s24p02.webp' },
+  { after: 2,  src: 'story24/panels/s24p03.webp' },
+  { after: 2,  src: 'story24/panels/s24p04.webp' },
+  { after: 2,  src: 'story24/panels/s24p05.webp' },
+  { after: 2,  src: 'story24/panels/s24p06.webp' },
+  { after: 2,  src: 'story24/panels/s24p07.webp' },
+  { after: 3,  src: 'story24/panels/s24p08.webp' },
+  { after: 3,  src: 'story24/panels/s24p09.webp' },
+  { after: 4,  src: 'story24/panels/s24p10.webp' },
+  { after: 4,  src: 'story24/panels/s24p11.webp' },
+  { after: 5,  src: 'story24/panels/s24p12.webp' },
+  { after: 5,  src: 'story24/panels/s24p13.webp' },
+  { after: 5,  src: 'story24/panels/s24p14.webp' },
+  { after: 5,  src: 'story24/panels/s24p15.webp' },
+  { after: 5,  src: 'story24/panels/s24p16.webp' },
+  { after: 6,  src: 'story24/panels/s24p17.webp' },
+  { after: 6,  src: 'story24/panels/s24p18.webp' },
+  { after: 6,  src: 'story24/panels/s24p19.webp' },
+  { after: 6,  src: 'story24/panels/s24p20.webp' },
+  { after: 6,  src: 'story24/panels/s24p21.webp' },
+  { after: 6,  src: 'story24/panels/s24p22.webp' },
+  { after: 7,  src: 'story24/panels/s24p23.webp' },
+  { after: 8,  src: 'story24/panels/s24p24.webp' },
+  { after: 10, src: 'story24/panels/s24p25.webp' }
 ];
