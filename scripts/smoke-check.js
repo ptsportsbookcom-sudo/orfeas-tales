@@ -152,8 +152,8 @@ function checkStoryData(data) {
 
   for (const storyId of storyIds) {
     const audio = data.audioFiles && data.audioFiles[storyId];
-    if (!audio || !audio.en || !audio.gr) {
-      fail(`Story ${storyId} must have EN and GR audio mappings.`);
+    if (!audio || (!audio.en && !audio.gr)) {
+      fail(`Story ${storyId} must have at least one audio mapping.`);
     }
   }
 

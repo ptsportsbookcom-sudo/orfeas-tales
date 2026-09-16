@@ -102,13 +102,13 @@ let charactersLang = 'en';
 
 function characterCopy(c) {
   if (charactersLang === 'gr' && characterTextGr[c.id]) return characterTextGr[c.id];
-  return { name: c.name, role: c.role, desc: c.desc };
+  return { role: c.role, desc: c.desc };
 }
 
 function openModal(c) {
   const copy = characterCopy(c);
   document.getElementById('modal-img').src = c.file;
-  document.getElementById('modal-name').textContent = copy.name || c.name;
+  document.getElementById('modal-name').textContent = c.name;
   document.getElementById('modal-role').textContent = copy.role;
   document.getElementById('modal-desc').textContent = copy.desc || (charactersLang === 'gr' ? 'Περισσότερες πληροφορίες σύντομα...' : 'More details coming soon...');
   document.getElementById('charModal').classList.add('open');
@@ -153,7 +153,7 @@ function buildCharacters() {
         </div>`}
       </div>
       <div class="char-info">
-        <div class="char-name">${copy.name || c.name}</div>
+        <div class="char-name">${c.name}</div>
         <div class="char-role">${copy.role}</div>
       </div>`;
     grid.appendChild(card);
@@ -300,7 +300,7 @@ function usesDynamicWalStory(storyId) {
 }
 
 function episodeNumeral(storyId) {
-  return ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI', 'XXII', 'XXIII', 'XXIV'][storyId] || String(storyId);
+  return ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI', 'XXII', 'XXIII', 'XXIV', 'XXV'][storyId] || String(storyId);
 }
 
 function storyDisplayTitle(storyId) {
@@ -516,7 +516,14 @@ function showWatchAndListen(storyId) {
   const wb = document.getElementById('wal-bar');
   if (wb) wb.classList.remove('hidden');
   const file = audioFiles[storyId]?.[walLang];
-  if (file) { audioEl.src = file; audioEl.currentTime = 0; }
+  if (file) {
+    audioEl.src = file;
+    audioEl.currentTime = 0;
+  } else {
+    audioEl.pause();
+    audioEl.removeAttribute('src');
+    audioEl.load();
+  }
   audioEl.onerror = () => {
     if (isPlaying || walPlaying) walStartSpeech();
   };
@@ -524,6 +531,16 @@ function showWatchAndListen(storyId) {
   const lb = document.getElementById('wal-btn-' + walLang);
   if (lb) lb.classList.add('active');
   setComicLang(walLang);
+  updateWalAudioAvailability();
+}
+
+function updateWalAudioAvailability() {
+  const btn = document.getElementById('wal-play-btn');
+  if (!btn) return;
+  const hasAudio = Boolean(audioFiles[walStoryId]?.[walLang]);
+  btn.disabled = !hasAudio;
+  btn.title = hasAudio ? 'Play narration' : 'Narration unavailable in this language';
+  btn.setAttribute('aria-label', btn.title);
 }
 
 function walStop() {
@@ -537,6 +554,8 @@ function walStop() {
 }
 
 function walTogglePlay() {
+  const file = audioFiles[walStoryId]?.[walLang];
+  if (!file) return;
   if (audioEl.paused) {
     walPlaying = true;
     audioEl.play().then(() => {
@@ -553,11 +572,21 @@ function walTogglePlay() {
   }
 }
 
-function walStartSpeech() {
+async function walStartSpeech() {
   if (!('speechSynthesis' in window)) return;
   walStopSpeech();
   const data = storyText[walStoryId]?.[walLang];
   if (!data) return;
+  if (data.textFile && !data.fullTextLoaded) {
+    try {
+      const response = await fetch(data.textFile);
+      if (!response.ok) throw new Error('Story text could not be loaded for narration.');
+      data.text = await response.text();
+      data.fullTextLoaded = true;
+    } catch (error) {
+      console.warn(error.message);
+    }
+  }
   walSpeechUtterance = new SpeechSynthesisUtterance(data.text);
   walSpeechUtterance.lang = walLang === 'gr' ? 'el-GR' : 'en-GB';
   walSpeechUtterance.onend = () => { walPlaying = false; };
@@ -597,10 +626,16 @@ function walSetLang(lang, btn) {
     audioEl.src = file;
     audioEl.currentTime = 0;
     if (wasPlaying) audioEl.play().catch(() => walStartSpeech());
+  } else {
+    audioEl.pause();
+    audioEl.removeAttribute('src');
+    audioEl.load();
+    walStopSpeech();
   }
   document.querySelectorAll('#wal-btn-en, #wal-btn-gr').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   setComicLang(lang);
+  updateWalAudioAvailability();
 }
 
 function walEnterFullscreen() {
@@ -676,35 +711,29 @@ function setReaderLang(lang, btn) {
   _renderStoryReader(_readerStoryId, lang);
 }
 
-function _renderStoryReader(storyId, lang) {
+async function _renderStoryReader(storyId, lang) {
   const body = document.getElementById('story-reader-body');
   if (!body) return;
   const data = storyText[storyId] && storyText[storyId][lang];
   if (!data) { body.innerHTML = '<p>Story not found.</p>'; return; }
-  if (data.textFile && !data.loadedText) {
-    body.innerHTML = '<h2>' + data.title + '</h2><p>' + (lang === 'gr' ? 'Φόρτωση ιστορίας…' : 'Loading story…') + '</p>';
-    fetch(data.textFile)
-      .then(function (response) {
-        if (!response.ok) throw new Error('Story text could not be loaded');
-        return response.text();
-      })
-      .then(function (text) {
-        data.loadedText = text.trim();
-        if (_readerStoryId === storyId) _renderStoryReader(storyId, lang);
-      })
-      .catch(function () {
-        data.loadedText = data.text;
-        if (_readerStoryId === storyId) _renderStoryReader(storyId, lang);
-      });
-    return;
+  if (data.textFile && !data.fullTextLoaded) {
+    try {
+      const response = await fetch(data.textFile);
+      if (!response.ok) throw new Error('Story text could not be loaded.');
+      data.text = await response.text();
+      data.fullTextLoaded = true;
+    } catch (error) {
+      console.warn(error.message);
+    }
   }
+  if (_readerStoryId !== storyId) return;
   const imgs = storyImages[storyId] || [];
   const imgAt = {};
   imgs.forEach(function (im) {
     if (!imgAt[im.after]) imgAt[im.after] = [];
     imgAt[im.after].push(im.src);
   });
-  const paragraphs = (data.loadedText || data.text).split('\n\n');
+  const paragraphs = data.text.split('\n\n');
   let html = '<h2>' + data.title + '</h2>';
   paragraphs.forEach(function (p, i) {
     html += '<p>' + p.replace(/\n/g, '<br>') + '</p>';

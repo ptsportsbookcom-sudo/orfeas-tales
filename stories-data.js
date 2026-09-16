@@ -683,7 +683,8 @@ const storyCardTextGr = {
   19:"Ο Αρχηγέας βαριέται στην Αφροδίτη και επισκέπτεται τους φίλους του στη Γη — αλλά ξεχνά να κρύψει το διαστημόπλοιό του και ο αμερικανικός στρατός ορμά στη ζούγκλα. Τα αγόρια πρέπει να επινοήσουν ένα τεράστιο εξωγήινο ψέμα για να βοηθήσουν τον φίλο τους να ξεφύγει με ασφάλεια.",
   20:"Μολυσμένο νερό μεταμορφώνει έναν χαμαιλέοντα σε τέρας στο μέγεθος πολυκατοικίας. Τα ζώα της ζούγκλας ενώνουν τις δυνάμεις τους, ενώ ο Θεοτόκης δημιουργεί ένα αντίδοτο και ο Αριστοτέλης ετοιμάζεται για τρεις αδύνατες βολές.",
   21:"Ένα ταξίδι-έκπληξη προς την Αφροδίτη βγαίνει τελείως εκτός πορείας και η παρέα παγιδεύεται στον βροχερό Πλανήτη 650. Εκεί γνωρίζουν την Αρχηγένα, μια ατρόμητη φρουρό που ίσως γίνει ένα πολύ ξεχωριστό πρόσωπο για τον Αρχηγέα.",
-  22:"Ο Ριλλάκι, ο Δάκης και ο Άκης ανακαλύπτουν μια πόρτα που ανοίγει με γρίφους και κρύβει ένα χρυσό λιβάδι με έναν τρομερό φύλακα. Όμως ο μεγαλύτερος θησαυρός ίσως είναι ένας μοναχικός δράκος που βρίσκει τους πρώτους αληθινούς του φίλους."
+  22:"Ο Ριλλάκι, ο Δάκης και ο Άκης ανακαλύπτουν μια πόρτα που ανοίγει με γρίφους και κρύβει ένα χρυσό λιβάδι με έναν τρομερό φύλακα. Όμως ο μεγαλύτερος θησαυρός ίσως είναι ένας μοναχικός δράκος που βρίσκει τους πρώτους αληθινούς του φίλους.",
+  25:"Ο Ριλάκης, ο Δάκης και ο Άκης χάνονται στη ζούγκλα και τους κυνηγά ένας τεράστιος θυμωμένος ελέφαντας. Ο φίλος τους, ο Ντάκης, τους προστατεύει μέχρι να φτάσει η ομάδα αναζήτησης."
 };
 
 
@@ -905,4 +906,50 @@ storyImages[24] = [
   { after: 7,  src: 'story24/panels/s24p23.webp' },
   { after: 8,  src: 'story24/panels/s24p24.webp' },
   { after: 10, src: 'story24/panels/s24p25.webp' }
+];
+
+// ── ORFEAS STORY 25 ──────────────────────────────────────────────────────
+// English intentionally has no MP3: Watch & Listen falls back to browser
+// speech synthesis using the corrected source-of-truth English text.
+audioFiles[25] = { gr: 'story25/story25_gr.mp3?v=2' };
+storyText[25] = {
+  en: {
+    title: "Lost Friends, Found Friends",
+    textFile: "story25/story25_en.txt?v=2",
+    text: "Rilaki, Dakis, and Akis become lost in the jungle and are chased by a huge angry elephant. Their old friend Ntakis helps protect them until the search party arrives."
+  },
+  gr: {
+    title: "Χαμένοι Φίλοι, Νέοι Φίλοι",
+    textFile: "story25/story25_gr.txt?v=2",
+    text: "Ο Ριλάκης, ο Δάκης και ο Άκης χάνονται στη ζούγκλα και τους κυνηγά ένας τεράστιος θυμωμένος ελέφαντας. Ο παλιός τους φίλος, ο Ντάκης, τους προστατεύει μέχρι να φτάσει η ομάδα αναζήτησης."
+  }
+};
+storyImages[25] = [
+  { after: 1,  src: 'story25/panels/s25p01.png' },
+  { after: 1,  src: 'story25/panels/s25p02.png' },
+  { after: 1,  src: 'story25/panels/s25p03.png' },
+  { after: 2,  src: 'story25/panels/s25p04.png' },
+  { after: 6,  src: 'story25/panels/s25p05.png' },
+  { after: 7,  src: 'story25/panels/s25p06.png' },
+  { after: 8,  src: 'story25/panels/s25p07.png' },
+  { after: 13, src: 'story25/panels/s25p08.png' },
+  { after: 13, src: 'story25/panels/s25p09.png' },
+  { after: 14, src: 'story25/panels/s25p10.png' },
+  { after: 15, src: 'story25/panels/s25p11.png' },
+  { after: 17, src: 'story25/panels/s25p12.png' },
+  { after: 20, src: 'story25/panels/s25p13.png' },
+  { after: 22, src: 'story25/panels/s25p14.png' },
+  { after: 23, src: 'story25/panels/s25p15.png' },
+  { after: 24, src: 'story25/panels/s25p16.png' },
+  { after: 27, src: 'story25/panels/s25p17.png' },
+  { after: 28, src: 'story25/panels/s25p18.png' },
+  { after: 32, src: 'story25/panels/s25p19.png' },
+  { after: 34, src: 'story25/panels/s25p20.png' },
+  { after: 35, src: 'story25/panels/s25p21.png' },
+  { after: 37, src: 'story25/panels/s25p22.png' },
+  { after: 38, src: 'story25/panels/s25p23.png' },
+  { after: 42, src: 'story25/panels/s25p24.png' },
+  { after: 45, src: 'story25/panels/s25p25.png' },
+  { after: 46, src: 'story25/panels/s25p26.png' },
+  { after: 48, src: 'story25/panels/s25p27.png' }
 ];
