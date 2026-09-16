@@ -144,7 +144,7 @@ function buildCharacters() {
     card.innerHTML = `
       <div class="char-img-wrap">
         <img src="${c.file}" alt="${c.name}" loading="lazy" decoding="async">
-        ${c.unlocked ? `<div class="unlock-badge">+ ${isGreek ? 'Ξεκλειδώθηκε' : 'Unlocked'}</div>` : `
+        ${c.unlocked ? '' : `
         <div class="lock-overlay">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>

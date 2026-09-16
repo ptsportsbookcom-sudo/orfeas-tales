@@ -617,19 +617,6 @@
     filter: grayscale(100%) brightness(0.35);
   }
 
-  .unlock-badge {
-    position: absolute;
-    top: 8px; right: 8px;
-    background: var(--purple);
-    color: white;
-    font-size: 0.55rem;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 20px;
-  }
-
   .lock-overlay {
     position: absolute;
     inset: 0;
