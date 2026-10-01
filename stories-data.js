@@ -956,7 +956,10 @@ storyImages[25] = [
 ];
 
 // ── ORFEAS STORY 26 ──────────────────────────────────────────────────────
-audioFiles[26] = { en: 'story26/story26_en.mp3?v=1' };
+audioFiles[26] = {
+  en: 'story26/story26_en.mp3?v=1',
+  gr: 'story26/story26_gr.aac?v=1'
+};
 storyText[26] = {
   en: {
     title: "The Wild Rally",
