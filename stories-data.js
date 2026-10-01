@@ -953,3 +953,49 @@ storyImages[25] = [
   { after: 46, src: 'story25/panels/s25p26.png' },
   { after: 48, src: 'story25/panels/s25p27.png' }
 ];
+
+// ── ORFEAS STORY 26 ──────────────────────────────────────────────────────
+audioFiles[26] = { en: 'story26/story26_en.mp3?v=1' };
+storyText[26] = {
+  en: {
+    title: "The Wild Rally",
+    textFile: "story26/story26_en.txt?v=1",
+    text: "The boys take Rillas and his friends to a thrilling WRC rally, where an unexpected crash sends the whole gang racing toward the finish line."
+  },
+  gr: {
+    title: "Το Τρελό Ράλι",
+    textFile: "story26/story26_gr.txt?v=1",
+    text: "Τα παιδιά πηγαίνουν τον Ρίλλα και τους φίλους του σε ένα συναρπαστικό ράλι WRC, όπου ένα απρόσμενο ατύχημα στέλνει όλη την παρέα σε έναν ξέφρενο αγώνα μέχρι τη γραμμή τερματισμού."
+  }
+};
+storyImages[26] = [
+  { after: 2,  src: 'story26/panels/s26p01.png' },
+  { after: 2,  src: 'story26/panels/s26p02.png' },
+  { after: 5,  src: 'story26/panels/s26p03.png' },
+  { after: 8,  src: 'story26/panels/s26p04.png' },
+  { after: 10, src: 'story26/panels/s26p05.png' },
+  { after: 16, src: 'story26/panels/s26p06.png' },
+  { after: 19, src: 'story26/panels/s26p07.png' },
+  { after: 20, src: 'story26/panels/s26p08.png' },
+  { after: 22, src: 'story26/panels/s26p09.png' },
+  { after: 22, src: 'story26/panels/s26p10.png' },
+  { after: 23, src: 'story26/panels/s26p11.png' },
+  { after: 24, src: 'story26/panels/s26p12.png' },
+  { after: 24, src: 'story26/panels/s26p13.png' },
+  { after: 24, src: 'story26/panels/s26p14.png' },
+  { after: 25, src: 'story26/panels/s26p15.png' },
+  { after: 26, src: 'story26/panels/s26p16.png' },
+  { after: 27, src: 'story26/panels/s26p17.png' },
+  { after: 28, src: 'story26/panels/s26p18.png' },
+  { after: 32, src: 'story26/panels/s26p19.png' },
+  { after: 31, src: 'story26/panels/s26p20.png' },
+  { after: 35, src: 'story26/panels/s26p21.png' },
+  { after: 37, src: 'story26/panels/s26p22.png' },
+  { after: 38, src: 'story26/panels/s26p23.png' },
+  { after: 39, src: 'story26/panels/s26p24.png' },
+  { after: 42, src: 'story26/panels/s26p25.png' },
+  { after: 46, src: 'story26/panels/s26p26.png' },
+  { after: 47, src: 'story26/panels/s26p27.png' },
+  { after: 50, src: 'story26/panels/s26p28.png' },
+  { after: 52, src: 'story26/panels/s26p29.png' }
+];
