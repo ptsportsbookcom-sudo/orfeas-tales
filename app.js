@@ -303,10 +303,10 @@ function episodeNumeral(storyId) {
   return ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI', 'XXII', 'XXIII', 'XXIV', 'XXV', 'XXVI'][storyId] || String(storyId);
 }
 
-function storyDisplayTitle(storyId) {
-  const story = storyText[storyId] && (storyText[storyId].en || storyText[storyId].gr);
+function storyDisplayTitle(storyId, lang = 'en') {
+  const story = storyText[storyId] && (storyText[storyId][lang] || storyText[storyId].en || storyText[storyId].gr);
   const title = story && story.title ? story.title : 'Story ' + storyId;
-  return 'Episode ' + episodeNumeral(storyId) + ' - ' + title;
+  return (lang === 'gr' ? 'Επεισόδιο ' : 'Episode ') + episodeNumeral(storyId) + ' — ' + title;
 }
 
 function clearDynamicComicPages() {
@@ -388,8 +388,33 @@ function setComicLang(lang, btn) {
   const activeBtn = btn || document.querySelector(`.comic-lang-btn[data-lang="${lang}"]`);
   if (activeBtn) activeBtn.classList.add('active');
   document.querySelectorAll('[data-en]').forEach(el => {
-    el.textContent = (lang === 'gr') ? el.dataset.gr : el.dataset.en;
+    if (lang !== 'gr' || el.dataset.gr) el.textContent = (lang === 'gr') ? el.dataset.gr : el.dataset.en;
   });
+  const isGreek = lang === 'gr';
+  const title = document.getElementById('comic-title');
+  const back = document.querySelector('#page-comic .comic-back-btn');
+  const prev = document.getElementById('comic-prev');
+  const next = document.getElementById('comic-next');
+  const sync = document.getElementById('wal-sync-btn');
+  const fullscreen = document.getElementById('wal-fullscreen-btn');
+  const exitFullscreen = document.getElementById('wal-exit-fullscreen-btn');
+  if (title && walStoryId) title.textContent = storyDisplayTitle(walStoryId, lang);
+  if (back) back.textContent = isGreek ? '← Πίσω στις Ιστορίες' : '← Back to Stories';
+  if (prev) prev.textContent = isGreek ? '◀ Προηγούμενη' : '◀ Prev';
+  if (next) next.textContent = isGreek ? 'Επόμενη ▶' : 'Next ▶';
+  if (sync) {
+    sync.textContent = isGreek ? `🔄 Συγχρονισμός ${walSyncOn ? 'ΕΝΕΡΓΟΣ' : 'ΑΝΕΝΕΡΓΟΣ'}` : `🔄 Sync ${walSyncOn ? 'ON' : 'OFF'}`;
+    sync.title = isGreek ? 'Αυτόματη αλλαγή καρέ μαζί με την αφήγηση' : 'Auto-advance panels with audio';
+  }
+  if (fullscreen) {
+    fullscreen.textContent = isGreek ? '⛶ Πλήρης οθόνη' : '⛶ Fullscreen';
+    fullscreen.title = isGreek ? 'Άνοιγμα ιστορίας σε πλήρη οθόνη' : 'Open fullscreen story mode';
+  }
+  if (exitFullscreen) {
+    exitFullscreen.textContent = isGreek ? 'Έξοδος' : 'Exit';
+    exitFullscreen.title = isGreek ? 'Έξοδος από την πλήρη οθόνη' : 'Exit fullscreen story mode';
+  }
+  updateWalAudioAvailability();
 }
 
 function goToComicPage(n) {
@@ -539,7 +564,9 @@ function updateWalAudioAvailability() {
   if (!btn) return;
   const hasAudio = Boolean(audioFiles[walStoryId]?.[walLang]);
   btn.disabled = !hasAudio;
-  btn.title = hasAudio ? 'Play narration' : 'Narration unavailable in this language';
+  btn.title = hasAudio
+    ? (walLang === 'gr' ? 'Αναπαραγωγή αφήγησης' : 'Play narration')
+    : (walLang === 'gr' ? 'Η αφήγηση δεν είναι διαθέσιμη σε αυτή τη γλώσσα' : 'Narration unavailable in this language');
   btn.setAttribute('aria-label', btn.title);
 }
 
@@ -611,7 +638,9 @@ function walToggleSync() {
   walSyncOn = !walSyncOn;
   const btn = document.getElementById('wal-sync-btn');
   if (!btn) return;
-  btn.textContent = walSyncOn ? '🔄 Sync ON' : '🔄 Sync OFF';
+  btn.textContent = walLang === 'gr'
+    ? `🔄 Συγχρονισμός ${walSyncOn ? 'ΕΝΕΡΓΟΣ' : 'ΑΝΕΝΕΡΓΟΣ'}`
+    : `🔄 Sync ${walSyncOn ? 'ON' : 'OFF'}`;
   btn.setAttribute('aria-pressed', String(walSyncOn));
   btn.style.background = walSyncOn ? 'rgba(123,47,255,0.3)' : 'rgba(255,255,255,0.1)';
   btn.style.borderColor = walSyncOn ? 'rgba(123,47,255,0.6)' : 'rgba(255,255,255,0.3)';
@@ -672,7 +701,7 @@ audioEl.addEventListener('timeupdate', () => {
   const timeEl = document.getElementById('wal-time');
   if (timeEl) timeEl.textContent = fmtTime(audioEl.currentTime) + ' / ' + fmtTime(audioEl.duration);
   const syncBtn = document.getElementById('wal-sync-btn');
-  if (syncBtn && syncBtn.textContent.includes('ON') && audioEl.duration && Date.now() > walSyncPausedUntil) {
+  if (syncBtn && walSyncOn && audioEl.duration && Date.now() > walSyncPausedUntil) {
     const frac = audioEl.currentTime / audioEl.duration;
     const target = Math.min(COMIC_PAGES, Math.max(1, Math.ceil(frac * COMIC_PAGES + 0.01)));
     if (target !== comicPage) goToComicPage(target);
@@ -692,6 +721,7 @@ let _readerStoryId = null;
 function showStoryText(storyId, options = {}) {
   _readerStoryId = storyId;
   const lang = (currentLang && currentLang[storyId]) || 'en';
+  updateReaderChromeLang(lang);
   _renderStoryReader(storyId, lang);
   document.querySelectorAll('#reader-btn-en, #reader-btn-gr').forEach(b => b.classList.remove('active'));
   const ab = document.getElementById('reader-btn-' + lang);
@@ -708,7 +738,15 @@ function setReaderLang(lang, btn) {
   if (currentLang) currentLang[_readerStoryId] = lang;
   document.querySelectorAll('#reader-btn-en, #reader-btn-gr').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
+  updateReaderChromeLang(lang);
   _renderStoryReader(_readerStoryId, lang);
+}
+
+function updateReaderChromeLang(lang) {
+  const back = document.querySelector('#page-story-reader .reader-back-btn');
+  if (!back) return;
+  back.lastChild.textContent = lang === 'gr' ? ' Ιστορίες' : ' Stories';
+  back.setAttribute('aria-label', lang === 'gr' ? 'Πίσω στις Ιστορίες' : 'Back to Stories');
 }
 
 async function _renderStoryReader(storyId, lang) {
