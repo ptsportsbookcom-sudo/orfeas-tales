@@ -1003,3 +1003,132 @@ storyImages[26] = [
   { after: 50, src: 'story26/panels/s26p28.png' },
   { after: 52, src: 'story26/panels/s26p29.png' }
 ];
+
+// Story 27 — The Ring in the Rock
+audioFiles[27] = {"en": "story27/story27_en.mp3?v=1", "gr": "story27/story27_gr.aac?v=1"};
+storyText[27] = {
+  "en": {
+    "title": "The Ring in the Rock",
+    "textFile": "story27/story27_en.txt?v=1",
+    "text": "Arxigeas plans a romantic surprise for Arxigeena on the highest mountain on Planet 650, but finding the ring proves harder than the climb!"
+  },
+  "gr": {
+    "title": "Το Δαχτυλίδι στην Πέτρα",
+    "textFile": "story27/story27_gr.txt?v=1",
+    "text": "Ο Αρχηγέας ετοιμάζει μια ρομαντική έκπληξη για την Αρχηγένα στο ψηλότερο βουνό του Πλανήτη 650, αλλά η αναζήτηση του δαχτυλιδιού αποδεικνύεται πιο δύσκολη από την ανάβαση!"
+  }
+};
+storyImages[27] = [
+  {
+    "after": 2,
+    "src": "story27/panels/s27p01.webp"
+  },
+  {
+    "after": 4,
+    "src": "story27/panels/s27p02.webp"
+  },
+  {
+    "after": 6,
+    "src": "story27/panels/s27p03.webp"
+  },
+  {
+    "after": 11,
+    "src": "story27/panels/s27p04.webp"
+  },
+  {
+    "after": 12,
+    "src": "story27/panels/s27p05.webp"
+  },
+  {
+    "after": 14,
+    "src": "story27/panels/s27p06.webp"
+  },
+  {
+    "after": 16,
+    "src": "story27/panels/s27p07.webp"
+  },
+  {
+    "after": 17,
+    "src": "story27/panels/s27p08.webp"
+  },
+  {
+    "after": 17,
+    "src": "story27/panels/s27p09.webp"
+  },
+  {
+    "after": 18,
+    "src": "story27/panels/s27p10.webp"
+  },
+  {
+    "after": 18,
+    "src": "story27/panels/s27p11.webp"
+  },
+  {
+    "after": 20,
+    "src": "story27/panels/s27p12.webp"
+  },
+  {
+    "after": 26,
+    "src": "story27/panels/s27p13.webp"
+  },
+  {
+    "after": 28,
+    "src": "story27/panels/s27p14.webp"
+  },
+  {
+    "after": 31,
+    "src": "story27/panels/s27p15.webp"
+  },
+  {
+    "after": 32,
+    "src": "story27/panels/s27p16.webp"
+  },
+  {
+    "after": 32,
+    "src": "story27/panels/s27p17.webp"
+  },
+  {
+    "after": 39,
+    "src": "story27/panels/s27p18.webp"
+  },
+  {
+    "after": 41,
+    "src": "story27/panels/s27p19.webp"
+  },
+  {
+    "after": 42,
+    "src": "story27/panels/s27p20.webp"
+  },
+  {
+    "after": 44,
+    "src": "story27/panels/s27p21.webp"
+  },
+  {
+    "after": 49,
+    "src": "story27/panels/s27p22.webp"
+  },
+  {
+    "after": 52,
+    "src": "story27/panels/s27p23.webp"
+  },
+  {
+    "after": 56,
+    "src": "story27/panels/s27p24.webp"
+  },
+  {
+    "after": 59,
+    "src": "story27/panels/s27p25.webp"
+  },
+  {
+    "after": 60,
+    "src": "story27/panels/s27p26.webp"
+  },
+  {
+    "after": 62,
+    "src": "story27/panels/s27p27.webp"
+  },
+  {
+    "after": 65,
+    "src": "story27/panels/s27p28.webp"
+  }
+];

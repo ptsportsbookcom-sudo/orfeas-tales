@@ -300,7 +300,7 @@ function usesDynamicWalStory(storyId) {
 }
 
 function episodeNumeral(storyId) {
-  return ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI', 'XXII', 'XXIII', 'XXIV', 'XXV', 'XXVI'][storyId] || String(storyId);
+  return ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI', 'XXII', 'XXIII', 'XXIV', 'XXV', 'XXVI', 'XXVII'][storyId] || String(storyId);
 }
 
 function storyDisplayTitle(storyId, lang = 'en') {
@@ -823,7 +823,7 @@ document.addEventListener('click', function (e) {
     case 'set-comic-lang':     setComicLang(el.dataset.lang, el); break;
     case 'comic-prev':         comicPrev(); break;
     case 'comic-next':         comicNext(); break;
-    case 'comic-go':           goToComicPage(+el.dataset.page); break;
+    case 'comic-go':           walSyncPausedUntil = Date.now() + 15000; goToComicPage(+el.dataset.page); break;
     case 'close-modal':        closeModalDirect(); break;
   }
 });
