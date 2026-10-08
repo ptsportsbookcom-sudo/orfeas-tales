@@ -229,3 +229,7 @@ Same pipeline as Stories 1 & 2:
 - [x] **`story5/story5_en.txt` created** — full English version. Title: "Saving Gorillatsos"
 - [x] **Key story facts**: Gorillatsos is Rillas's **cousin** (ξάδερφος) — NOT nephew. Boys + Rillas track Poachers to their hideout. Rillas wears knight's armour as decoy (arrows bounce off shield). Boys sneak in ninja-style, find 3 cages, free Gorillatsos + Maimudakis + Rilena. Rillas hears cousin's voice and smashes through walls. All escape on quad bikes ("γουρούνες"). Rilena catches Rillas's eye (his ears go red). All become friends.
 - [x] **`generate_a
+
+## 2026-10-08 - Story 27 release
+
+Released with 28 visually verified WebP panels, bilingual text and English MP3/original Greek AAC narration. Browser checks cover reader image order, language switches, audio decoding, page navigation and fullscreen. Manual page dots now pause auto-sync for 15 seconds. See story27/final_asset_mapping.md.
