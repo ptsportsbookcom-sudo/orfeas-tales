@@ -1135,3 +1135,141 @@ storyImages[27] = [
 
 // Greek card synopsis must be wired as well as the reader text.
 storyCardTextGr[27] = storyText[27].gr.text;
+
+// Story 28 — Saving the Dragon
+audioFiles[28] = {"en": "story28/story28_en.mp3?v=1", "gr": "story28/story28_gr.aac?v=1"};
+storyText[28] = {
+  "en": {
+    "title": "Saving the Dragon",
+    "textFile": "story28/story28_en.txt?v=1",
+    "text": "When the Dragon goes missing, Rilaki and his friends solve magical riddles, follow mysterious tracks, and work together to save their injured friend."
+  },
+  "gr": {
+    "title": "Σώζοντας τον Δράκο",
+    "textFile": "story28/story28_gr.txt?v=1",
+    "text": "Όταν ο Δράκος εξαφανίζεται, ο Ριλάκης και οι φίλοι του λύνουν μαγικά αινίγματα, ακολουθούν μυστηριώδη ίχνη και ενώνουν τις δυνάμεις τους για να σώσουν τον τραυματισμένο φίλο τους."
+  }
+};
+storyImages[28] = [
+  {
+    "after": 2,
+    "src": "story28/panels/s28p01.webp"
+  },
+  {
+    "after": 7,
+    "src": "story28/panels/s28p02.webp"
+  },
+  {
+    "after": 9,
+    "src": "story28/panels/s28p03.webp"
+  },
+  {
+    "after": 11,
+    "src": "story28/panels/s28p04.webp"
+  },
+  {
+    "after": 15,
+    "src": "story28/panels/s28p05.webp"
+  },
+  {
+    "after": 19,
+    "src": "story28/panels/s28p06.webp"
+  },
+  {
+    "after": 23,
+    "src": "story28/panels/s28p07.webp"
+  },
+  {
+    "after": 31,
+    "src": "story28/panels/s28p08.webp"
+  },
+  {
+    "after": 34,
+    "src": "story28/panels/s28p09.webp"
+  },
+  {
+    "after": 38,
+    "src": "story28/panels/s28p10.webp"
+  },
+  {
+    "after": 39,
+    "src": "story28/panels/s28p11.webp"
+  },
+  {
+    "after": 42,
+    "src": "story28/panels/s28p12.webp"
+  },
+  {
+    "after": 45,
+    "src": "story28/panels/s28p13.webp"
+  },
+  {
+    "after": 46,
+    "src": "story28/panels/s28p14.webp"
+  },
+  {
+    "after": 49,
+    "src": "story28/panels/s28p15.webp"
+  },
+  {
+    "after": 50,
+    "src": "story28/panels/s28p16.webp"
+  },
+  {
+    "after": 52,
+    "src": "story28/panels/s28p17.webp"
+  },
+  {
+    "after": 55,
+    "src": "story28/panels/s28p18.webp"
+  },
+  {
+    "after": 57,
+    "src": "story28/panels/s28p19.webp"
+  },
+  {
+    "after": 60,
+    "src": "story28/panels/s28p20.webp"
+  },
+  {
+    "after": 64,
+    "src": "story28/panels/s28p21.webp"
+  },
+  {
+    "after": 67,
+    "src": "story28/panels/s28p22.webp"
+  },
+  {
+    "after": 72,
+    "src": "story28/panels/s28p23.webp"
+  },
+  {
+    "after": 77,
+    "src": "story28/panels/s28p24.webp"
+  },
+  {
+    "after": 80,
+    "src": "story28/panels/s28p25.webp"
+  },
+  {
+    "after": 83,
+    "src": "story28/panels/s28p26.webp"
+  },
+  {
+    "after": 84,
+    "src": "story28/panels/s28p27.webp"
+  },
+  {
+    "after": 85,
+    "src": "story28/panels/s28p28.webp"
+  },
+  {
+    "after": 88,
+    "src": "story28/panels/s28p29.webp"
+  },
+  {
+    "after": 89,
+    "src": "story28/panels/s28p30.webp"
+  }
+];
+storyCardTextGr[28] = storyText[28].gr.text;

@@ -149,3 +149,15 @@ Make changes in small batches. If a change affects story navigation, comic rende
 - Mobile fullscreen enters and exits cleanly
 - Browser Back/Forward works across all pages
 - No encoding issues or null bytes detected in deployed file
+
+
+## Mandatory bilingual release gate (Pantelis, 2026-10-08)
+
+When asked to release a story and check everything, verify ALL English and Greek translations before declaring the release complete. Loading Greek text and playing Greek audio alone do not satisfy this check.
+
+- Read every Greek narrative paragraph against its English counterpart for meaning, omissions, names, and standard Modern Greek.
+- In the browser, select GR on the new story card and verify its episode label, title, description, read-time/panel metadata, and both action buttons. Confirm the description is connected to the actual card translation table; a Greek reader synopsis alone is insufficient.
+- Verify the full Greek reader, all paragraphs and pictures, and its language/back controls.
+- Verify every Greek comic page label, navigation control, narration control, sync state, fullscreen/exit label, image description, and page-button accessibility label.
+- Switch EN -> GR -> EN and confirm translations update correctly. Verify the corrected files and visible Greek card on production after deployment.
+- Report only checks actually completed. Never say "all good", "everything checked", or "all translations verified" based on partial checks. State any remaining gap explicitly.

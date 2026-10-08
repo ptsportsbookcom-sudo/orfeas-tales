@@ -153,6 +153,14 @@ function checkStoryData(data) {
   if (story27Blocks.some(blocks => blocks.length !== 69)) fail("Story 27 must retain all 69 aligned text blocks in both languages.");
   if (data.storyImages[27].length !== 28) fail("Story 27 must retain all 28 panels.");
 
+  if (!data.storyCardTextGr[28] || data.storyCardTextGr[28] !== data.storyText[28].gr.text) fail("Story 28 Greek card description must be translated.");
+  for (const lang of ["en", "gr"]) {
+    const text = read(stripVersion(data.storyText[28][lang].textFile));
+    if (/\r|\u0000|\ufffd/.test(text) || text.trim().split("\n\n").length !== 91) fail(`Story 28 ${lang} must retain 91 valid paragraphs.`);
+  }
+  const expected28 = Array.from({length:30}, (_, i) => `story28/panels/s28p${String(i+1).padStart(2,"0")}.webp`);
+  if (JSON.stringify(data.storyImages[28].map(im => im.src)) !== JSON.stringify(expected28)) fail("Story 28 must retain all 30 panels in verified order.");
+
   if (!Array.isArray(data.characters) || data.characters.length < 4) {
     fail("stories-data.js must define at least the live characters.");
   }
