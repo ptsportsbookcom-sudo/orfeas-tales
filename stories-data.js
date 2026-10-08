@@ -1014,7 +1014,7 @@ storyText[27] = {
   },
   "gr": {
     "title": "Το Δαχτυλίδι στην Πέτρα",
-    "textFile": "story27/story27_gr.txt?v=1",
+    "textFile": "story27/story27_gr.txt?v=2",
     "text": "Ο Αρχηγέας ετοιμάζει μια ρομαντική έκπληξη για την Αρχηγένα στο ψηλότερο βουνό του Πλανήτη 650, αλλά η αναζήτηση του δαχτυλιδιού αποδεικνύεται πιο δύσκολη από την ανάβαση!"
   }
 };
@@ -1132,3 +1132,6 @@ storyImages[27] = [
     "src": "story27/panels/s27p28.webp"
   }
 ];
+
+// Greek card synopsis must be wired as well as the reader text.
+storyCardTextGr[27] = storyText[27].gr.text;
