@@ -197,7 +197,7 @@ function setCardLang(storyId, lang, btn) {
   const numeral = (label?.dataset.en || '').replace(/^Episode\s+/i, '');
   if (label) label.textContent = isGreek ? `Επεισόδιο ${numeral}` : label.dataset.en;
   if (title) title.textContent = isGreek ? (storyText[storyId]?.gr?.title || title.dataset.en) : title.dataset.en;
-  if (desc) desc.textContent = isGreek ? (storyCardTextGr[storyId] || desc.dataset.en) : desc.dataset.en;
+  if (desc) desc.textContent = isGreek ? (storyCardTextGr[storyId] || storyText[storyId]?.gr?.text || desc.dataset.en) : desc.dataset.en;
   if (meta) {
     const match = meta.dataset.en.match(/(\d+)\s*min read\s*·\s*(\d+)\s*panels/i);
     meta.textContent = isGreek && match ? `${match[1]} λεπτά ανάγνωση · ${match[2]} καρέ` : meta.dataset.en;
@@ -346,7 +346,9 @@ function renderDynamicComicPages(storyId, pagePrefix, gridClass) {
 
       const img = document.createElement('img');
       img.src = image.src;
-      img.alt = 'Story ' + storyId + ' panel ' + panelNumber;
+      img.dataset.en = 'Story ' + storyId + ' panel ' + panelNumber;
+      img.dataset.gr = 'Ιστορία ' + storyId + ' — καρέ ' + panelNumber;
+      img.alt = comicLang === 'gr' ? img.dataset.gr : img.dataset.en;
       img.loading = 'lazy';
       img.decoding = 'async';
 
@@ -374,7 +376,7 @@ function renderDynamicComicPages(storyId, pagePrefix, gridClass) {
     dot.className = 'comic-dot';
     dot.dataset.action = 'comic-go';
     dot.dataset.page = String(page);
-    dot.setAttribute('aria-label', 'Go to comic page ' + page);
+    dot.setAttribute('aria-label', comicLang === 'gr' ? 'Μετάβαση στη σελίδα ' + page : 'Go to comic page ' + page);
     dots.appendChild(dot);
   }
   nav.insertBefore(dots, next);
@@ -388,9 +390,16 @@ function setComicLang(lang, btn) {
   const activeBtn = btn || document.querySelector(`.comic-lang-btn[data-lang="${lang}"]`);
   if (activeBtn) activeBtn.classList.add('active');
   document.querySelectorAll('[data-en]').forEach(el => {
-    if (lang !== 'gr' || el.dataset.gr) el.textContent = (lang === 'gr') ? el.dataset.gr : el.dataset.en;
+    if (lang !== 'gr' || el.dataset.gr) {
+      const translation = lang === 'gr' ? el.dataset.gr : el.dataset.en;
+      if (el.tagName === 'IMG') el.alt = translation;
+      else el.textContent = translation;
+    }
   });
   const isGreek = lang === 'gr';
+  document.querySelectorAll('#comic-dynamic-nav .comic-dot').forEach((dot, index) => {
+    dot.setAttribute('aria-label', isGreek ? 'Μετάβαση στη σελίδα ' + (index + 1) : 'Go to comic page ' + (index + 1));
+  });
   const title = document.getElementById('comic-title');
   const back = document.querySelector('#page-comic .comic-back-btn');
   const prev = document.getElementById('comic-prev');

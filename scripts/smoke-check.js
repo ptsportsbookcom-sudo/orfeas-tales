@@ -126,7 +126,7 @@ function checkIndex(data) {
 
 function loadStoryData() {
   const code = `${read("stories-data.js")}
-globalThis.__orfeasData = { characters, audioFiles, storyText, storyImages };`;
+globalThis.__orfeasData = { characters, audioFiles, storyText, storyImages, storyCardTextGr };`;
   const context = {};
   vm.createContext(context);
   try {
@@ -141,6 +141,17 @@ globalThis.__orfeasData = { characters, audioFiles, storyText, storyImages };`;
 function checkStoryData(data) {
   if (!data) return;
   const storyIds = liveStoryIds(data);
+
+  if (!data.storyCardTextGr[27] || data.storyCardTextGr[27] !== data.storyText[27].gr.text) {
+    fail("Story 27 must wire its Greek synopsis into the card translation table.");
+  }
+  const story27Blocks = ["en", "gr"].map(lang => {
+    const text = read(stripVersion(data.storyText[27][lang].textFile));
+    if (/\r|\u0000|\ufffd/.test(text)) fail(`Story 27 ${lang} text has invalid line endings or corrupted characters.`);
+    return text.trim().split("\n\n");
+  });
+  if (story27Blocks.some(blocks => blocks.length !== 69)) fail("Story 27 must retain all 69 aligned text blocks in both languages.");
+  if (data.storyImages[27].length !== 28) fail("Story 27 must retain all 28 panels.");
 
   if (!Array.isArray(data.characters) || data.characters.length < 4) {
     fail("stories-data.js must define at least the live characters.");
