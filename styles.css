@@ -1122,7 +1122,7 @@
 /* ── Watch & Listen audio bar in comic ───────────────── */
 .wal-bar {
   display:flex; align-items:center; gap:12px; justify-content:center;
-  background:rgba(124,58,237,0.18); border-bottom:1px solid rgba(124,58,237,0.3);
+  background:#17172f; border-bottom:1px solid rgba(124,58,237,0.3);
   padding:10px 20px; flex-wrap:wrap;
 }
 .wal-bar.hidden { display:none; }

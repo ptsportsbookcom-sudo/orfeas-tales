@@ -300,7 +300,7 @@ function usesDynamicWalStory(storyId) {
 }
 
 function episodeNumeral(storyId) {
-  return ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI', 'XXII', 'XXIII', 'XXIV', 'XXV', 'XXVI', 'XXVII', 'XXVIII'][storyId] || String(storyId);
+  return ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI', 'XXII', 'XXIII', 'XXIV', 'XXV', 'XXVI', 'XXVII', 'XXVIII', 'XXIX'][storyId] || String(storyId);
 }
 
 function storyDisplayTitle(storyId, lang = 'en') {
@@ -577,7 +577,22 @@ function updateWalAudioAvailability() {
     ? (walLang === 'gr' ? 'Αναπαραγωγή αφήγησης' : 'Play narration')
     : (walLang === 'gr' ? 'Η αφήγηση δεν είναι διαθέσιμη σε αυτή τη γλώσσα' : 'Narration unavailable in this language');
   btn.setAttribute('aria-label', btn.title);
+  if (hasAudio && !audioEl.paused) {
+    btn.title = walLang === 'gr' ? 'Παύση αφήγησης' : 'Pause narration';
+    btn.setAttribute('aria-label', btn.title);
+  }
 }
+
+function updateWalPlaybackControl() {
+  const btn = document.getElementById('wal-play-btn');
+  if (!btn) return;
+  btn.innerHTML = audioEl.paused
+    ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>'
+    : '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+  updateWalAudioAvailability();
+}
+audioEl.addEventListener('play', updateWalPlaybackControl);
+audioEl.addEventListener('pause', updateWalPlaybackControl);
 
 function walStop() {
   walPlaying = false;
@@ -671,7 +686,8 @@ function walSetLang(lang, btn) {
     walStopSpeech();
   }
   document.querySelectorAll('#wal-btn-en, #wal-btn-gr').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
+  const languageButton = btn || document.getElementById('wal-btn-' + lang);
+  if (languageButton) languageButton.classList.add('active');
   setComicLang(lang);
   updateWalAudioAvailability();
 }
@@ -825,11 +841,12 @@ document.addEventListener('click', function (e) {
     case 'show-wal':           showWatchAndListen(+el.dataset.story); break;
     case 'set-reader-lang':    setReaderLang(el.dataset.lang, el); break;
     case 'wal-toggle-play':    walTogglePlay(); break;
+    case 'wal-toggle-sync':    walToggleSync(); break;
     case 'wal-seek':           walSeek(e); break;
     case 'wal-enter-fullscreen': walEnterFullscreen(); break;
     case 'wal-exit-fullscreen':  walExitFullscreen(); break;
     case 'wal-set-lang':       walSetLang(el.dataset.lang, el); break;
-    case 'set-comic-lang':     setComicLang(el.dataset.lang, el); break;
+    case 'set-comic-lang':     walStoryId ? walSetLang(el.dataset.lang) : setComicLang(el.dataset.lang, el); break;
     case 'comic-prev':         comicPrev(); break;
     case 'comic-next':         comicNext(); break;
     case 'comic-go':           walSyncPausedUntil = Date.now() + 15000; goToComicPage(+el.dataset.page); break;
