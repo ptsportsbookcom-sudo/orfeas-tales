@@ -1273,3 +1273,137 @@ storyImages[28] = [
   }
 ];
 storyCardTextGr[28] = storyText[28].gr.text;
+
+// Story 29 — The Costume Festival
+audioFiles[29] = {"en": "story29/story29_en.mp3?v=1", "gr": "story29/story29_gr.aac?v=1"};
+storyText[29] = {
+  "en": {
+    "title": "The Costume Festival",
+    "textFile": "story29/story29_en.txt?v=1",
+    "text": "A costume festival brings music, wrestling, games and a hilarious contest. Can Rillas and Dakis win without dressing up?"
+  },
+  "gr": {
+    "title": "Το Φεστιβάλ Μεταμφιέσεων",
+    "textFile": "story29/story29_gr.txt?v=1",
+    "text": "Ένα φεστιβάλ μεταμφιέσεων φέρνει μουσική, πάλη, παιχνίδια και έναν ξεκαρδιστικό διαγωνισμό. Μπορούν ο Ρίλλας και ο Δάκης να κερδίσουν χωρίς να μεταμφιεστούν;"
+  }
+};
+storyImages[29] = [
+  {
+    "after": 1,
+    "src": "story29/panels/s29p01.webp"
+  },
+  {
+    "after": 2,
+    "src": "story29/panels/s29p02.webp"
+  },
+  {
+    "after": 3,
+    "src": "story29/panels/s29p03.webp"
+  },
+  {
+    "after": 5,
+    "src": "story29/panels/s29p04.webp"
+  },
+  {
+    "after": 6,
+    "src": "story29/panels/s29p05.webp"
+  },
+  {
+    "after": 7,
+    "src": "story29/panels/s29p06.webp"
+  },
+  {
+    "after": 8,
+    "src": "story29/panels/s29p07.webp"
+  },
+  {
+    "after": 9,
+    "src": "story29/panels/s29p08.webp"
+  },
+  {
+    "after": 11,
+    "src": "story29/panels/s29p09.webp"
+  },
+  {
+    "after": 12,
+    "src": "story29/panels/s29p10.webp"
+  },
+  {
+    "after": 12,
+    "src": "story29/panels/s29p11.webp"
+  },
+  {
+    "after": 14,
+    "src": "story29/panels/s29p12.webp"
+  },
+  {
+    "after": 14,
+    "src": "story29/panels/s29p13.webp"
+  },
+  {
+    "after": 15,
+    "src": "story29/panels/s29p14.webp"
+  },
+  {
+    "after": 16,
+    "src": "story29/panels/s29p15.webp"
+  },
+  {
+    "after": 16,
+    "src": "story29/panels/s29p16.webp"
+  },
+  {
+    "after": 17,
+    "src": "story29/panels/s29p17.webp"
+  },
+  {
+    "after": 18,
+    "src": "story29/panels/s29p18.webp"
+  },
+  {
+    "after": 19,
+    "src": "story29/panels/s29p19.webp"
+  },
+  {
+    "after": 19,
+    "src": "story29/panels/s29p20.webp"
+  },
+  {
+    "after": 22,
+    "src": "story29/panels/s29p21.webp"
+  },
+  {
+    "after": 23,
+    "src": "story29/panels/s29p22.webp"
+  },
+  {
+    "after": 25,
+    "src": "story29/panels/s29p23.webp"
+  },
+  {
+    "after": 26,
+    "src": "story29/panels/s29p24.webp"
+  },
+  {
+    "after": 27,
+    "src": "story29/panels/s29p25.webp"
+  },
+  {
+    "after": 28,
+    "src": "story29/panels/s29p26.webp"
+  },
+  {
+    "after": 29,
+    "src": "story29/panels/s29p27.webp"
+  },
+  {
+    "after": 30,
+    "src": "story29/panels/s29p28.webp"
+  },
+  {
+    "after": 33,
+    "src": "story29/panels/s29p29.webp"
+  }
+];
+storyCardTextGr[29] = storyText[29].gr.text;
