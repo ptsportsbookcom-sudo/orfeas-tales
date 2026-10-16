@@ -1407,3 +1407,153 @@ storyImages[29] = [
   }
 ];
 storyCardTextGr[29] = storyText[29].gr.text;
+
+// Story 30 — Lost in Limassol
+audioFiles[30] = {"en": "story30/story30_en.mp3?v=1", "gr": "story30/story30_gr.aac?v=1"};
+storyText[30] = {
+  "en": {
+    "title": "Lost in Limassol",
+    "textFile": "story30/story30_en.txt?v=1",
+    "text": "Rillas sets off to visit his friends but gets lost in Limassol. Can Aristotelis and Theotokis find him and bring him safely home?"
+  },
+  "gr": {
+    "title": "Χαμένος στη Λεμεσό",
+    "textFile": "story30/story30_gr.txt?v=1",
+    "text": "Ο Ρίλλας ξεκινά να επισκεφτεί τους φίλους του, αλλά χάνεται στη Λεμεσό. Θα καταφέρουν ο Αριστοτέλης και ο Θεοτόκης να τον βρουν και να τον φέρουν με ασφάλεια στο σπίτι;"
+  }
+};
+storyImages[30] = [
+  {
+    "after": 2,
+    "src": "story30/panels/s30p01.webp"
+  },
+  {
+    "after": 3,
+    "src": "story30/panels/s30p02.webp"
+  },
+  {
+    "after": 8,
+    "src": "story30/panels/s30p03.webp"
+  },
+  {
+    "after": 9,
+    "src": "story30/panels/s30p04.webp"
+  },
+  {
+    "after": 11,
+    "src": "story30/panels/s30p05.webp"
+  },
+  {
+    "after": 12,
+    "src": "story30/panels/s30p06.webp"
+  },
+  {
+    "after": 13,
+    "src": "story30/panels/s30p07.webp"
+  },
+  {
+    "after": 14,
+    "src": "story30/panels/s30p08.webp"
+  },
+  {
+    "after": 16,
+    "src": "story30/panels/s30p09.webp"
+  },
+  {
+    "after": 22,
+    "src": "story30/panels/s30p10.webp"
+  },
+  {
+    "after": 23,
+    "src": "story30/panels/s30p11.webp"
+  },
+  {
+    "after": 24,
+    "src": "story30/panels/s30p12.webp"
+  },
+  {
+    "after": 25,
+    "src": "story30/panels/s30p13.webp"
+  },
+  {
+    "after": 28,
+    "src": "story30/panels/s30p14.webp"
+  },
+  {
+    "after": 33,
+    "src": "story30/panels/s30p15.webp"
+  },
+  {
+    "after": 34,
+    "src": "story30/panels/s30p16.webp"
+  },
+  {
+    "after": 35,
+    "src": "story30/panels/s30p17.webp"
+  },
+  {
+    "after": 38,
+    "src": "story30/panels/s30p18.webp"
+  },
+  {
+    "after": 39,
+    "src": "story30/panels/s30p19.webp"
+  },
+  {
+    "after": 46,
+    "src": "story30/panels/s30p20.webp"
+  },
+  {
+    "after": 47,
+    "src": "story30/panels/s30p21.webp"
+  },
+  {
+    "after": 51,
+    "src": "story30/panels/s30p22.webp"
+  },
+  {
+    "after": 55,
+    "src": "story30/panels/s30p23.webp"
+  },
+  {
+    "after": 56,
+    "src": "story30/panels/s30p24.webp"
+  },
+  {
+    "after": 59,
+    "src": "story30/panels/s30p25.webp"
+  },
+  {
+    "after": 61,
+    "src": "story30/panels/s30p26.webp"
+  },
+  {
+    "after": 62,
+    "src": "story30/panels/s30p27.webp"
+  },
+  {
+    "after": 65,
+    "src": "story30/panels/s30p28.webp"
+  },
+  {
+    "after": 67,
+    "src": "story30/panels/s30p29.webp"
+  },
+  {
+    "after": 77,
+    "src": "story30/panels/s30p30.webp"
+  },
+  {
+    "after": 80,
+    "src": "story30/panels/s30p31.webp"
+  },
+  {
+    "after": 81,
+    "src": "story30/panels/s30p32.webp"
+  },
+  {
+    "after": 82,
+    "src": "story30/panels/s30p33.webp"
+  }
+];
+storyCardTextGr[30] = storyText[30].gr.text;
