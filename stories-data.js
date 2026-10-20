@@ -1557,3 +1557,183 @@ storyImages[30] = [
   }
 ];
 storyCardTextGr[30] = storyText[30].gr.text;
+
+// Story 31 — The Great Banana Contest
+characters.push(...[{"id": 21, "name": "King Kong", "role": "Gorilla — The Strongest Rival", "file": "characters/king_kong_ref.webp", "unlocked": true, "desc": "A huge black gorilla who first crossed paths with the boys in Story 4. Proud of his strength and very fond of bananas, he challenges Rillas to a contest and learns that sharing makes everyone a winner."}, {"id": 22, "name": "Old Evripidis", "role": "Gorilla — The Wise Judge", "file": "characters/evripidis_ref.webp", "unlocked": true, "desc": "A wise elderly gorilla with a white beard and a wooden walking stick. He judges the Great Banana Contest and helps Rillas and King Kong learn to share."}]);
+Object.assign(characterTextGr, {"21": {"name": "Βασιλιάς Κονγκ", "role": "Γορίλλας — Ο Δυνατός Αντίπαλος", "desc": "Ένας τεράστιος μαύρος γορίλλας που συνάντησε πρώτη φορά τα παιδιά στην Ιστορία 4. Περήφανος για τη δύναμή του και λάτρης της μπανάνας, προκαλεί τον Ρίλλα σε διαγωνισμό και μαθαίνει την αξία του μοιράσματος."}, "22": {"name": "Γέροντας Ευριπίδης", "role": "Γορίλλας — Ο Σοφός Κριτής", "desc": "Ένας σοφός ηλικιωμένος γορίλλας με άσπρη γενειάδα και ξύλινο μπαστούνι. Κρίνει τον μεγάλο διαγωνισμό και βοηθά τον Ρίλλα και τον Βασιλιά Κονγκ να μάθουν να μοιράζονται."}});
+audioFiles[31] = {"en": "story31/story31_en.mp3?v=1", "gr": "story31/story31_gr.aac?v=1"};
+storyText[31] = {
+  "en": {
+    "title": "The Great Banana Contest",
+    "textFile": "story31/story31_en.txt?v=1",
+    "text": "Rillas and King Kong compete for a huge bunch of bananas. Can speed, strength or brains settle their quarrel, or will they learn to share?"
+  },
+  "gr": {
+    "title": "Ο Μεγάλος Διαγωνισμός για τις Μπανάνες",
+    "textFile": "story31/story31_gr.txt?v=1",
+    "text": "Ο Ρίλλας και ο Βασιλιάς Κονγκ διαγωνίζονται για ένα τεράστιο τσαμπί μπανάνες. Θα λύσουν τη διαφωνία τους με ταχύτητα, δύναμη και εξυπνάδα ή θα μάθουν να μοιράζονται;"
+  }
+};
+storyImages[31] = [
+  {
+    "after": 2,
+    "src": "story31/panels/s31p01.webp"
+  },
+  {
+    "after": 3,
+    "src": "story31/panels/s31p02.webp"
+  },
+  {
+    "after": 4,
+    "src": "story31/panels/s31p03.webp"
+  },
+  {
+    "after": 5,
+    "src": "story31/panels/s31p04.webp"
+  },
+  {
+    "after": 7,
+    "src": "story31/panels/s31p05.webp"
+  },
+  {
+    "after": 10,
+    "src": "story31/panels/s31p06.webp"
+  },
+  {
+    "after": 13,
+    "src": "story31/panels/s31p07.webp"
+  },
+  {
+    "after": 17,
+    "src": "story31/panels/s31p08.webp"
+  },
+  {
+    "after": 18,
+    "src": "story31/panels/s31p09.webp"
+  },
+  {
+    "after": 23,
+    "src": "story31/panels/s31p10.webp"
+  },
+  {
+    "after": 25,
+    "src": "story31/panels/s31p11.webp"
+  },
+  {
+    "after": 26,
+    "src": "story31/panels/s31p12.webp"
+  },
+  {
+    "after": 27,
+    "src": "story31/panels/s31p13.webp"
+  },
+  {
+    "after": 29,
+    "src": "story31/panels/s31p14.webp"
+  },
+  {
+    "after": 33,
+    "src": "story31/panels/s31p15.webp"
+  },
+  {
+    "after": 38,
+    "src": "story31/panels/s31p16.webp"
+  },
+  {
+    "after": 40,
+    "src": "story31/panels/s31p17.webp"
+  },
+  {
+    "after": 41,
+    "src": "story31/panels/s31p18.webp"
+  },
+  {
+    "after": 42,
+    "src": "story31/panels/s31p19.webp"
+  },
+  {
+    "after": 43,
+    "src": "story31/panels/s31p20.webp"
+  },
+  {
+    "after": 49,
+    "src": "story31/panels/s31p21.webp"
+  },
+  {
+    "after": 49,
+    "src": "story31/panels/s31p22.webp"
+  },
+  {
+    "after": 50,
+    "src": "story31/panels/s31p23.webp"
+  },
+  {
+    "after": 51,
+    "src": "story31/panels/s31p24.webp"
+  },
+  {
+    "after": 54,
+    "src": "story31/panels/s31p25.webp"
+  },
+  {
+    "after": 56,
+    "src": "story31/panels/s31p26.webp"
+  },
+  {
+    "after": 58,
+    "src": "story31/panels/s31p27.webp"
+  },
+  {
+    "after": 60,
+    "src": "story31/panels/s31p28.webp"
+  },
+  {
+    "after": 65,
+    "src": "story31/panels/s31p29.webp"
+  },
+  {
+    "after": 66,
+    "src": "story31/panels/s31p30.webp"
+  },
+  {
+    "after": 72,
+    "src": "story31/panels/s31p31.webp"
+  },
+  {
+    "after": 79,
+    "src": "story31/panels/s31p32.webp"
+  },
+  {
+    "after": 80,
+    "src": "story31/panels/s31p33.webp"
+  },
+  {
+    "after": 84,
+    "src": "story31/panels/s31p34.webp"
+  },
+  {
+    "after": 85,
+    "src": "story31/panels/s31p35.webp"
+  },
+  {
+    "after": 86,
+    "src": "story31/panels/s31p36.webp"
+  },
+  {
+    "after": 89,
+    "src": "story31/panels/s31p37.webp"
+  },
+  {
+    "after": 90,
+    "src": "story31/panels/s31p38.webp"
+  },
+  {
+    "after": 91,
+    "src": "story31/panels/s31p39.webp"
+  },
+  {
+    "after": 92,
+    "src": "story31/panels/s31p40.webp"
+  }
+];
+storyCardTextGr[31] = storyText[31].gr.text;
