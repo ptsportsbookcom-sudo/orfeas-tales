@@ -1737,3 +1737,129 @@ storyImages[31] = [
   }
 ];
 storyCardTextGr[31] = storyText[31].gr.text;
+
+// Story 32 — The Fish of the Jungle
+audioFiles[32] = {"en": "story32/story32_en.mp3?v=1", "gr": "story32/story32_gr.aac?v=1"};
+storyText[32] = {
+  "en": {
+    "title": "The Fish of the Jungle",
+    "textFile": "story32/story32_en.txt?v=1",
+    "text": "A quiet fishing trip with Rilaki turns into a wild ride when a giant fish pulls Theotokis across the jungle lake. Can his friends bring him safely ashore?"
+  },
+  "gr": {
+    "title": "Το Ψάρι της Ζούγκλας",
+    "textFile": "story32/story32_gr.txt?v=1",
+    "text": "Ένα ήσυχο ψάρεμα με τον Ριλάκη γίνεται τρελή περιπέτεια όταν ένα τεράστιο ψάρι παρασύρει τον Θεοτόκη στη λίμνη της ζούγκλας. Θα καταφέρουν οι φίλοι του να τον φέρουν με ασφάλεια στη στεριά;"
+  }
+};
+storyImages[32] = [
+  {
+    "after": 2,
+    "src": "story32/panels/s32p01.webp"
+  },
+  {
+    "after": 6,
+    "src": "story32/panels/s32p02.webp"
+  },
+  {
+    "after": 9,
+    "src": "story32/panels/s32p03.webp"
+  },
+  {
+    "after": 14,
+    "src": "story32/panels/s32p04.webp"
+  },
+  {
+    "after": 16,
+    "src": "story32/panels/s32p05.webp"
+  },
+  {
+    "after": 20,
+    "src": "story32/panels/s32p06.webp"
+  },
+  {
+    "after": 24,
+    "src": "story32/panels/s32p07.webp"
+  },
+  {
+    "after": 26,
+    "src": "story32/panels/s32p08.webp"
+  },
+  {
+    "after": 27,
+    "src": "story32/panels/s32p09.webp"
+  },
+  {
+    "after": 32,
+    "src": "story32/panels/s32p10.webp"
+  },
+  {
+    "after": 38,
+    "src": "story32/panels/s32p11.webp"
+  },
+  {
+    "after": 39,
+    "src": "story32/panels/s32p12.webp"
+  },
+  {
+    "after": 41,
+    "src": "story32/panels/s32p13.webp"
+  },
+  {
+    "after": 43,
+    "src": "story32/panels/s32p14.webp"
+  },
+  {
+    "after": 44,
+    "src": "story32/panels/s32p15.webp"
+  },
+  {
+    "after": 48,
+    "src": "story32/panels/s32p16.webp"
+  },
+  {
+    "after": 53,
+    "src": "story32/panels/s32p17.webp"
+  },
+  {
+    "after": 54,
+    "src": "story32/panels/s32p18.webp"
+  },
+  {
+    "after": 56,
+    "src": "story32/panels/s32p19.webp"
+  },
+  {
+    "after": 60,
+    "src": "story32/panels/s32p20.webp"
+  },
+  {
+    "after": 62,
+    "src": "story32/panels/s32p21.webp"
+  },
+  {
+    "after": 64,
+    "src": "story32/panels/s32p22.webp"
+  },
+  {
+    "after": 67,
+    "src": "story32/panels/s32p23.webp"
+  },
+  {
+    "after": 68,
+    "src": "story32/panels/s32p24.webp"
+  },
+  {
+    "after": 70,
+    "src": "story32/panels/s32p25.webp"
+  },
+  {
+    "after": 71,
+    "src": "story32/panels/s32p26.webp"
+  },
+  {
+    "after": 73,
+    "src": "story32/panels/s32p27.webp"
+  }
+];
+storyCardTextGr[32] = storyText[32].gr.text;
