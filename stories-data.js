@@ -1863,3 +1863,133 @@ storyImages[32] = [
   }
 ];
 storyCardTextGr[32] = storyText[32].gr.text;
+
+// Story 33 — The Missing Bride
+audioFiles[33] = {"en": "story33/story33_en.mp3?v=1", "gr": "story33/story33_gr.aac?v=1"};
+storyText[33] = {
+  "en": {
+    "title": "The Missing Bride",
+    "textFile": "story33/story33_en.txt?v=1",
+    "text": "Everyone travels to Aphrodite for Arxigeas and Arxigeena's wedding, but the bride never arrives. Can the boys find her spaceship and save the big day?"
+  },
+  "gr": {
+    "title": "Η Νύφη που Χάθηκε",
+    "textFile": "story33/story33_gr.txt?v=1",
+    "text": "Όλοι ταξιδεύουν στην Αφροδίτη για τον γάμο του Αρχηγέα και της Αρχηγένας, αλλά η νύφη δεν φτάνει ποτέ. Θα βρουν τα αγόρια το διαστημόπλοιό της και θα σώσουν τη μεγάλη μέρα;"
+  }
+};
+storyImages[33] = [
+  {
+    "after": 2,
+    "src": "story33/panels/s33p01.webp"
+  },
+  {
+    "after": 7,
+    "src": "story33/panels/s33p02.webp"
+  },
+  {
+    "after": 15,
+    "src": "story33/panels/s33p03.webp"
+  },
+  {
+    "after": 20,
+    "src": "story33/panels/s33p04.webp"
+  },
+  {
+    "after": 21,
+    "src": "story33/panels/s33p05.webp"
+  },
+  {
+    "after": 22,
+    "src": "story33/panels/s33p06.webp"
+  },
+  {
+    "after": 24,
+    "src": "story33/panels/s33p07.webp"
+  },
+  {
+    "after": 26,
+    "src": "story33/panels/s33p08.webp"
+  },
+  {
+    "after": 30,
+    "src": "story33/panels/s33p09.webp"
+  },
+  {
+    "after": 31,
+    "src": "story33/panels/s33p10.webp"
+  },
+  {
+    "after": 33,
+    "src": "story33/panels/s33p11.webp"
+  },
+  {
+    "after": 35,
+    "src": "story33/panels/s33p12.webp"
+  },
+  {
+    "after": 39,
+    "src": "story33/panels/s33p13.webp"
+  },
+  {
+    "after": 40,
+    "src": "story33/panels/s33p14.webp"
+  },
+  {
+    "after": 44,
+    "src": "story33/panels/s33p15.webp"
+  },
+  {
+    "after": 46,
+    "src": "story33/panels/s33p16.webp"
+  },
+  {
+    "after": 50,
+    "src": "story33/panels/s33p17.webp"
+  },
+  {
+    "after": 52,
+    "src": "story33/panels/s33p18.webp"
+  },
+  {
+    "after": 53,
+    "src": "story33/panels/s33p19.webp"
+  },
+  {
+    "after": 58,
+    "src": "story33/panels/s33p20.webp"
+  },
+  {
+    "after": 59,
+    "src": "story33/panels/s33p21.webp"
+  },
+  {
+    "after": 63,
+    "src": "story33/panels/s33p22.webp"
+  },
+  {
+    "after": 68,
+    "src": "story33/panels/s33p23.webp"
+  },
+  {
+    "after": 70,
+    "src": "story33/panels/s33p24.webp"
+  },
+  {
+    "after": 72,
+    "src": "story33/panels/s33p25.webp"
+  },
+  {
+    "after": 72,
+    "src": "story33/panels/s33p26.webp"
+  },
+  {
+    "after": 79,
+    "src": "story33/panels/s33p27.webp"
+  },
+  {
+    "after": 82,
+    "src": "story33/panels/s33p28.webp"
+  }
+];
+storyCardTextGr[33] = storyText[33].gr.text;
