@@ -1993,3 +1993,129 @@ storyImages[33] = [
   }
 ];
 storyCardTextGr[33] = storyText[33].gr.text;
+
+// Story 34 — The Banana Thief
+audioFiles[34] = {"en": "story34/story34_en.mp3?v=1", "gr": "story34/story34_gr.aac?v=1"};
+storyText[34] = {
+  "en": {
+    "title": "The Banana Thief",
+    "textFile": "story34/story34_en.txt?v=1",
+    "text": "Rillas and Rilaki's bananas have vanished! Detectives Theotokis and Aristotelis follow the clues through the jungle and discover a thief with an unexpected story."
+  },
+  "gr": {
+    "title": "Ο Κλέφτης των Μπανανών",
+    "textFile": "story34/story34_gr.txt?v=1",
+    "text": "Οι μπανάνες του Ρίλλα και του Ριλάκη εξαφανίστηκαν! Οι ντετέκτιβ Θεοτόκης και Αριστοτέλης ακολουθούν τα ίχνη στη ζούγκλα και ανακαλύπτουν έναν κλέφτη με μια απρόσμενη ιστορία."
+  }
+};
+storyImages[34] = [
+  {
+    "after": 1,
+    "src": "story34/panels/s34p01.webp"
+  },
+  {
+    "after": 3,
+    "src": "story34/panels/s34p02.webp"
+  },
+  {
+    "after": 4,
+    "src": "story34/panels/s34p03.webp"
+  },
+  {
+    "after": 9,
+    "src": "story34/panels/s34p04.webp"
+  },
+  {
+    "after": 12,
+    "src": "story34/panels/s34p05.webp"
+  },
+  {
+    "after": 15,
+    "src": "story34/panels/s34p06.webp"
+  },
+  {
+    "after": 16,
+    "src": "story34/panels/s34p07.webp"
+  },
+  {
+    "after": 19,
+    "src": "story34/panels/s34p08.webp"
+  },
+  {
+    "after": 20,
+    "src": "story34/panels/s34p09.webp"
+  },
+  {
+    "after": 23,
+    "src": "story34/panels/s34p10.webp"
+  },
+  {
+    "after": 25,
+    "src": "story34/panels/s34p11.webp"
+  },
+  {
+    "after": 26,
+    "src": "story34/panels/s34p12.webp"
+  },
+  {
+    "after": 29,
+    "src": "story34/panels/s34p13.webp"
+  },
+  {
+    "after": 31,
+    "src": "story34/panels/s34p14.webp"
+  },
+  {
+    "after": 34,
+    "src": "story34/panels/s34p15.webp"
+  },
+  {
+    "after": 37,
+    "src": "story34/panels/s34p16.webp"
+  },
+  {
+    "after": 39,
+    "src": "story34/panels/s34p17.webp"
+  },
+  {
+    "after": 46,
+    "src": "story34/panels/s34p18.webp"
+  },
+  {
+    "after": 47,
+    "src": "story34/panels/s34p19.webp"
+  },
+  {
+    "after": 48,
+    "src": "story34/panels/s34p20.webp"
+  },
+  {
+    "after": 55,
+    "src": "story34/panels/s34p21.webp"
+  },
+  {
+    "after": 60,
+    "src": "story34/panels/s34p22.webp"
+  },
+  {
+    "after": 62,
+    "src": "story34/panels/s34p23.webp"
+  },
+  {
+    "after": 69,
+    "src": "story34/panels/s34p24.webp"
+  },
+  {
+    "after": 70,
+    "src": "story34/panels/s34p25.webp"
+  },
+  {
+    "after": 73,
+    "src": "story34/panels/s34p26.webp"
+  },
+  {
+    "after": 75,
+    "src": "story34/panels/s34p27.webp"
+  }
+];
+storyCardTextGr[34] = storyText[34].gr.text;
