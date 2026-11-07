@@ -264,8 +264,11 @@ function checkVercelConfig() {
     fail("vercel.json must keep Cache-Control headers.");
   }
 
-  if (config.buildCommand !== "node scripts/smoke-check.js") {
-    fail('vercel.json must run "node scripts/smoke-check.js" before deploy.');
+  if (config.buildCommand !== "node scripts/smoke-check.js && node scripts/build-site.js") {
+    fail('vercel.json must run smoke checks and the filtered site build before deploy.');
+  }
+  if (config.outputDirectory !== 'site-dist') {
+    fail('vercel.json must publish only site-dist, never the source repository root.');
   }
 }
 
