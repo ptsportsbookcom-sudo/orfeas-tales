@@ -37,3 +37,6 @@ story1/panels/preview.html
 
 # Alternate music file (not deployed)
 music/background_music.mp3
+
+# Generated publish directory (original media remains tracked)
+site-dist/

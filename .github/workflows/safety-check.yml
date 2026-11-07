@@ -49,3 +49,9 @@ jobs:
 
       - name: Smoke check
         run: node scripts/smoke-check.js
+
+      - name: Test filtered build safety
+        run: node --test scripts/build-site.test.js
+
+      - name: Build and verify published assets
+        run: node scripts/build-site.js
