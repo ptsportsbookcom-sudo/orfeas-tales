@@ -28,8 +28,8 @@ const characters = [
   { id:12, name:"Geas",        role:"Twin Son — Older",    file:"characters/3_Geas.webp",          unlocked:false, desc:"" },
   { id:13, name:"Eas",         role:"Twin Son — Younger",  file:"characters/4_Eas.webp",           unlocked:false, desc:"" },
   { id:14, name:"Geena",       role:"The Daughter",        file:"characters/5_Geena.webp",         unlocked:false, desc:"" },
-  { id:15, name:"Kakeas",      role:"The Villain",         file:"characters/15_Kakeas.webp",       unlocked:false, villain:true,
-    desc:"" },
+  { id:15, name:"Kakeas",      role:"The Villain",         file:"characters/kakeas_ref.webp",       unlocked:true, villain:true,
+    desc:"A boastful space villain who steals planets and adores his enormous, sparkling sword. When he captures Planet 650, Arxigeas challenges him under the Law of the Duel — and Kakeas learns that a beautiful weapon is no substitute for practice." },
   { id:16, name:"Gorillatsos", role:"Gorilla — Rillas's Cousin", file:"characters/gorillatsas_ref.webp", unlocked:true,
     desc:"Rillas's young cousin — full of energy and mischief. Captured by Poachers before Story 5 begins, he was rescued by Rillas and the boys and couldn't be happier to be free." },
   { id:17, name:"The Dragon", role:"Treasure Guardian", file:"characters/dragon_ref.webp", unlocked:true,
@@ -656,7 +656,7 @@ const characterTextGr = {
   12: { role:"Δίδυμος Γιος — Ο Μεγαλύτερος", desc:"" },
   13: { role:"Δίδυμος Γιος — Ο Μικρότερος", desc:"" },
   14: { role:"Η Κόρη", desc:"" },
-  15: { role:"Ο Κακός", desc:"" },
+  15: { role:"Ο Κακός", desc:"Ένας καυχησιάρης κακός του διαστήματος που κλέβει πλανήτες και λατρεύει το τεράστιο, αστραφτερό σπαθί του. Όταν αιχμαλωτίζει τον Πλανήτη 650, ο Αρχηγέας τον προκαλεί σε μονομαχία — και ο Κακέας μαθαίνει ότι ένα όμορφο όπλο δεν αντικαθιστά την εξάσκηση." },
   16: { role:"Γορίλλας — Ο Ξάδελφος του Ρίλλα", desc:"Ο νεαρός ξάδελφος του Ρίλλα — γεμάτος ενέργεια και σκανταλιές. Αιχμαλωτίστηκε από λαθροκυνηγούς πριν αρχίσει η Ιστορία 5, αλλά ο Ρίλλας και τα αγόρια τον έσωσαν και τώρα χαίρεται όσο ποτέ την ελευθερία του." },
   17: { name:"Ο Δράκος", role:"Φύλακας του Θησαυρού", desc:"Ένας πανίσχυρος δράκος που αναπνέει φωτιά και φυλάει ένα μαγικό χρυσό λιβάδι πίσω από μια πόρτα που ανοίγει μόνο με γρίφους. Πίσω από τον τρομακτικό βρυχηθμό του κρύβεται μια μοναχική καρδιά, και η καλοσύνη του Ριλλακιού τον βοηθά να ανακαλύψει ότι η φιλία αξίζει περισσότερο από όλο το χρυσάφι που προστατεύει." }
 };
@@ -2119,3 +2119,137 @@ storyImages[34] = [
   }
 ];
 storyCardTextGr[34] = storyText[34].gr.text;
+
+// Story 35 — The Law of the Duel
+audioFiles[35] = {"en": "story35/story35_en.mp3?v=1", "gr": "story35/story35_gr.aac?v=1"};
+storyText[35] = {
+  "en": {
+    "title": "The Law of the Duel",
+    "textFile": "story35/story35_en.txt?v=1",
+    "text": "Kakeas has captured Planet 650 and Arxigeena! Theotokis discovers an ancient law that gives Arxigeas one chance to save them: a duel against the biggest villain in the universe."
+  },
+  "gr": {
+    "title": "Ο Νόμος της Μονομαχίας",
+    "textFile": "story35/story35_gr.txt?v=1",
+    "text": "Ο Κακέας αιχμαλώτισε τον Πλανήτη 650 και την Αρχηγένα! Ο Θεοτόκης ανακαλύπτει έναν αρχαίο νόμο που δίνει στον Αρχηγέα μια ευκαιρία να τους σώσει: μια μονομαχία με τον μεγαλύτερο κακό του σύμπαντος."
+  }
+};
+storyImages[35] = [
+  {
+    "after": 4,
+    "src": "story35/panels/s35p01.webp"
+  },
+  {
+    "after": 4,
+    "src": "story35/panels/s35p02.webp"
+  },
+  {
+    "after": 6,
+    "src": "story35/panels/s35p03.webp"
+  },
+  {
+    "after": 7,
+    "src": "story35/panels/s35p04.webp"
+  },
+  {
+    "after": 19,
+    "src": "story35/panels/s35p05.webp"
+  },
+  {
+    "after": 21,
+    "src": "story35/panels/s35p06.webp"
+  },
+  {
+    "after": 22,
+    "src": "story35/panels/s35p07.webp"
+  },
+  {
+    "after": 31,
+    "src": "story35/panels/s35p08.webp"
+  },
+  {
+    "after": 33,
+    "src": "story35/panels/s35p09.webp"
+  },
+  {
+    "after": 39,
+    "src": "story35/panels/s35p10.webp"
+  },
+  {
+    "after": 40,
+    "src": "story35/panels/s35p11.webp"
+  },
+  {
+    "after": 45,
+    "src": "story35/panels/s35p12.webp"
+  },
+  {
+    "after": 49,
+    "src": "story35/panels/s35p13.webp"
+  },
+  {
+    "after": 54,
+    "src": "story35/panels/s35p14.webp"
+  },
+  {
+    "after": 55,
+    "src": "story35/panels/s35p15.webp"
+  },
+  {
+    "after": 60,
+    "src": "story35/panels/s35p16.webp"
+  },
+  {
+    "after": 63,
+    "src": "story35/panels/s35p17.webp"
+  },
+  {
+    "after": 68,
+    "src": "story35/panels/s35p18.webp"
+  },
+  {
+    "after": 69,
+    "src": "story35/panels/s35p19.webp"
+  },
+  {
+    "after": 70,
+    "src": "story35/panels/s35p20.webp"
+  },
+  {
+    "after": 73,
+    "src": "story35/panels/s35p21.webp"
+  },
+  {
+    "after": 75,
+    "src": "story35/panels/s35p22.webp"
+  },
+  {
+    "after": 78,
+    "src": "story35/panels/s35p23.webp"
+  },
+  {
+    "after": 79,
+    "src": "story35/panels/s35p24.webp"
+  },
+  {
+    "after": 81,
+    "src": "story35/panels/s35p25.webp"
+  },
+  {
+    "after": 85,
+    "src": "story35/panels/s35p26.webp"
+  },
+  {
+    "after": 89,
+    "src": "story35/panels/s35p27.webp"
+  },
+  {
+    "after": 90,
+    "src": "story35/panels/s35p28.webp"
+  },
+  {
+    "after": 93,
+    "src": "story35/panels/s35p29.webp"
+  }
+];
+storyCardTextGr[35] = storyText[35].gr.text;
