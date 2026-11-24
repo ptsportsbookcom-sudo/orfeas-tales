@@ -25,8 +25,8 @@ const characters = [
     desc:"The sly, grinning leader of an alien species from the planet Aphrodite — met on the moon in Story 17. He loves diamonds (his species eats them!), owns three spaceships, and quickly became the animals' newest, most unexpected friend." },
   { id:11, name:"Arxigeena",   role:"Alien — Planetary Guard", file:"characters/Arxigeena.webp", unlocked:true,
     desc:"A fearless planetary guard from Planet 650. Arxigeena first met the friends when their spaceship landed on her rainy world by mistake. After they helped with her chores, she safely flew everyone to Aphrodite — where she immediately caught Arxigeas's eye." },
-  { id:12, name:"Geas",        role:"Twin Son — Older",    file:"characters/3_Geas.webp",          unlocked:false, desc:"" },
-  { id:13, name:"Eas",         role:"Twin Son — Younger",  file:"characters/4_Eas.webp",           unlocked:false, desc:"" },
+  { id:12, name:"Geas",        role:"Twin Son — Older",    file:"characters/3_Geas.webp",          unlocked:true, desc:"Arxigeas and Arxigeena’s firstborn twin son, born on Planet 650 in Story 36. His arrival makes his nervous dad happier than ever." },
+  { id:13, name:"Eas",         role:"Twin Son — Younger",  file:"characters/4_Eas.webp",           unlocked:true, desc:"Arxigeas and Arxigeena’s younger twin son, born just minutes after Geas in Story 36. His delighted dad almost gives him his own name!" },
   { id:14, name:"Geena",       role:"The Daughter",        file:"characters/5_Geena.webp",         unlocked:false, desc:"" },
   { id:15, name:"Kakeas",      role:"The Villain",         file:"characters/kakeas_ref.webp",       unlocked:true, villain:true,
     desc:"A boastful space villain who steals planets and adores his enormous, sparkling sword. When he captures Planet 650, Arxigeas challenges him under the Law of the Duel — and Kakeas learns that a beautiful weapon is no substitute for practice." },
@@ -653,8 +653,8 @@ const characterTextGr = {
   9:  { role:"Δεύτερος Γιος — Ο Μικρότερος", desc:"Ο μικρότερος γιος του Μαϊμουδάκη και της Μαϊμουδακένας — εμφανίστηκε πρώτη φορά στην Ιστορία 11. Είναι εξίσου σκανταλιάρης με τον μεγάλο του αδελφό, με ένα χαμόγελο που προδίδει κάθε φάρσα πριν ακόμη αρχίσει." },
   10: { role:"Εξωγήινος — Ο Αρχηγός", desc:"Ο πονηρός και χαμογελαστός αρχηγός των εξωγήινων από τον πλανήτη Αφροδίτη — τον γνώρισαν στο φεγγάρι στην Ιστορία 17. Λατρεύει τα διαμάντια (το είδος του τα τρώει!), έχει τρία διαστημόπλοια και έγινε γρήγορα ο πιο απρόσμενος νέος φίλος της παρέας." },
   11: { role:"Εξωγήινη — Φρουρός Πλανήτη", desc:"Μια ατρόμητη φρουρός από τον Πλανήτη 650. Η Αρχηγένα γνώρισε την παρέα όταν το διαστημόπλοιό τους προσγειώθηκε κατά λάθος στον βροχερό κόσμο της. Αφού τη βοήθησαν με τις δουλειές της, τους μετέφερε με ασφάλεια στην Αφροδίτη — όπου τράβηξε αμέσως την προσοχή του Αρχηγέα." },
-  12: { role:"Δίδυμος Γιος — Ο Μεγαλύτερος", desc:"" },
-  13: { role:"Δίδυμος Γιος — Ο Μικρότερος", desc:"" },
+  12: { role:"Δίδυμος Γιος — Ο Μεγαλύτερος", desc:"Ο πρωτότοκος δίδυμος γιος του Αρχηγέα και της Αρχηγένας, που γεννήθηκε στον Πλανήτη 650 στην Ιστορία 36. Ο ερχομός του γεμίζει χαρά τον αγχωμένο μπαμπά του." },
+  13: { role:"Δίδυμος Γιος — Ο Μικρότερος", desc:"Ο μικρότερος δίδυμος γιος του Αρχηγέα και της Αρχηγένας, που γεννήθηκε λίγα λεπτά μετά τον Γέα στην Ιστορία 36. Ο ενθουσιασμένος μπαμπάς του παραλίγο να του δώσει το δικό του όνομα!" },
   14: { role:"Η Κόρη", desc:"" },
   15: { role:"Ο Κακός", desc:"Ένας καυχησιάρης κακός του διαστήματος που κλέβει πλανήτες και λατρεύει το τεράστιο, αστραφτερό σπαθί του. Όταν αιχμαλωτίζει τον Πλανήτη 650, ο Αρχηγέας τον προκαλεί σε μονομαχία — και ο Κακέας μαθαίνει ότι ένα όμορφο όπλο δεν αντικαθιστά την εξάσκηση." },
   16: { role:"Γορίλλας — Ο Ξάδελφος του Ρίλλα", desc:"Ο νεαρός ξάδελφος του Ρίλλα — γεμάτος ενέργεια και σκανταλιές. Αιχμαλωτίστηκε από λαθροκυνηγούς πριν αρχίσει η Ιστορία 5, αλλά ο Ρίλλας και τα αγόρια τον έσωσαν και τώρα χαίρεται όσο ποτέ την ελευθερία του." },
@@ -2253,3 +2253,129 @@ storyImages[35] = [
   }
 ];
 storyCardTextGr[35] = storyText[35].gr.text;
+
+// Story 36 — The Twins Are Coming!
+audioFiles[36] = {"en":"story36/story36_en.mp3?v=1","gr":"story36/story36_gr.aac?v=1"};
+storyText[36] = {
+  "en": {
+    "title": "The Twins Are Coming!",
+    "textFile": "story36/story36_en.txt?v=1",
+    "text": "Arxigeas and Arxigeena are expecting twin boys! When his spaceship is stolen just as the babies arrive, can the nervous dad get home in time?"
+  },
+  "gr": {
+    "title": "Έρχονται τα Δίδυμα!",
+    "textFile": "story36/story36_gr.txt?v=1",
+    "text": "Ο Αρχηγέας και η Αρχηγένα περιμένουν δίδυμα αγοράκια! Όταν του κλέβουν το διαστημόπλοιο την ώρα που έρχονται τα μωρά, θα προλάβει ο αγχωμένος μπαμπάς να γυρίσει σπίτι;"
+  }
+};
+storyImages[36] = [
+  {
+    "after": 2,
+    "src": "story36/panels/s36p01.webp"
+  },
+  {
+    "after": 12,
+    "src": "story36/panels/s36p02.webp"
+  },
+  {
+    "after": 15,
+    "src": "story36/panels/s36p03.webp"
+  },
+  {
+    "after": 21,
+    "src": "story36/panels/s36p04.webp"
+  },
+  {
+    "after": 22,
+    "src": "story36/panels/s36p05.webp"
+  },
+  {
+    "after": 26,
+    "src": "story36/panels/s36p06.webp"
+  },
+  {
+    "after": 32,
+    "src": "story36/panels/s36p07.webp"
+  },
+  {
+    "after": 33,
+    "src": "story36/panels/s36p08.webp"
+  },
+  {
+    "after": 34,
+    "src": "story36/panels/s36p09.webp"
+  },
+  {
+    "after": 39,
+    "src": "story36/panels/s36p10.webp"
+  },
+  {
+    "after": 43,
+    "src": "story36/panels/s36p11.webp"
+  },
+  {
+    "after": 53,
+    "src": "story36/panels/s36p12.webp"
+  },
+  {
+    "after": 54,
+    "src": "story36/panels/s36p13.webp"
+  },
+  {
+    "after": 57,
+    "src": "story36/panels/s36p14.webp"
+  },
+  {
+    "after": 59,
+    "src": "story36/panels/s36p15.webp"
+  },
+  {
+    "after": 59,
+    "src": "story36/panels/s36p16.webp"
+  },
+  {
+    "after": 60,
+    "src": "story36/panels/s36p17.webp"
+  },
+  {
+    "after": 63,
+    "src": "story36/panels/s36p18.webp"
+  },
+  {
+    "after": 65,
+    "src": "story36/panels/s36p19.webp"
+  },
+  {
+    "after": 68,
+    "src": "story36/panels/s36p20.webp"
+  },
+  {
+    "after": 71,
+    "src": "story36/panels/s36p21.webp"
+  },
+  {
+    "after": 73,
+    "src": "story36/panels/s36p22.webp"
+  },
+  {
+    "after": 75,
+    "src": "story36/panels/s36p23.webp"
+  },
+  {
+    "after": 76,
+    "src": "story36/panels/s36p24.webp"
+  },
+  {
+    "after": 78,
+    "src": "story36/panels/s36p25.webp"
+  },
+  {
+    "after": 82,
+    "src": "story36/panels/s36p26.webp"
+  },
+  {
+    "after": 83,
+    "src": "story36/panels/s36p27.webp"
+  }
+];
+storyCardTextGr[36] = storyText[36].gr.text;
