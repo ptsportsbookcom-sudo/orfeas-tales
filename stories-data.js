@@ -2379,3 +2379,129 @@ storyImages[36] = [
   }
 ];
 storyCardTextGr[36] = storyText[36].gr.text;
+
+// Story 37 — Rillas Goes to Africa!
+audioFiles[37] = {"en":"story37/story37_en.mp3?v=1","gr":"story37/story37_gr.aac?v=1"};
+storyText[37] = {
+  "en": {
+    "title": "Rillas Goes to Africa!",
+    "textFile": "story37/story37_en.txt?v=1",
+    "text": "The boys take Rillas to Africa to meet his gorilla relatives. A ridiculous disguise, an airplane mix-up and a wild safari lead him to discover there is no place like home."
+  },
+  "gr": {
+    "title": "Ο Ρίλλας πάει στην Αφρική!",
+    "textFile": "story37/story37_gr.txt?v=1",
+    "text": "Τα παιδιά παίρνουν τον Ρίλλα στην Αφρική για να γνωρίσει τους συγγενείς του. Μια αστεία μεταμφίεση, μια αναστάτωση στο αεροπλάνο και ένα ξέφρενο σαφάρι τον βοηθούν να ανακαλύψει πως σαν το σπίτι του δεν έχει."
+  }
+};
+storyImages[37] = [
+  {
+    "after": 4,
+    "src": "story37/panels/s37p01.webp"
+  },
+  {
+    "after": 13,
+    "src": "story37/panels/s37p02.webp"
+  },
+  {
+    "after": 20,
+    "src": "story37/panels/s37p03.webp"
+  },
+  {
+    "after": 25,
+    "src": "story37/panels/s37p04.webp"
+  },
+  {
+    "after": 31,
+    "src": "story37/panels/s37p05.webp"
+  },
+  {
+    "after": 35,
+    "src": "story37/panels/s37p06.webp"
+  },
+  {
+    "after": 42,
+    "src": "story37/panels/s37p07.webp"
+  },
+  {
+    "after": 43,
+    "src": "story37/panels/s37p08.webp"
+  },
+  {
+    "after": 49,
+    "src": "story37/panels/s37p09.webp"
+  },
+  {
+    "after": 54,
+    "src": "story37/panels/s37p10.webp"
+  },
+  {
+    "after": 57,
+    "src": "story37/panels/s37p11.webp"
+  },
+  {
+    "after": 59,
+    "src": "story37/panels/s37p12.webp"
+  },
+  {
+    "after": 60,
+    "src": "story37/panels/s37p13.webp"
+  },
+  {
+    "after": 62,
+    "src": "story37/panels/s37p14.webp"
+  },
+  {
+    "after": 64,
+    "src": "story37/panels/s37p15.webp"
+  },
+  {
+    "after": 68,
+    "src": "story37/panels/s37p16.webp"
+  },
+  {
+    "after": 71,
+    "src": "story37/panels/s37p17.webp"
+  },
+  {
+    "after": 73,
+    "src": "story37/panels/s37p18.webp"
+  },
+  {
+    "after": 77,
+    "src": "story37/panels/s37p19.webp"
+  },
+  {
+    "after": 78,
+    "src": "story37/panels/s37p20.webp"
+  },
+  {
+    "after": 91,
+    "src": "story37/panels/s37p21.webp"
+  },
+  {
+    "after": 95,
+    "src": "story37/panels/s37p22.webp"
+  },
+  {
+    "after": 101,
+    "src": "story37/panels/s37p23.webp"
+  },
+  {
+    "after": 104,
+    "src": "story37/panels/s37p24.webp"
+  },
+  {
+    "after": 112,
+    "src": "story37/panels/s37p25.webp"
+  },
+  {
+    "after": 114,
+    "src": "story37/panels/s37p26.webp"
+  },
+  {
+    "after": 115,
+    "src": "story37/panels/s37p27.webp"
+  }
+];
+storyCardTextGr[37] = storyText[37].gr.text;
