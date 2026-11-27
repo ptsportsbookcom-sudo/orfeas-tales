@@ -2505,3 +2505,117 @@ storyImages[37] = [
   }
 ];
 storyCardTextGr[37] = storyText[37].gr.text;
+
+// Story 38 — The Diamonds of Aphrodite
+audioFiles[38] = {"en":"story38/story38_en.mp3?v=1","gr":"story38/story38_gr.aac?v=1"};
+storyText[38] = {
+  "en": {
+    "title": "The Diamonds of Aphrodite",
+    "textFile": "story38/story38_en.txt?v=1",
+    "text": "Kakeas kidnaps Arxigeas and demands every diamond on Aphrodite. Theotokis discovers a magical recipe, and the whole village joins a dazzling plan to bring their friend home."
+  },
+  "gr": {
+    "title": "Τα Διαμάντια της Αφροδίτης",
+    "textFile": "story38/story38_gr.txt?v=1",
+    "text": "Ο Κακέας απάγει τον Αρχηγέα και απαιτεί όλα τα διαμάντια της Αφροδίτης. Ο Θεοτόκης ανακαλύπτει μια μαγική συνταγή και όλο το χωριό βοηθά σε ένα λαμπερό σχέδιο για να φέρουν τον φίλο τους πίσω."
+  }
+};
+storyImages[38] = [
+  {
+    "after": 4,
+    "src": "story38/panels/s38p01.webp"
+  },
+  {
+    "after": 5,
+    "src": "story38/panels/s38p02.webp"
+  },
+  {
+    "after": 8,
+    "src": "story38/panels/s38p03.webp"
+  },
+  {
+    "after": 11,
+    "src": "story38/panels/s38p04.webp"
+  },
+  {
+    "after": 14,
+    "src": "story38/panels/s38p05.webp"
+  },
+  {
+    "after": 20,
+    "src": "story38/panels/s38p06.webp"
+  },
+  {
+    "after": 22,
+    "src": "story38/panels/s38p07.webp"
+  },
+  {
+    "after": 28,
+    "src": "story38/panels/s38p08.webp"
+  },
+  {
+    "after": 32,
+    "src": "story38/panels/s38p09.webp"
+  },
+  {
+    "after": 44,
+    "src": "story38/panels/s38p10.webp"
+  },
+  {
+    "after": 48,
+    "src": "story38/panels/s38p11.webp"
+  },
+  {
+    "after": 52,
+    "src": "story38/panels/s38p12.webp"
+  },
+  {
+    "after": 54,
+    "src": "story38/panels/s38p13.webp"
+  },
+  {
+    "after": 59,
+    "src": "story38/panels/s38p14.webp"
+  },
+  {
+    "after": 61,
+    "src": "story38/panels/s38p15.webp"
+  },
+  {
+    "after": 62,
+    "src": "story38/panels/s38p16.webp"
+  },
+  {
+    "after": 65,
+    "src": "story38/panels/s38p17.webp"
+  },
+  {
+    "after": 68,
+    "src": "story38/panels/s38p18.webp"
+  },
+  {
+    "after": 69,
+    "src": "story38/panels/s38p19.webp"
+  },
+  {
+    "after": 70,
+    "src": "story38/panels/s38p20.webp"
+  },
+  {
+    "after": 79,
+    "src": "story38/panels/s38p21.webp"
+  },
+  {
+    "after": 80,
+    "src": "story38/panels/s38p22.webp"
+  },
+  {
+    "after": 92,
+    "src": "story38/panels/s38p23.webp"
+  },
+  {
+    "after": 100,
+    "src": "story38/panels/s38p24.webp"
+  }
+];
+storyCardTextGr[38] = storyText[38].gr.text;
